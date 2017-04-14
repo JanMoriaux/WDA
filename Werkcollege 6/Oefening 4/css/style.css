@@ -1,0 +1,38 @@
+.slider-div{
+    position: relative;
+    width: 500px;
+    height: 300px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    padding: 0px;
+    <!-- border: solid; -->
+}
+
+.red{
+    background-color: red;
+}
+
+.green{
+    background-color: green;
+}
+
+.blue{
+    background-color: blue;
+}
+
+ul{
+    position: absolute;
+    padding: 0px;
+}
+
+li{
+    width: 500px;
+    height: 300px;
+    list-style-type: none;
+
+}
+
+button{
+    margin: 20px;
+}

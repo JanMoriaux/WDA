@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registratieformulier met jQuery</title>
+    <script src="../../JQuery/jquery-3.2.1.min.js"></script>
+    <script src="js/script.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../Bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Registratieformulier met jQuery</h1>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col col-md-2 control-label" for="name">Naam</label>
+            <div class="col col-md-4">
+                <input type="text" id="name" class="form-control" name="name"/>
+            </div>
+            <label class="col col-md-4 form-control-static" id="errorname"></label>
+        </div>
+        <div class="form-group">
+            <label class="col col-md-2 control-label" for="email">Email</label>
+            <div class="col col-md-4">
+                <input type="email" id="email" class="form-control" name="email"/>
+            </div>
+            <label class="col col-md-6 form-control-static" id="erroremail"></label>
+        </div>
+        <div class="form-group">
+            <label class="col col-md-2 control-label" for="password">Wachtwoord</label>
+            <div class="col col-md-4">
+                <input type="password" id="password" class="form-control" name="password"/>
+            </div>
+            <label class="col col-md-6 form-control-static" id="errorpassword"></label>
+        </div>
+        <div class="form-group">
+            <label class="col col-md-2 control-label" for="repeatpasswd">Bevestig Wachtwoord</label>
+            <div class="col col-md-4">
+                <input type="password" id="repeatpasswd" class="form-control" name="repeatpasswd"/>
+            </div>
+            <label class="col col-md-6 form-control-static" id="errorrepeatpasswd"></label>
+        </div>
+        <div class="form-group">
+            <div class="col col-md-2 col-md-offset-4">
+                <input class="btn btn-primary form-control" type="submit" value="Registreer"/>
+            </div>
+        </div>
+    </form>
+    <div id="success">
+        <p class="alert alert-success">Registratie Voltooid!</p>
+    </div>
+
+</div>
+
+
+</body>
+</html>

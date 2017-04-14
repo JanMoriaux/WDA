@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gegevens versturen via GET</title>
+    <link rel="stylesheet" href="../../Bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <script src="../../JQuery/jquery-3.2.1.min.js"></script>
+    <script src="js/script.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1>Gegevens versturen via GET</h1>
+    <div id="response" class="lead">
+
+    </div>
+    <div id="error" class="lead error">
+
+    </div>
+
+    <form class="form-horizontal" id="register" action="register.php" method="get">
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="name">Naam</label>
+            <div class="col-md-6">
+                <input type="text" name="name" id="name" class="form-control"/>
+            </div>
+            <div class="col-md-4">
+                <label class="form-control-static error-label"></label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-2">
+                <input type="submit" class="btn btn-lg btn-primary" value="Submit"/>
+            </div>
+        </div>
+
+
+    </form>
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blokken verplaatsen</title>
+    <script src="../../JQuery/jquery-3.2.1.min.js"></script>
+    <script src="js/script.js"></script>
+    <style>
+        .box {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            margin: 10px;
+            cursor: pointer;
+            padding: 50px;
+            font-size: 20px;
+            font-family: Verdana;
+            float: left;
+            background-color: lightgrey;
+            border:solid;
+        }
+
+        .active {
+            border-color: red;
+        }
+
+        #box1 {
+            top: 120px;
+            left: 240px;
+        }
+
+        #box2 {
+            top: 0;
+            left: 120px;
+        }
+
+        #box3 {
+            top: 0;
+            left: 240px;
+        }
+
+        #box4 {
+            top: 240px;
+            left: 120px;
+        }
+
+        #box5 {
+            top: 120px;
+            left: 120px;
+        }
+
+        #box6 {
+            top: 120px;
+            left: 0;
+        }
+
+        #box7 {
+            top: 240px;
+            left: 240px;
+        }
+
+        #box8 {
+            top: 240px;
+            left: 0;
+        }
+
+        #box9 {
+            top: 0;
+            left: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="box1" class="box">1</div>
+<div id="box2" class="box">2</div>
+<div id="box3" class="box">3</div>
+<div id="box4" class="box">4</div>
+<div id="box5" class="box">5</div>
+<div id="box6" class="box">6</div>
+<div id="box7" class="box">7</div>
+<div id="box8" class="box">8</div>
+<div id="box9" class="box">9</div>
+
+</body>
+</html>
