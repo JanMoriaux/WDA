@@ -1,0 +1,14 @@
+<spellen>
+  <spel min="3" max="6">
+    <naam>Catan</naam>
+    <img>catan.png</img>
+  </spel>
+  <spel min="2" max="8">
+    <naam>Roborally</naam>
+    <img>roborally.png</img>
+  </spel>
+  <spel min="2" max="6">
+    <naam>Risk</naam>
+    <img>risk.png</img>
+  </spel>
+</spellen>

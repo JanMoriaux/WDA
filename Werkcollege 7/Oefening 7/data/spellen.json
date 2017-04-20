@@ -1,0 +1,22 @@
+{
+  "spellen" : [
+    {
+      "min" : 3,
+      "max" : 6,
+      "naam" : "Catan",
+      "img" : "catan.png"
+    },
+    {
+      "min" : 2,
+      "max" : 8,
+      "naam" : "Roborally",
+      "img" : "roborally.png"
+    },
+    {
+      "min" : 2,
+      "max" : 6,
+      "naam" : "Risk",
+      "img" : "risk.png"
+    }
+  ]
+}

@@ -6,7 +6,7 @@
  * Time: 21:01
  */
 
-include_once('model/Model.php');
+include_once('model/models.php');
 
 class Controller{
     public $model;
