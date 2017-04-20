@@ -8,7 +8,8 @@
  */
 
 require_once 'ObjectValidator.php';
-require_once 'Address.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/entities/Address.php';
+
 
 //class voor het valideren van Address objecten
 //genereert foutboodschappen indien meegegeven object niet valid is
@@ -17,11 +18,11 @@ class AddressValidator extends ObjectValidator
     //Address Object dat moet gevalideerd worden
     protected $address;
 
-    protected $requiredFields = array('id', 'street', 'number', 'postalCode', 'city');
-    protected $numericFields = array('id', 'number', 'postalCode');
-    protected $strictPosInts = array('postalCode','number','id');
+    protected $requiredFields = array('street', 'number', 'postalCode', 'city');
+    protected $numericFields = array('number', 'postalCode');
+    protected $strictPosInts = array('postalCode','number');
     protected $nameFields = array('street', 'city');
-    protected $fieldLenghts = array(
+    protected $fieldLengths = array(
         'street' => [2,255],
         'city' => [2, 255]
     );
@@ -47,10 +48,10 @@ class AddressValidator extends ObjectValidator
                 $this->updateErrorsAndValues();
             } //foutboodschap indien geen geldig object
             else {
-                $this->errors[0] = $this->errorMessages['object'];
+                $this->errors[0] = $this->errorValues['object'];
             }
         } else {
-            $this->errors[0] = $this->errorMessages['object'];
+            $this->errors[0] = $this->errorValues['object'];
         }
 
     }
@@ -59,7 +60,6 @@ class AddressValidator extends ObjectValidator
     protected function setErrors()
     {
         $this->errors = [
-            'id' => '',
             'street' => '',
             'number' => '',
             'bus' => '',
@@ -72,7 +72,6 @@ class AddressValidator extends ObjectValidator
     protected function setValues()
     {
         $this->values = [
-            'id' => $this->address->getId(),
             'street' => $this->address->getStreet(),
             'number' => $this->address->getNumber(),
             'bus' => $this->address->getBus(),
@@ -95,7 +94,7 @@ class AddressValidator extends ObjectValidator
         //'bus' is geen verplicht veld, enkel valideren indien aanwezig
         if (isset($this->values['bus']) && !empty($this->values['bus'])) {
             if (!ValidationRules::isValidBusNumber($this->values['bus'])) {
-                $this->errors['bus'] = $this->errorMessages['bus'];
+                $this->errors['bus'] = $this->errorValues['bus'];
                 $this->values['bus'] = '';
             }
         }

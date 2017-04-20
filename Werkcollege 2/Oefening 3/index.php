@@ -31,7 +31,7 @@ else {
         }
         else{
             if(validateExtension($type)) {
-                $location = '..\\Images\\' . $file['name'];
+                $location = '..\\images\\' . $file['name'];
 
                 if (move_uploaded_file($file['tmp_name'], $location)) {
                     include('./showpic.php');

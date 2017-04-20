@@ -22,10 +22,10 @@ class User
     protected $password;
     /* @var string */
     protected $email;
-    /* @var Address */
-    protected $facturationAddress;
-    /* @var Address */
-    protected $deliveryAddress;
+    /* @var int */
+    protected $facturationAddressId;
+    /* @var int */
+    protected $deliveryAddressId;
     /* @var boolean */
     protected $admin;
 
@@ -37,13 +37,11 @@ class User
      * @param string $userName
      * @param string $password
      * @param string $email
-     * @param Address $facturationAddress
-     * @param Address $deliveryAddress
-     * @param bool $isAdmin
+     * @param int $facturationAddressId
+     * @param int $deliveryAddressId
+     * @param bool $admin
      */
-    public function __construct($id, $firstName, $lastName, $userName,
-                                $password, $email, Address $facturationAddress,
-                                Address $deliveryAddress, $admin)
+    public function __construct($id, $firstName, $lastName, $userName, $password, $email, $facturationAddressId, $deliveryAddressId, $admin)
     {
         $this->id = $id;
         $this->firstName = $firstName;
@@ -51,8 +49,8 @@ class User
         $this->userName = $userName;
         $this->password = $password;
         $this->email = $email;
-        $this->facturationAddress = $facturationAddress;
-        $this->deliveryAddress = $deliveryAddress;
+        $this->facturationAddress = $facturationAddressId;
+        $this->deliveryAddress = $deliveryAddressId;
         $this->admin = $admin;
     }
 
@@ -145,35 +143,19 @@ class User
     }
 
     /**
-     * @return Address
+     * @return int
      */
-    public function getFacturationAddress()
-    {
-        return $this->facturationAddress;
+    public function getFacturationAddressId()    {
+        return $this->facturationAddressId;
     }
 
-    /**
-     * @param Address $facturationAddress
-     */
-    public function setFacturationAddress($facturationAddress)
-    {
-        $this->facturationAddress = $facturationAddress;
-    }
 
     /**
-     * @return Address
+     * @return int
      */
-    public function getDeliveryAddress()
+    public function getDeliveryAddressId()
     {
-        return $this->deliveryAddress;
-    }
-
-    /**
-     * @param Address $deliveryAddress
-     */
-    public function setDeliveryAddress($deliveryAddress)
-    {
-        $this->deliveryAddress = $deliveryAddress;
+        return $this->deliveryAddressId;
     }
 
     /**

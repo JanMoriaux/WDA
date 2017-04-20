@@ -13,20 +13,23 @@ abstract class ObjectValidator
 {
     /* @var array */
     //TODO extract
-    protected $errorMessages = array(
+    //waarden van de foutboodschappen
+    protected $errorValues = array(
         'object' => 'Geen geldig object',
         'required' => 'Verplicht veld',
         'numeric' => 'Moet een getal zijn',
         'posInt' => 'Moet een geheel getal groter dan 0 zijn',
-        'minmax' => 'Moet groter of gelijk aan %d en kleiner of gelijk aan %d zijn',
+        'minMaxInt' => 'Moet groter of gelijk aan %d en kleiner of gelijk aan %d zijn',
+        'minMaxFloat' => 'Moet groter of gelijk aan %.2f en kleiner of gelijk aan %.2f zijn',
         'length' => 'Bevat minimum %d en maximum %d tekens',
         'name' => 'Bevat ongeldige tekens',
         'bus' => 'Bestaat uit maximaal 3 letters',
         'userNameRegex' => 'Mag enkel bestaan uit cijfers, letters, underscores (_) en koppeltekens',
-        'passwordRegex' => 'Moet bestaan uit een combinatie cijfers, letters, !, #, $, %, &, en ?',
-        'emailRegex' => 'Geen geldig email-adres'
-
+        'passwordRegex' => 'Moet bestaan uit een combinatie van cijfers, letters, !, #, $, %, &, en ?',
+        'emailRegex' => 'Geen geldig email-adres',
+        'image' => 'Ongeldige bestandsnaam. Enkel afbeeldingen toegelaten.',
     );
+
     //bevat de foutboodschappen voor verschillende formuliervelden
     protected $errors = array();
     //bevat de waarden van de verschillende formuliervelden
@@ -38,7 +41,7 @@ abstract class ObjectValidator
     //namen van de formuliervelden die als naam worden gevalideerd (bv. voornaam, achternaam, straat,...'
     protected $nameFields = array();
     //namen en minimum/maximum waarden van de velden met een gerestricteerde lengte
-    protected $fieldLenghts = array();
+    protected $fieldLengths = array();
     //namen van velden met een strikt positief geheel getal als waarde
     protected $strictPosInts = array();
     //namen en minimum/maximumwaarden van velden met een gerestricteerde waarde
@@ -83,7 +86,7 @@ abstract class ObjectValidator
     protected function validateRequiredFields(){
         foreach($this->requiredFields as $fieldName){
             if(!ValidationRules::valueProvided($this->values[$fieldName])){
-                $this->errors[$fieldName] = $this->errorMessages['required'];
+                $this->errors[$fieldName] = $this->errorValues['required'];
                 //waarde verwijderen indien niet geldig
                 $this->values[$fieldName] = '';
             }
@@ -94,7 +97,7 @@ abstract class ObjectValidator
     protected function validateNumericFields(){
         foreach($this->numericFields as $fieldName){
             if(empty($this->errors[$fieldName]) && !ValidationRules::isNumeric($this->values[$fieldName])){
-                $this->errors[$fieldName] = $this->errorMessages['numeric'];
+                $this->errors[$fieldName] = $this->errorValues['numeric'];
                 //waarde verwijderen indien niet geldig
                 $this->values[$fieldName] = '';
             }
@@ -104,7 +107,7 @@ abstract class ObjectValidator
     protected function validateNameFields(){
         foreach($this->nameFields as $fieldName){
             if(empty($this->errors[$fieldName]) && !ValidationRules::isValidName($this->values[$fieldName])){
-                $this->errors[$fieldName] = $this->errorMessages['name'];
+                $this->errors[$fieldName] = $this->errorValues['name'];
                 //waarde verwijderen indien niet geldig
                 $this->values[$fieldName] = '';
             }
@@ -112,10 +115,10 @@ abstract class ObjectValidator
     }
 
     protected function validateFieldLengths(){
-        foreach($this->fieldLenghts as $fieldName => $boundaries){
+        foreach($this->fieldLengths as $fieldName => $boundaries){
             if(empty($this->errors[$fieldName]) &&
                 !ValidationRules::hasValidLength($this->values[$fieldName], $boundaries[0], $boundaries[1])){
-                $this->errors[$fieldName] = sprintf($this->errorMessages['length'], $boundaries[0], $boundaries[1]);
+                $this->errors[$fieldName] = sprintf($this->errorValues['length'], $boundaries[0], $boundaries[1]);
                 //waarde verwijderen indien niet geldig
                 $this->values[$fieldName] = '';
             }
@@ -125,7 +128,7 @@ abstract class ObjectValidator
     protected function validateStrictPosInts(){
         foreach($this->strictPosInts as $fieldName){
             if(empty($this->errors[$fieldName]) && !ValidationRules::isStrictPosInt($this->values[$fieldName])){
-                $this->errors[$fieldName] = $this->errorMessages['posInt'];
+                $this->errors[$fieldName] = $this->errorValues['posInt'];
                 $this->values[$fieldName] = '';
             }
         }
@@ -135,7 +138,12 @@ abstract class ObjectValidator
         foreach($this->fieldBoundaries as $fieldName => $boundaries){
             if(empty($this->errors[$fieldName]) &&
                 !ValidationRules::hasValidBoundariesIncl($this->values[$fieldName],$boundaries[0],$boundaries[1])){
-                $this->errors[$fieldName] = sprintf($this->errorMessages['minmax'],$boundaries[0],$boundaries[1]);
+                if(is_integer($this->values[$fieldName] + 0)){
+                    $this->errors[$fieldName] = sprintf($this->errorValues['minMaxInt'],$boundaries[0],$boundaries[1]);
+                }
+                else if(is_float($this->values[$fieldName] + 0)){
+                    $this->errors[$fieldName] = sprintf($this->errorValues['minMaxFloat'],$boundaries[0],$boundaries[1]);
+                }
                 $this->values[$fieldName] = '';
             }
         }
