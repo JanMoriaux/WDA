@@ -6,12 +6,17 @@
  * Time: 13:59
  */
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/validation/ProductValidator.php';
+require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/validation/ProductValidator.php';
+require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/database/CRUD/ProductDb.php';
 
 $errors = array();
 $values = array();
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $productAdded = false;
+    $targetDir = $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/images/';
 
     $name = $_POST['name'];
     $description = $_POST['description'];
@@ -35,22 +40,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($valid) {
-        echo 'ok';
-        //TODO file upload
-        //TODO db insert
+
+        //file uploaden en in images map zetten
+        $target = $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/images/' . $_FILES['image']['name'];
+        $source = $_FILES['image']['tmp_name'];
+
+        if (move_uploaded_file($source, $target)) {
+            if (ProductDb::insert($product)) {
+                $values = array();
+                $productAdded = true;
+            }
+        }
     }
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css"/>
-    <link rel="stylesheet" href="../css/custom.css" type="text/css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="css/custom.css" type="text/css"/>
     <title>Test Product Input</title>
 </head>
 <body>
 <div class="container">
     <h1>Test product input</h1>
+    <?php
+    if (isset($productAdded)) {
+        if ($productAdded) {
+            ?>
+            <div class="alert alert-info">Product toegevoegd aan database</div><?php
+        } else { ?>
+            <div class="alert alert-danger">Product werd niet toegevoegd</div><?php
+        }
+    }
+    ?>
     <form class="form-horizontal" action="./testProduct.php" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label class="control-label col-md-2" for="name">Naam:</label>
@@ -82,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label class="control-label col-md-2" for="image">Afbeelding:</label>
             <div class="col-md-6">
                 <label class="btn btn-default btn-file">Browse
-                <input type="file" name="image" id="image" accept="image/*" style="display: none">
+                    <input type="file" name="image" id="image" accept="image/*" style="display: none">
                 </label>
 
             </div>
@@ -105,18 +128,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </label>
             </div>
         </div>
-
-        <!-- TODO Highlighted -->
         <div class="form-group">
             <label class="control-label col-md-2">Uitlichten:</label>
             <div class="col-md-6">
 
                 <div class="col col-md-2"><label class="control-label" for="hlyes">Ja</label>
                     <input class="" type="radio" name="highLighted" id="hlyes" value="1"
-                           checked/></div>
+                           <?php echo isset($values['highLighted']) && $values['highLighted'] ?
+                            'checked' : '' ?>/>
+                </div>
                 <div class="col col-md-2"><label class="control-label" for="hlno">Nee</label>
                     <input class="" type="radio" name="highLighted" id="hlno" value="0"
-                    /></div>
+                        <?php echo isset($values['highLighted']) && !$values['highLighted'] ?
+                            'checked' : '' ?>/>
+                </div>
             </div>
             <div class="col-md-4">
                 <label class="error-label control-label">
@@ -124,13 +149,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </label>
             </div>
         </div>
-
+        <!-- TODO categorieën laden -->
         <div class="form-group">
             <label class="control-label col-md-2" for="categoryId">Categorie:</label>
             <div class="col-md-6">
                 <select class="btn btn-default dropdown" type="" name="categoryId" id="categoryId">
                     <option value="1">Speelgoed</option>
                     <option value="2">Kleding</option>
+                    <option value="125">Ongeldige Categorie</option>
                 </select>
             </div>
             <div class="col-md-4">

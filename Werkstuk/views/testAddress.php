@@ -11,7 +11,7 @@ $values = array();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/validation/AddressValidator.php' ;
+    require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/validation/AddressValidator.php' ;
 
     $street = $_POST['street'];
     $number = $_POST['number'];
@@ -45,8 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css"/>
-    <link rel="stylesheet" href="../css/custom.css" type="text/css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="css/custom.css" type="text/css"/>
     <title>Test Address</title>
 </head>
 <body>

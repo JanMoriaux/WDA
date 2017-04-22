@@ -10,7 +10,7 @@
 
 require_once 'ObjectValidator.php';
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/entities/User.php';
+require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/entities/User.php';
 
 
 class UserValidator extends ObjectValidator
@@ -31,13 +31,13 @@ class UserValidator extends ObjectValidator
     //ctor
     public function __construct($user)
     {
-        $this->user = $this->setUser($user);
+        $this->setUser($user);
     }
 
     //gaat na of het meegegeven object een User object is
     //indien ja: User validatie
     //indien nee: foutboodschap toevoegen aan eerste element van errors array
-    public function setUser($user)
+    protected function setUser($user)
     {
         if (isset($user) && !empty($user)) {
             if (get_class($user) === 'User') {
@@ -77,7 +77,7 @@ class UserValidator extends ObjectValidator
         ];
     }
 
-    function validate()
+    protected function validate()
     {
 
         //validatie van verplichte-, numerieke-, strikt positieve- en namevelden en lengte van velden

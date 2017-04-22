@@ -7,7 +7,7 @@
  * Time: 15:32
  */
 require_once 'ObjectValidator.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/entities/Category.php';
+require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/entities/Category.php';
 
 class CategoryValidator extends ObjectValidator
 {
@@ -24,7 +24,7 @@ class CategoryValidator extends ObjectValidator
 
     public function __construct($category)
     {
-        $this->category = $this->setCategory($category);
+        $this->setCategory($category);
     }
 
     protected function setErrors()

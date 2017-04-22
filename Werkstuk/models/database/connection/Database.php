@@ -56,12 +56,18 @@ class Database
         return $this->executeAdvancedSqlQuery($sqlQuery, true, $parameterArray);
     }
 
-    protected function voerAdvancedSqlQueryUit($sqlQuery, $closeConnectionAutomatically = true, $parameterArray = null){
+    /**
+     * @param $sqlQuery
+     * @param bool $closeConnectionAutomatically
+     * @param null $parameterArray
+     * @return mysqli_result
+     */
+    protected function executeAdvancedSqlQuery($sqlQuery, $closeConnectionAutomatically = true, $parameterArray = null){
         $this->getDatabaseConnection();
         if($parameterArray != null){
             //Replace all sqlQuery questions marks by parameter values from parameterArray
-            $queryParts = preg_split("/\\?/", $sqlQuery);
-            if(count($queryParts) != count($parameterArray)){
+            $queryParts = preg_split('/\?/', $sqlQuery);
+            if(count($queryParts) != count($parameterArray) + 1){
                 return false;
             }
             $actualQuery = $queryParts[0];
@@ -72,6 +78,7 @@ class Database
         }
 
         $result = $this->connection->query($sqlQuery);
+
         if($closeConnectionAutomatically){
             $this->closeDatabaseConnection();
         }

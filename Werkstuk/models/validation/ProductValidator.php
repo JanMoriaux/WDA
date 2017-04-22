@@ -7,7 +7,7 @@
  * Time: 13:09
  */
 require_once 'ObjectValidator.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/entities/Product.php';
+require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/entities/Product.php';
 
 class ProductValidator extends ObjectValidator
 {
@@ -17,7 +17,7 @@ class ProductValidator extends ObjectValidator
     protected $product;
 
     protected $requiredFields = array('name','description','image','price','highLighted','categoryId','inStock');
-    protected $numericFields = array('price','categoryId','inStock');
+    protected $numericFields = array('price','categoryId','inStock','highLighted');
     protected $nameFields = array('name');
     protected $fieldLengths = array(
         'name' => [2,255],
@@ -35,7 +35,7 @@ class ProductValidator extends ObjectValidator
      */
     public function __construct(Product $product)
     {
-        $this->product = $this->setProduct($product);
+        $this->setProduct($product);
     }
 
     /**

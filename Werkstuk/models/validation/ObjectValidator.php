@@ -28,6 +28,7 @@ abstract class ObjectValidator
         'passwordRegex' => 'Moet bestaan uit een combinatie van cijfers, letters, !, #, $, %, &, en ?',
         'emailRegex' => 'Geen geldig email-adres',
         'image' => 'Ongeldige bestandsnaam. Enkel afbeeldingen toegelaten.',
+        'passwordNotSame' => 'Wachtwoord waarden komen niet overeen'
     );
 
     //bevat de foutboodschappen voor verschillende formuliervelden

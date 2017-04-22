@@ -21,6 +21,10 @@ class ValidationRules
      * Validatie van verplichte velden
      */
     public static function valueProvided($requiredValue){
+        //validatie voor correcte waarde 0
+        if(self::isNumeric($requiredValue)){
+            return true;
+        }
         if(!isset($requiredValue) || empty($requiredValue)){
             return false;
         }

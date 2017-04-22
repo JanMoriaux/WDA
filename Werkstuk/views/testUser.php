@@ -12,19 +12,24 @@ $values = array();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/validation/UserValidator.php';
+    require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] .
+        '/WDA/Werkstuk/models/validation/UserRegistrationViewModelValidator.php';
 
     $firstName = $_POST['firstName'];
     $lastName = $_POST['lastName'];
     $userName = $_POST['userName'];
     $password = $_POST['password'];
+    $repeatPassword = $_POST['repeatPassword'];
     $email = $_POST['email'];
 
-    $user = new User(null, $firstName, $lastName, $userName, $password, $email, 0, 0, false);
+    //$user = new User(null, $firstName, $lastName, $userName, $password, $email, 0, 0, false);
+    $userRegistrationViewModel = new UserRegistrationViewModel(null, $firstName, $lastName, $userName,
+        $password, $email, 0, 0, false, $repeatPassword);
 
-    $uv = new UserValidator($user);
-    $errors = $uv->getErrors();
-    $values = $uv->getValues();
+    //$uv = new UserValidator($user);
+    $urvmValidator = new UserRegistrationViewModelValidator($userRegistrationViewModel);
+    $errors = $urvmValidator->getErrors();
+    $values = $urvmValidator->getValues();
 
     $valid = true;
 
@@ -42,8 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css"/>
-    <link rel="stylesheet" href="../css/custom.css" type="text/css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="css/custom.css" type="text/css"/>
     <title>Test User</title>
 </head>
 <body>
@@ -100,6 +105,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-md-4">
                 <label class="error-label control-label">
                     <?php echo(isset($errors['password']) ? $errors['password'] : ''); ?>
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="repeatPassword">Herhaal Wachtwoord:</label>
+            <div class="col-md-6">
+                <input class="form-control" type="text" name="repeatPassword" id="repeatPassword"
+                       value="<?php echo(isset($values['repeatPassword']) ? $values['repeatPassword'] : ''); ?>"
+                       placeholder="Herhaal wachtwoord"/>
+            </div>
+            <div class="col-md-4">
+                <label class="error-label control-label">
+                    <?php echo(isset($errors['repeatPassword']) ? $errors['repeatPassword'] : ''); ?>
                 </label>
             </div>
         </div>

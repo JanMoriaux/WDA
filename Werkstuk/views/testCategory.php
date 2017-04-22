@@ -5,7 +5,7 @@
  * Date: 20/04/2017
  * Time: 15:39
  */
-require_once $_SERVER['DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/validation/CategoryValidator.php';
+require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/validation/CategoryValidator.php';
 
 $errors = array();
 $values = array();
@@ -36,8 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css"/>
-    <link rel="stylesheet" href="../css/custom.css" type="text/css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="css/custom.css" type="text/css"/>
     <title>Test Category</title>
 </head>
 <body>

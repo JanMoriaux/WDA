@@ -11,22 +11,24 @@
  *
  *
  */
+require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/database/connection/Database.PHP';
+
 class DatabaseFactory
 {
     //Singleton pattern
     private static $connection;
 
-    public static function getConnection(){
+    public static function getDatabase(){
 
-        if(self::$verbinding == null){
+        if(self::$connection == null){
             $servername = 'dtsl.ehb.be';
             $username = 'WDA098';
             $password = '71263548';
             $databasename = 'WDA098';
 
-            self::$verbinding = new Database($servername,$username,$password,$databasename);
+            self::$connection = new Database($servername,$username,$password,$databasename);
         }
 
-        return self::$verbinding;
+        return self::$connection;
     }
 }

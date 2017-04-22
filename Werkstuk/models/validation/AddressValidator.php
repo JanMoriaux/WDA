@@ -8,7 +8,7 @@
  */
 
 require_once 'ObjectValidator.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/entities/Address.php';
+require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/entities/Address.php';
 
 
 //class voor het valideren van Address objecten
