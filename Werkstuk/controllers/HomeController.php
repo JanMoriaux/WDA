@@ -9,6 +9,7 @@
 class HomeController
 {
     public function home(){
+        $title = 'Thuispagina';
 
         require_once ROOT . '/views/Home/home.php';
     }

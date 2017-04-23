@@ -17,8 +17,8 @@ else{
     <html>
     <head>
         <meta lang="en" charset="UTF-8" />
-        <link href="../../Bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
-        <link href="../../Style/custom.css" rel="stylesheet" type="text/css" />
+        <link href="../../../Bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+        <link href="../../../Style/custom.css" rel="stylesheet" type="text/css" />
         <title><?php echo $title; ?></title>
     </head>
     <body>

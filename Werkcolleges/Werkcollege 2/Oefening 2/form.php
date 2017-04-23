@@ -15,15 +15,15 @@ $isOther = $values['sex'] === 'other';
 <html>
 <head>
     <title><?php echo("$title"); ?></title>
-    <link href="../../Bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet"/>
-    <link href="../../Style/custom.css" type="text/css" rel="stylesheet"/>
+    <link href="../../../Bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet"/>
+    <link href="../../../Style/custom.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
 
     <h1><?php echo("$title"); ?></h1>
 
-    <form action="./index.php" method="post" class="form-horizontal">
+    <form action="index.php" method="post" class="form-horizontal">
 
         <div class="form-group">
             <label class="col-md-2 control-label" for="firstname">Voornaam: </label>

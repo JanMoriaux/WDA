@@ -80,8 +80,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <meta charset="UTF-8" lang="en"/>
-    <link href="../../Bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet"/>
-    <link href="../../Style/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../Bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet"/>
+    <link href="../../../Style/custom.css" rel="stylesheet" type="text/css"/>
     <title><?php echo $title ?></title>
 </head>
 <body>
@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="alert alert-danger"><?php echo $messages['error']; ?></div>
     <?php } ?>
 
-    <form class="form-horizontal" action="./insertbook.php" method="post">
+    <form class="form-horizontal" action="insertbook.php" method="post">
         <div class="form-group">
             <label class="control-label col-md-2" for="title"> Titel:</label>
             <div class="col-md-6">
@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <nav class="navbar navbar-inverse">
         <ul class="nav navbar-nav">
             <li>
-                <a href="./home.php">Home</a>
+                <a href="home.php">Home</a>
             </li>
         </ul>
     </nav>

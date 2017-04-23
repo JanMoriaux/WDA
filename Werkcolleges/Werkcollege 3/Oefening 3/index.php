@@ -18,15 +18,15 @@ include '.\tijdkeuze.php';
 <html>
 <head>
     <meta charset="UTF-8" lang="en">
-    <link rel="stylesheet" type="text/css" href="../../Bootstrap/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="../../Style/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../Bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../../../Style/custom.css" />
     <title><?php echo $indextitel; ?></title>
 </head>
 <body <?php echo "$style"; ?>>
     <div class="container">
         <nav class="navbar navbar-default">
             <ul class="nav navbar-nav">
-                <li><a class="" href="./instellingen.php"><?php echo $indexlink ?></a></li>
+                <li><a class="" href="instellingen.php"><?php echo $indexlink ?></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="navbar-text"><?php echo $showDate ?></li>

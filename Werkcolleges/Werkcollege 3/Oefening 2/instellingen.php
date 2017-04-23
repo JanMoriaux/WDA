@@ -5,9 +5,6 @@
  * Date: 18/03/2017
  * Time: 21:01
  */
-
-session_start();
-
 include './taalkeuze.php';
 include './naamkeuze.php';
 include './kleurkeuze.php';
@@ -18,8 +15,8 @@ include './tijdkeuze.php';
 <html>
 <head>
     <meta charset="UTF-8" lang="en">
-    <link rel="stylesheet" type="text/css" href="../../Bootstrap/css/bootstrap.css"/>
-    <link rel="stylesheet" type="text/css" href="../../Style/custom.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../Bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../Style/custom.css"/>
     <title><?php echo $instellingentitel; ?></title>
 </head>
 <body>

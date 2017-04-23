@@ -14,8 +14,8 @@ global $error;
 <html>
 <head>
     <meta charset="UTF-8" lang="en"/>
-    <link href="../../Bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet"/>
-    <link href="../../Style/custom.css" type="text/css" rel="stylesheet"/>
+    <link href="../../../Bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet"/>
+    <link href="../../../Style/custom.css" type="text/css" rel="stylesheet"/>
     <title><?php echo("$title"); ?></title>
 </head>
 <body>

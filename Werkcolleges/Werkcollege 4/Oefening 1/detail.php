@@ -51,8 +51,8 @@ if (isset($_GET['bookId']) && !empty($_GET['bookId'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="../../Bootstrap/css/bootstrap.css"/>
-    <link rel="stylesheet" type="text/css" href="../../Style/custom.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../Bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../Style/custom.css"/>
     <meta lang="en" charset="UTF-8"/>
     <title><?php echo $title; ?></title>
 </head>
@@ -108,7 +108,7 @@ if (isset($_GET['bookId']) && !empty($_GET['bookId'])) {
     <nav class="navbar navbar-inverse">
         <ul class="nav navbar-nav">
             <li>
-                <a href="./home.php">Home</a>
+                <a href="home.php">Home</a>
             </li>
         </ul>
     </nav>

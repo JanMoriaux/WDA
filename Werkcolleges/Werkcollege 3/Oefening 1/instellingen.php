@@ -12,8 +12,8 @@ include 'taalkeuze.php';
 <html>
 <head>
     <meta charset="UTF-8" lang="en">
-    <link rel="stylesheet" type="text/css" href="../../Bootstrap/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="../../Style/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../Bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../../../Style/custom.css" />
     <title><?php echo $instellingentitel; ?></title>
 </head>
 <body>

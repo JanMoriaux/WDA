@@ -31,8 +31,8 @@ if(isset($_GET['message']) && !empty($_GET['message']))
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="../../Bootstrap/css/bootstrap.css"/>
-    <link rel="stylesheet" type="text/css" href="../../Style/custom.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../Bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../Style/custom.css"/>
     <meta lang="en" charset="UTF-8"/>
     <title><?php echo $title; ?></title>
 </head>
@@ -102,7 +102,7 @@ if(isset($_GET['message']) && !empty($_GET['message']))
     <nav class="navbar navbar-inverse">
         <ul class="nav navbar-nav">
             <li>
-                <a class="" href="./insertbook.php">Insert Page</a>
+                <a class="" href="insertbook.php">Insert Page</a>
             </li>
         </ul>
     </nav>
