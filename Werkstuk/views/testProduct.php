@@ -6,8 +6,11 @@
  * Time: 13:59
  */
 
-require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/validation/ProductValidator.php';
-require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/database/CRUD/ProductDb.php';
+define('ROOT', $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk');
+
+require_once ROOT . '/models/validation/ProductValidator.php';
+require_once ROOT . '/models/database/CRUD/ProductDb.php';
+require_once ROOT . '/models/database/CRUD/CategoryDb.php';
 
 $errors = array();
 $values = array();
@@ -15,7 +18,7 @@ $values = array();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $productAdded = false;
+
     $targetDir = $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/images/';
 
     $name = $_POST['name'];
@@ -40,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($valid) {
+        $productAdded = false;
 
         //file uploaden en in images map zetten
         $target = $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/images/' . $_FILES['image']['name'];
@@ -134,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="col col-md-2"><label class="control-label" for="hlyes">Ja</label>
                     <input class="" type="radio" name="highLighted" id="hlyes" value="1"
-                           <?php echo isset($values['highLighted']) && $values['highLighted'] ?
+                        <?php echo isset($values['highLighted']) && $values['highLighted'] ?
                             'checked' : '' ?>/>
                 </div>
                 <div class="col col-md-2"><label class="control-label" for="hlno">Nee</label>
@@ -154,9 +158,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label class="control-label col-md-2" for="categoryId">Categorie:</label>
             <div class="col-md-6">
                 <select class="btn btn-default dropdown" type="" name="categoryId" id="categoryId">
-                    <option value="1">Speelgoed</option>
-                    <option value="2">Kleding</option>
-                    <option value="125">Ongeldige Categorie</option>
+                    <?php foreach (CategoryDb::getAll() as $category) { ?>
+                        <option value="<?php echo $category->getId(); ?>">
+                            <?php echo $category->getDescription(); ?></option>
+                    <?php } ?>
                 </select>
             </div>
             <div class="col-md-4">

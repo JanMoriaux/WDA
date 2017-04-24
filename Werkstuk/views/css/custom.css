@@ -53,3 +53,14 @@ thumbnail bevat .imageholder, .caption en .cart
 footer {
     margin: 50px 0;
 }
+
+/*Admin/productOverview*/
+#admin_product_table td{
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/*Admin/editProduct*/
+.dropdown,.form-control,.btn-default, input[type="radio"]{
+    margin-bottom: 2em;
+}

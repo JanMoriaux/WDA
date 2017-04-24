@@ -6,13 +6,14 @@
  * Date: 20/04/2017
  * Time: 15:32
  */
-require_once 'ObjectValidator.php';
-require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/entities/Category.php';
+require_once ROOT . '/models/validation/ObjectValidator.php';
+require_once ROOT . '/models/database/CRUD/CategoryDb.php';
+require_once ROOT . '/models/entities/Category.php';
 
 class CategoryValidator extends ObjectValidator
 {
     /**
-     * @var Category
+     * @var Category het Category object dat gevalideerd wordt
      */
     protected $category;
 
@@ -50,5 +51,17 @@ class CategoryValidator extends ObjectValidator
 
     protected function validate(){
         parent::validate();
+
+        //validatie van unieke Category description
+        $this->validateUniqueCategoryDescription();
+    }
+
+    protected function validateUniqueCategoryDescription(){
+        if(empty($this->errors['description']) &&
+            !ValidationRules::isUniqueCategoryDescription($this->category->getDescription())){
+            $this->errors['description'] =
+                sprintf($this->errorValues['categoryAlreadyInDb'],$this->category->getDescription());
+            $this->values['description'] = '';
+        }
     }
 }

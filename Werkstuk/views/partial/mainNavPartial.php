@@ -25,7 +25,7 @@
                     <a href="/WDA/Werkstuk/index.php?controller=Product&action=index">Producten</a>
                 </li>
                 <li>
-                    <a href="/#">Services</a>
+                    <a href="/WDA/Werkstuk/index.php?controller=Admin&action=index">Admin</a>
                 </li>
                 <li>
                     <a href="#">Contact</a>

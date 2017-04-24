@@ -6,8 +6,8 @@
  * Date: 20/04/2017
  * Time: 13:09
  */
-require_once 'ObjectValidator.php';
-require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/entities/Product.php';
+require_once ROOT . '/models/validation/ObjectValidator.php';
+require_once ROOT . '/models/entities/Product.php';
 
 class ProductValidator extends ObjectValidator
 {
@@ -114,6 +114,7 @@ class ProductValidator extends ObjectValidator
 
        $this->validateImage();
        $this->validateCategoryId();
+       $this->validateUniqueProductName();
     }
 
     protected function validateImage(){
@@ -124,8 +125,19 @@ class ProductValidator extends ObjectValidator
     }
 
     protected function validateCategoryId(){
-        //TODO nagaan of categoryid in db
+        if(empty($this->errors['categoryId']) &&
+            !ValidationRules::isValidCategoryId($this->values['categoryId'])){
+            $this->errors['categoryId'] = $this->errorValues['categoryNoExist'];
+            $this->values['categoryId'] = '';
+        }
+    }
 
+    protected function validateUniqueProductName(){
+        if(empty($this->errors['name']) &&
+            !ValidationRules::isUniqueProductName($this->product->getName())){
+            $this->errors['name'] = $this->errorValues['productAlreadyInDb'];
+            $this->values['name'] = '';
+        }
     }
 
 

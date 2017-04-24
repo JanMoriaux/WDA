@@ -19,16 +19,36 @@ require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] .
 class UserRegistrationViewModelValidator extends UserValidator
 {
     /**
-     * @var string
+     * @var string bevat naast de User-type property van de superklasse ook een property voor
+     * de waarde van het repeatPassword veld van het registratieformulier
      */
     protected $repeatPassword;
 
-    //todo requiredfields and fieldLenghts not updating
-
+    /**
+     * @var array met de namen van de verplichte velden in het registratieformulier
+     */
+    protected $requiredFields = array('firstName', 'lastName', 'userName', 'password', 'repeatPassword', 'email');
+    /**
+     * @var array met de namen van de velden die als 'name' gevalideerd worden
+     */
+    protected $nameFields = array('firstName', 'lastName');
+    /**
+     * @var array met de minimum- en maximumlengten van gerestricteerde veldnamen
+     */
+    protected $fieldLengths = array(
+        'firstName' => [2, 255],
+        'lastName' => [2, 255],
+        'userName' => [3, 15],
+        'password' => [8, 16],
+        'repeatPassword' => [8,16],
+        'email' => [3, 254]
+    );
 
     /**
      * UserRegistrationViewModelValidator constructor.
-     * @param $userViewModel
+     * @param $userViewModel UserRegistrationViewModel
+     * Nieuwe User aanmaken met de veldwaarden die overeenkomen met een User-property.
+     * Daarnaast ook de repeatPassword property uit het formulier halen.
      */
     public function __construct($userViewModel)
     {
@@ -38,32 +58,50 @@ class UserRegistrationViewModelValidator extends UserValidator
             $userViewModel->getDeliveryAddressId(),$userViewModel->isAdmin()));
 
             $this->setRepeatPassword($userViewModel->getRepeatPassword());
-
-            //extra repeatPassword veld toevoegen aan verschillende validatie arrays
-            $this->fieldLengths['repeatPassword'] = [8,16];
     }
 
+    /**
+     * @param $repeatPassword string met de waarde van het repeatPassword veld
+     */
     public function setRepeatPassword($repeatPassword){
         $this->repeatPassword = $repeatPassword;
         $this->updateErrorsAndValues();
     }
 
+    /**
+     * Voegt nog een element toe aan de errors array van de superclass met een eventuele
+     * foutboodschap voor het repeatPassword veld
+     */
     protected function setErrors()
     {
         parent::setErrors();
         $this->errors['repeatPassword'] = '';
     }
+
+    /**
+     * Voegt nog een element toe aan de values array van de superclass met
+     * de waarde van het repeatPassword veld
+     */
     protected function setValues()
     {
         parent::setValues(); //
         $this->values['repeatPassword'] = $this->repeatPassword;
     }
+
+    /**
+     * Voegt validatie van het repeatPasword veld toe aan de validatie uit de superclass
+     */
     protected function validate(){
         parent::validate();
 
         //extra validatie repeatPassword en password
         $this->validateRepeatPassword();
     }
+
+    /**
+     * repeatPassword veldwaarde valideren als password en nagaan of password en repeatPassword
+     * waarden overeenkomen
+     */
     protected function validateRepeatPassword(){
 
         if(empty($this->errors['repeatPassword']) &&

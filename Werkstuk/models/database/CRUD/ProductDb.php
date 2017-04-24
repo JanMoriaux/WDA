@@ -7,8 +7,10 @@
  * Time: 21:10
  */
 
-require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/database/connection/DatabaseFactory.php';
-require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/entities/Product.php';
+
+require_once ROOT . '/models/database/connection/DatabaseFactory.php';
+
+require_once ROOT . '/models/entities/Product.php';
 
 class ProductDb
 {
@@ -21,13 +23,10 @@ class ProductDb
     public static function getAll()
     {
         $result = self::getConnection()->executeSqlQuery("SELECT * FROM TINY_CLOUDS_PRODUCTS");
-        $resultArray = array();
-        for ($index = 0; $index < $result->num_rows; $index++) {
-            $dbRow = $result->fetch_array();
-            $product = self::convertRowToProduct($dbRow);
-            $resultArray[$index] = $product;
-        }
-        return $resultArray;
+
+
+        return self::getProductArrayFromResult($result);
+
     }
 
     //product op id uit db
@@ -45,10 +44,42 @@ class ProductDb
         }
     }
 
-    //product van formulier in db (na validatie)
+    /**
+     * @return array met alle productnamen in de Products tabel
+     */
+    public static function getNames(){
+        $query = 'SELECT name FROM TINY_CLOUDS_PRODUCTS';
+
+        $result = self::getConnection()->executeSqlQuery($query);
+
+        $names = array();
+
+        for($index= 0;$index < $result->num_rows;$index++){
+            $names[$index] = $result->fetch_array()['name'];
+        }
+
+        return $names;
+    }
+
+    public static function getByCategoryId($id){
+        $query = 'SELECT * FROM TINY_CLOUDS_PRODUCTS WHERE categoryId = ?';
+        $parameters = array($id);
+        $result = self::getConnection()->executeSqlQuery($query, $parameters);
+
+        return self::getProductArrayFromResult($result);
+    }
+
+
+    /**
+     * @param $product
+     * @return bool|mysqli_result false indien de naam van het toe te voegen product niet uniek is
+     */
     public static function insert($product)
     {
-        //TODO controleren op naam als unieke sleutel
+        if(in_array($product->getName(),self::getNames())){
+            return false;
+        }
+
         $query = "INSERT INTO TINY_CLOUDS_PRODUCTS(name, description, image, price, isHighlighted, categoryId, inStock) " .
             "VALUES ('?','?','?',?,?,?,?)";
         $parameters = array(
@@ -61,7 +92,10 @@ class ProductDb
     //product info wijzigen
     public static function update($product)
     {
-        //TODO controleren op naam als unieke sleutel
+        if(in_array($product->getName(),self::getNames())){
+            return false;
+        }
+
         $parameters = array(
             $product->getName(), $product->getDescription(), $product->getImage(), $product->getPrice(), $product->isHighLighted(),
             $product->getCategoryId(), $product->getInStock(), $product->getId()
@@ -89,10 +123,32 @@ class ProductDb
         return self::getConnection()->executeSqlQuery($query,$parameters);
     }
 
+    public static function getCategoryIds(){
+        $result =
+            self::getConnection()->executeSqlQuery('SELECT DISTINCT categoryId FROM TINY_CLOUDS_PRODUCTS');
+        $categoryids = array();
+        for ($index = 0; $index < $result->num_rows;$index++){
+            $categoryids[$index] = $result->fetch_array()['categoryId'];
+        }
+        return $categoryids;
+    }
+
     protected static function convertRowToProduct($dbRow)
     {
         return new Product($dbRow['id'], $dbRow['name'], $dbRow['description'], $dbRow['image'], $dbRow['price'],
-            $dbRow['isHighlighted'], $dbRow['categoryId'], $dbRow['inStock'], new DateTime($dbRow['dateAdded']));
+            (boolean)$dbRow['isHighlighted'], $dbRow['categoryId'], $dbRow['inStock'], new DateTime($dbRow['dateAdded']));
+    }
+
+    protected static function getProductArrayFromResult($result){
+        $resultArray = array();
+
+        for ($index = 0; $index < $result->num_rows; $index++) {
+            $dbRow = $result->fetch_array();
+            $product = self::convertRowToProduct($dbRow);
+            $resultArray[$index] = $product;
+        }
+
+        return $resultArray;
     }
 }
 

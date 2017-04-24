@@ -11,9 +11,9 @@ $values = array();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-
-    require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] .
-        '/WDA/Werkstuk/models/validation/UserRegistrationViewModelValidator.php';
+    define ('ROOT',$_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk');
+    require_once ROOT . '/models/validation/UserRegistrationViewModelValidator.php';
+    require_once ROOT . '/models/database/CRUD/UserDb.php';
 
     $firstName = $_POST['firstName'];
     $lastName = $_POST['lastName'];
@@ -22,11 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $repeatPassword = $_POST['repeatPassword'];
     $email = $_POST['email'];
 
-    //$user = new User(null, $firstName, $lastName, $userName, $password, $email, 0, 0, false);
     $userRegistrationViewModel = new UserRegistrationViewModel(null, $firstName, $lastName, $userName,
-        $password, $email, 0, 0, false, $repeatPassword);
+        $password, $email, null, null, false, $repeatPassword);
 
-    //$uv = new UserValidator($user);
     $urvmValidator = new UserRegistrationViewModelValidator($userRegistrationViewModel);
     $errors = $urvmValidator->getErrors();
     $values = $urvmValidator->getValues();
@@ -40,8 +38,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if ($valid)
-        echo 'ok';
+    if ($valid){
+        $userAdded = false;
+        $user = $urvmValidator->getUser();
+
+        if(UserDb::insertWithoutAddressIds($user)){
+            $userAdded = true;
+            $values = array();
+        }
+
+    }
+
 }
 ?>
 <!DOCTYPE html>
@@ -55,6 +62,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="container">
     <h1>Test User Input</h1>
+    <?php
+    if (isset($userAdded)) {
+        if ($userAdded) {
+            ?>
+            <div class="alert alert-info">User toegevoegd aan database</div><?php
+        } else { ?>
+            <div class="alert alert-danger">User werd niet toegevoegd</div><?php
+        }
+    }
+    ?>
     <form class="form-horizontal" action="./testUser.php" method="post">
         <div class="form-group">
             <label class="control-label col-md-2" for="firstName"> Voornaam:</label>

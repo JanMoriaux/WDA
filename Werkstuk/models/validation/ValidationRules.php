@@ -11,6 +11,16 @@
  * Class ValidationRules
  *
  */
+
+require_once ROOT . '/models/database/CRUD/ProductDb.php';
+require_once ROOT . '/models/database/CRUD/CategoryDb.php';
+require_once ROOT . '/models/database/CRUD/UserDb.php';
+
+/**
+ * Class ValidationRules bevat de validatieregels voor verschillende entities en formulieren
+ * De static functions geven true of false terug als antwoord op een meegegeven parameter. Eigenlijke
+ * foutboodschappen worden in de errors array van een ObjectValidator-subclass geset.
+ */
 class ValidationRules
 {
     //Algemeen
@@ -135,7 +145,6 @@ class ValidationRules
      */
     public static function isValidUserName($userName){
         $regex = '/^[a-zA-Z0-9_-]{3,15}$/';
-        echo preg_match($regex, $userName);
         return preg_match($regex, $userName);
     }
 
@@ -162,8 +171,14 @@ class ValidationRules
         return preg_match($regex, $email);
     }
 
-    //TODO validatie voor unieke username (na database CRUD voor user)
+    public static function isValidCategoryId($id){
+        return in_array($id,CategoryDb::getIds());
+    }
 
+    public static function isUniqueUserName($username){
+        return !in_array($username,UserDb::getUserNames());
+
+    }
 
     //Product
 
@@ -176,6 +191,16 @@ class ValidationRules
     public static function isValidImageFileName($filename){
         $regex = '/\.(jpe?g|png|gif|bmp)$/i';
         return preg_match($regex,$filename);
+    }
+
+    public static function isUniqueProductName($name){
+        return !in_array($name, ProductDb::getNames());
+    }
+
+    //Category
+
+    public static function isUniqueCategoryDescription($description){
+        return !in_array($description,CategoryDb::getAllDescriptions());
     }
 
 

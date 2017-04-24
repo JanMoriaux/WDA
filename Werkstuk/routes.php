@@ -18,18 +18,27 @@ function call($controller, $action){
         case 'Home':
             $controller = new HomeController();
             break;
-        case 'Product':{
+        case 'Product':
             $controller = new ProductController();
+            break;
+        case 'Admin':
+            $controller = new AdminController();
+            break;
+        default:
+            $controller = new HomeController();
+            break;
         }
-    }
-
     $controller->{$action}();
 }
+
+
 
 //lijst van geldige controllers en actions
 $controllers  = array(
     'Home' => ['home','error'],
-    'Product' => ['index','showDetail']
+    'Product' => ['index','showDetail','showCategory'],
+    'User' => ['index'],
+    'Admin' => ['index','productOverview','editProduct','deleteProduct']
     );
 
 //controleren of de controller en action toegestaan zijn

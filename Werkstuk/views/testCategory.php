@@ -5,7 +5,10 @@
  * Date: 20/04/2017
  * Time: 15:39
  */
-require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/validation/CategoryValidator.php';
+define('ROOT',$_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/');
+
+require_once ROOT . '/models/validation/CategoryValidator.php';
+require_once ROOT . '/models/database/CRUD/CategoryDb.php';
 
 $errors = array();
 $values = array();
@@ -29,7 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($valid) {
-        //Todo db insert
+        $categoryAdded = false;
+        if(CategoryDb::insert($category)){
+            $categoryAdded = true;
+            $values= array();
+        }
+
     }
 }
 ?>
@@ -44,6 +52,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container">
     <div class="container">
         <h1>Test Category Input</h1>
+        <?php
+        if (isset($categoryAdded)) {
+            if ($categoryAdded) {
+                ?>
+                <div class="alert alert-info">Categorie toegevoegd aan database</div><?php
+            } else { ?>
+                <div class="alert alert-danger">Categorie werd niet toegevoegd</div><?php
+            }
+        }
+        ?>
         <form class="form-horizontal" action="./testCategory.php" method="post">
             <div class="form-group">
                 <label class="control-label col-md-2" for="description">Beschrijving:</label>

@@ -9,6 +9,7 @@
  * English version of the Database class from the solutions of the Web Development Advanced class workshops (part 4).
  * Original author (dutch version): Frauke Vanderzijpe
  */
+//TODO Exception handling for database classes
 class Database
 {
     protected $servername;

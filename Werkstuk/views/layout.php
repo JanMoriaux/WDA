@@ -15,8 +15,7 @@
     <link href="/WDA/Werkstuk/views/css/bootstrap-theme.min.css" type="text/css" rel="stylesheet"/>
     <link href="/WDA/Werkstuk/views/css/custom.css" type="text/css" rel="stylesheet"/>
 
-    <!-- todo title zetten -->
-    <title>Title</title>
+    <title><?php echo isset($title) ? $title : '';?></title>
 </head>
 <body>
 
@@ -32,14 +31,7 @@
     <div class="row">
 
         <!-- sidebar -->
-        <div class="col-md-3">
-            <p class="lead">Tiny Clouds</p>
-            <div class="list-group">
-                <a href="#" class="list-group-item">Category 1</a>
-                <a href="#" class="list-group-item">Category 2</a>
-                <a href="#" class="list-group-item">Category 3</a>
-            </div>
-        </div>
+        <?php require_once ROOT . '/views/partial/sidebarPartial.php' ?>
         <!-- sidebar -->
 
         <!-- banner -->
@@ -47,7 +39,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="well well-lg">
-                        <h1 class="">Tiny Clouds <?php echo isset($title) ? $title : '';?></h1>
+                        <h1 class=""><?php echo isset($title) ? $title : '';?></h1>
                     </div>
                 </div>
             </div>
@@ -56,7 +48,11 @@
 
             <!-- routing naar page content -->
             <div class="row">
-                <?php require_once ROOT . '/routes.php'; ?>
+                <?php
+                    if(isset($view) && !empty($view)){
+                        require_once $view;
+                    }
+                ?>
             </div>
             <!-- routing -->
 

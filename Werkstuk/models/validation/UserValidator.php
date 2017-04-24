@@ -15,11 +15,22 @@ require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/entities/
 
 class UserValidator extends ObjectValidator
 {
-
+    /**
+     * @var User het object dat gavalideerd wordt
+     */
     protected $user;
 
-    protected $requiredFields = array('firstName', 'lastName', 'userName', 'password', 'email', 'isAdmin');
+    /**
+     * @var array met de namen van de verplichte velden
+     */
+    protected $requiredFields = array('firstName', 'lastName', 'userName', 'password', 'email');
+    /**
+     * @var array met de namen van de velden die als 'name' gevalideerd worden
+     */
     protected $nameFields = array('firstName', 'lastName');
+    /**
+     * @var array met de minimum- en maximumlengten van gerestricteerde veldnamen
+     */
     protected $fieldLengths = array(
         'firstName' => [2, 255],
         'lastName' => [2, 255],
@@ -28,7 +39,10 @@ class UserValidator extends ObjectValidator
         'email' => [3, 254]
     );
 
-    //ctor
+    /**
+     * UserValidator constructor.
+     * @param $user User object dat gevalideerd wordt
+     */
     public function __construct($user)
     {
         $this->setUser($user);
@@ -37,6 +51,12 @@ class UserValidator extends ObjectValidator
     //gaat na of het meegegeven object een User object is
     //indien ja: User validatie
     //indien nee: foutboodschap toevoegen aan eerste element van errors array
+    /**
+     * @param $user User
+     * gaat na of het meegegeven object een User object is
+     * indien ja: User validatie
+     * indien nee: foutboodschap toevoegen aan eerste element van errors array
+     */
     protected function setUser($user)
     {
         if (isset($user) && !empty($user)) {
@@ -51,7 +71,16 @@ class UserValidator extends ObjectValidator
         }
     }
 
-    // initiële waarden van de errors array
+    /**
+     * @return User het User object dat werd gevalideerd
+     */
+    public function getUser(){
+        return $this->user;
+    }
+
+    /**
+     * set de foutboodschappen op lege strings
+     */
     protected function setErrors()
     {
         $this->errors = [
@@ -60,11 +89,12 @@ class UserValidator extends ObjectValidator
             'userName' => '',
             'password' => '',
             'email' => '',
-            'isAdmin' => ''
         ];
     }
 
-    //propertywaarden van het User object worden ingevuld in values array
+    /**
+     * propertywaarden van het User object worden ingevuld in values array
+     */
     protected function setValues()
     {
         $this->values = [
@@ -77,10 +107,14 @@ class UserValidator extends ObjectValidator
         ];
     }
 
+    /**
+     * parent::validate() -> validatie van verplichte-, numerieke-, strikt positieve- en namevelden en lengte van velden
+     * daarna validatie van de User specifieke velden
+     */
     protected function validate()
     {
 
-        //validatie van verplichte-, numerieke-, strikt positieve- en namevelden en lengte van velden
+        //
         parent::validate();
 
 
@@ -91,6 +125,8 @@ class UserValidator extends ObjectValidator
         $this->validatePassword();
         //email
         $this->validateEmailAddress();
+        //is userName uniek?
+        $this->validateUniqueUsername();
     }
 
     protected function validateUserName()
@@ -103,7 +139,6 @@ class UserValidator extends ObjectValidator
 
     protected function validatePassword()
     {
-        //TODO ViewModel validatie voor repeatpasswordField????
         if (empty($this->errors['password']) && !ValidationRules::isValidPassword($this->values['password'])) {
             $this->errors['password'] = $this->errorValues['passwordRegex'];
             $this->values['password'] = '';
@@ -115,6 +150,13 @@ class UserValidator extends ObjectValidator
         if (empty($this->errors['email']) && !ValidationRules::isValidEmailAddress($this->values['email'])) {
             $this->errors['email'] = 'Geen geldig email-adres';
             $this->values['email'] = '';
+        }
+    }
+
+    protected function validateUniqueUsername(){
+        if (empty($this->errors['userName']) && !ValidationRules::isUniqueUserName($this->values['userName'])) {
+            $this->errors['userName'] = sprintf($this->errorValues['userNameAlreadyInDb'],$this->values['userName']);
+            $this->values['userName'] = '';
         }
     }
 

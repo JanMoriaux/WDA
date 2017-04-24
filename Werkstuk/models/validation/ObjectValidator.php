@@ -1,7 +1,8 @@
 <?php
 
 
-require_once('ValidationRules.php');
+//require_once('ValidationRules.php');
+require_once ROOT . '/models/validation/ValidationRules.php';
 
 /**
  * Created by PhpStorm.
@@ -12,9 +13,13 @@ require_once('ValidationRules.php');
 abstract class ObjectValidator
 {
     /* @var array */
-    //TODO extract
-    //waarden van de foutboodschappen
+
+    //TODO extract $errorvalues naar een globale constante
+    /**
+     * @var array met de waarden van foutboodschappen
+     */
     protected $errorValues = array(
+        //foutboodschappen voor algemene object validatie
         'object' => 'Geen geldig object',
         'required' => 'Verplicht veld',
         'numeric' => 'Moet een getal zijn',
@@ -23,58 +28,103 @@ abstract class ObjectValidator
         'minMaxFloat' => 'Moet groter of gelijk aan %.2f en kleiner of gelijk aan %.2f zijn',
         'length' => 'Bevat minimum %d en maximum %d tekens',
         'name' => 'Bevat ongeldige tekens',
+        //foutboodschappen voor adresvalidatie
         'bus' => 'Bestaat uit maximaal 3 letters',
+        //foutboodschappen voor user validatie
         'userNameRegex' => 'Mag enkel bestaan uit cijfers, letters, underscores (_) en koppeltekens',
         'passwordRegex' => 'Moet bestaan uit een combinatie van cijfers, letters, !, #, $, %, &, en ?',
         'emailRegex' => 'Geen geldig email-adres',
+        'userNameAlreadyInDb' => '"%s" is niet meer beschikbaar',
+        //foutboodschappen voor product validatie
         'image' => 'Ongeldige bestandsnaam. Enkel afbeeldingen toegelaten.',
-        'passwordNotSame' => 'Wachtwoord waarden komen niet overeen'
+        'passwordNotSame' => 'Wachtwoord waarden komen niet overeen',
+        'categoryNoExist' => 'Deze category bestaat niet in de database',
+        'productAlreadyInDb' => 'Er bestaat al een product met deze naam',
+        //foutboodschappen voor category validatie
+        'categoryAlreadyInDb' => 'Categorie met naam "%s" bestaat al'
     );
 
-    //bevat de foutboodschappen voor verschillende formuliervelden
+    // De volgende properties zijn arrays met namen van velden die op een bepaalde
+    // manier moeten gevalideerd worden. Deze arrays krijgen in elk van de verschillende
+    // 'Validator' klassen andere elementen.
+    /**
+     * @var array bevat eventuele foutboodschappen voor formuliervelden
+     */
     protected $errors = array();
-    //bevat de waarden van de verschillende formuliervelden
+    /**
+     * @var array bevat de waarden van de verschillende formuliervelden
+     */
     protected $values = array();
-    //namen van de verplichte formuliervelden
+    /**
+     * @var array bevat de namen van verplichte formuliervelden
+     */
     protected $requiredFields = array();
-    //namen van de numerieke formuliervelden
+    /**
+     * @var array bevat de namen van de numerieke formuliervelden
+     */
     protected $numericFields = array();
-    //namen van de formuliervelden die als naam worden gevalideerd (bv. voornaam, achternaam, straat,...'
+    /**
+     * @var array bevat de namen van de formuliervelden die als naam worden gevalideerd (bv. voornaam, achternaam, straat,...'
+     */
     protected $nameFields = array();
-    //namen en minimum/maximum waarden van de velden met een gerestricteerde lengte
+    /**
+     * @var array bevat de namen en minimum/maximum waarden van de velden met een gerestricteerde lengte     */
     protected $fieldLengths = array();
-    //namen van velden met een strikt positief geheel getal als waarde
+    /**
+     * @var array bevat de namen van velden met een strikt positief geheel getal als waarde
+     */
     protected $strictPosInts = array();
-    //namen en minimum/maximumwaarden van velden met een gerestricteerde waarde
+    /**
+     * @var array bevat de namen en minimum/maximumwaarden van velden met een gerestricteerde waarde
+     */
     protected $fieldBoundaries = array();
 
-    //getters en setters
+    /**
+     * @return array
+     */
     public function getErrors(){
         return $this->errors;
     }
+
+    /**
+     * @return void
+     */
     protected abstract function setErrors();
 
+    /**
+     * @return array
+     */
     public function getValues(){
         return $this->values;
     }
 
+    /**
+     * @return void
+     */
     protected abstract function setValues();
 
-    //zet alle foutboodschappen terug op ''
-    //zet alle values gelijk aan de propertywaarden van het te valideren object
-    //valideert de values en update de foutboodschappen en values (fout => value op '')
+    /**
+     * zet alle foutboodschappen terug op ''
+     * zet alle values gelijk aan de propertywaarden van het te valideren object
+     * valideert de values en update de foutboodschappen en values (fout => value op '')
+     */
     protected function updateErrorsAndValues(){
         $this->setErrors();
         $this->setValues();
         $this->validate();
     }
-    //validatie van de verplichte velden
-    //validatie van de numerieke velden
-    //validatie van de 'naam' velden
-    //validatie van de velden met een gerestricteerde lengte
-    //validatie van de velden met strikt positief geheel getal als waarde
-    //validate van velden met waarde binnen bepaalde grenzen
-    //rest van de validatie gebeurt in subklassen
+    //
+
+
+    /**
+     * validatie van de verplichte velden
+     * validatie van de numerieke velden
+     * validatie van de 'naam' velden
+     * validatie van de velden met een gerestricteerde lengte
+     * validatie van de velden met strikt positief geheel getal als waarde
+     * validate van velden met waarde binnen bepaalde grenzen
+     * rest van de validatie gebeurt in subklassen
+     */
     protected function validate(){
         $this->validateRequiredFields();
         $this->validateNumericFields();

@@ -10,7 +10,7 @@ define('ROOT',__DIR__);
 
 //TODO reference http://requiremind.com/a-most-simple-php-mvc-beginners-tutorial/
 
-//TODO delete require_once ROOT . '/models/database/connection/DatabaseFactory.php';
+
 
 if(isset($_GET['controller']) && isset($_GET['action'])){
     $controller = $_GET['controller'];
@@ -20,4 +20,4 @@ if(isset($_GET['controller']) && isset($_GET['action'])){
     $action = 'home';
 }
 
-require_once ROOT . '/views/layout.php';
+require_once ROOT . '/routes.php';

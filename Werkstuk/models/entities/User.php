@@ -145,7 +145,7 @@ class User
     /**
      * @return int
      */
-    public function getFacturationAddressId()    {
+    public function getFacturationAddressId(){
         return $this->facturationAddressId;
     }
 
