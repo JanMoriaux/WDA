@@ -14,10 +14,10 @@
             <th class="col-md-1">Naam</th>
             <th class="col-md-1 text-right">Prijs</th>
             <th class="col-md-1 text-center">Uitgelicht</th>
-            <th class="col-md-1 text-right">Stock</th>
-            <th class="col-md-1 text-right">Toegevoegd</th>
-            <th class="col-md-1">Wijzig</th>
-            <th class="col-md-1">Verwijder</th>
+            <th class="col-md-1 text-center">Stock</th>
+            <th class="col-md-1 text-center">Detail</th>
+            <th class="col-md-1 text-center">Wijzig</th>
+            <th class="col-md-1 text-center">Verwijder</th>
         </tr>
         </thead>
         <tbody>
@@ -31,11 +31,13 @@
                 <td class="col-md-1 text-center">
                     <?php echo $product->isHighLighted() ?
                         '<span class="glyphicon glyphicon-ok"></span>' : ''; ?></td>
-                <td class="col-md-1 text-right"><?php echo $product->getInStock(); ?></td>
-                <td class="col-md-1 text-right">
-                    <?php echo date('d/m/Y',
-                        $product->getDateAdded()->getTimestamp());
-                    $product->getDateAdded(); ?></td>
+                <td class="col-md-1 text-center"><?php echo $product->getInStock(); ?></td>
+                <td class="col-md-1 text-center">
+                    <a class="text-info"
+                       href="/WDA/Werkstuk/index.php?controller=Admin&action=showProduct&id=<?php echo $product->getId(); ?>"
+                       title="/WDA/Werkstuk/index.php?controller=Admin&action=showProduct&id=<?php echo $product->getId(); ?>">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </a></td>
                 <td class="col-md-1 text-center">
                     <a class="text-info"
                        href="/WDA/Werkstuk/index.php?controller=Admin&action=editProduct&id=<?php echo $product->getId(); ?>"

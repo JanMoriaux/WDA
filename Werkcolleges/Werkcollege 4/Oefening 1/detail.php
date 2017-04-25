@@ -45,7 +45,7 @@ if (isset($_GET['bookId']) && !empty($_GET['bookId'])) {
         $error = $e->getMessage();
     }
 } else {
-    header('location: ./home.php');
+    header('location: ./index.php');
 }
 ?>
 <!DOCTYPE html>

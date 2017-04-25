@@ -11,7 +11,7 @@ class PageController
     public function home(){
         $first_name = 'Jon';
         $last_name = 'Snow';
-        require_once('views/pages/home.php');
+        require_once('views/pages/index.php');
     }
 
     public function error(){

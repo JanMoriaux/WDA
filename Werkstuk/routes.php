@@ -9,12 +9,14 @@
 //http://requiremind.com/a-most-simple-php-mvc-beginners-tutorial/
 
 
-function call($controller, $action){
+function call($controller, $action)
+{
     //Controller class require
+    require_once ROOT . '/controllers/HomeController.php';
     require_once ROOT . '/controllers/' . $controller . 'Controller.php';
 
     //nieuwe instantie van de Controller
-    switch($controller){
+    switch ($controller) {
         case 'Home':
             $controller = new HomeController();
             break;
@@ -24,32 +26,33 @@ function call($controller, $action){
         case 'Admin':
             $controller = new AdminController();
             break;
-        default:
-            $controller = new HomeController();
+        case 'User':
+            $controller = new UserController();
             break;
-        }
+
+    }
     $controller->{$action}();
 }
 
 
-
 //lijst van geldige controllers en actions
-$controllers  = array(
-    'Home' => ['home','error'],
-    'Product' => ['index','showDetail','showCategory'],
-    'User' => ['index'],
-    'Admin' => ['index','productOverview','editProduct','deleteProduct']
-    );
+$controllers = array(
+    'Home' => ['index', 'error'],
+    'Product' => ['index', 'showDetail', 'showCategory'],
+    'User' => ['login', 'logout'],
+    'Admin' => ['index', 'productOverview', 'editProduct',
+        'showProduct', 'insertProduct', 'deleteProduct','categoryOverview','editCategory','insertCategory']
+);
 
 //controleren of de controller en action toegestaan zijn
 //indien niet, wordt de gebruiker naar de error page doorgestuurd
-if(array_key_exists($controller, $controllers)){
-    if(in_array($action,$controllers[$controller])){
-        call($controller,$action);
-    } else{
-        call('Home','error');
+if (array_key_exists($controller, $controllers)) {
+    if (in_array($action, $controllers[$controller])) {
+        call($controller, $action);
+    } else {
+        call('Home', 'error');
     }
-} else{
-    call('Home','error');
+} else {
+    call('Home', 'error');
 }
 ?>

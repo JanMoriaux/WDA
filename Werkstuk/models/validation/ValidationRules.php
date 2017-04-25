@@ -174,7 +174,7 @@ class ValidationRules
     public static function isValidCategoryId($id){
         return in_array($id,CategoryDb::getIds());
     }
-
+    //TODO niet voor update
     public static function isUniqueUserName($username){
         return !in_array($username,UserDb::getUserNames());
 
@@ -193,14 +193,65 @@ class ValidationRules
         return preg_match($regex,$filename);
     }
 
-    public static function isUniqueProductName($name){
-        return !in_array($name, ProductDb::getNames());
+    /**
+     * @param $name de naam van het product
+     * @param $id de is van het product
+     * @return bool false indien niet uniek, true indien unieke productnaam
+     */
+    public static function isUniqueProductName($name, $id){
+        //indien $id null is (= we doen een insert van een product)
+        //controleren of de naam van het product al voorkomt in db
+        if($id === null)
+            return !in_array($name, ProductDb::getNames());
+
+        //indien $id niet gelijk is aan null (= we doen een db update)
+        //controleren of er een product is met een andere id en dezelfde naam
+        foreach(ProductDB::getAll() as $otherProduct){
+            if($id !== $otherProduct->getId() && $name === $otherProduct->getName()){
+                return false;
+            }
+        }
+        return true;
     }
 
     //Category
 
-    public static function isUniqueCategoryDescription($description){
+    /**
+     * @param $description
+     * @return bool
+     * controleren op unieke category description
+     */
+    public static function isUniqueCategoryDescription($description,$id){
+        //indien $id null is (= we doen een insert van een product)
+        //controleren of de omschrijving van de Category al voorkomt in db
+        if($id === null)
+            return !in_array($description, CategoryDb::getAllDescriptions());
+
+        //indien $id niet gelijk is aan null (= we doen een db update)
+        //controleren of er een Category is met een andere id en dezelfde omschrijving
+        foreach(CategoryDb::getAll() as $otherCategory){
+            if($id !== $otherCategory->getId() && $description === $otherCategory->getDescription()){
+                return false;
+            }
+        }
+
+        return true;
+
+
+
+
         return !in_array($description,CategoryDb::getAllDescriptions());
+    }
+
+    //LoginViewModel
+
+    /**
+     * @param $username
+     * @param $password
+     * @return bool|User false indien user niet in database of de user indien wel
+     */
+    public static function isAuthorizedUser($username,$password){
+        return UserDb::getByUsernameAndPassword($username,$password);
     }
 
 

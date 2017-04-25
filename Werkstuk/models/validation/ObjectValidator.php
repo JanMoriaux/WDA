@@ -35,6 +35,7 @@ abstract class ObjectValidator
         'passwordRegex' => 'Moet bestaan uit een combinatie van cijfers, letters, !, #, $, %, &, en ?',
         'emailRegex' => 'Geen geldig email-adres',
         'userNameAlreadyInDb' => '"%s" is niet meer beschikbaar',
+        'noUser' => 'Ongeldige combinatie wachtwoord en gebruikersnaam',
         //foutboodschappen voor product validatie
         'image' => 'Ongeldige bestandsnaam. Enkel afbeeldingen toegelaten.',
         'passwordNotSame' => 'Wachtwoord waarden komen niet overeen',

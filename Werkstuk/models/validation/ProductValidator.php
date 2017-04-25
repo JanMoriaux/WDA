@@ -63,6 +63,7 @@ class ProductValidator extends ObjectValidator
     protected function setErrors()
     {
         $this->errors = array(
+            'id' => '',
             'name' => '',
             'description' => '',
             'image' => '',
@@ -89,11 +90,12 @@ class ProductValidator extends ObjectValidator
         }
 
         $this->values = array(
+            'id' => $this->product->getId(),
             'name' => $this->product->getName(),
             'description' => $this->product->getDescription(),
             'image' => $this->product->getImage(),
             'price' => $this->product->getPrice(),
-            'highLighted' => $this->product->isHighLighted(),
+            'highLighted' => (int)$this->product->isHighLighted(),
             'categoryId' => $this->product->getCategoryId(),
             'inStock' => $this->product->getInStock()
         );
@@ -134,7 +136,7 @@ class ProductValidator extends ObjectValidator
 
     protected function validateUniqueProductName(){
         if(empty($this->errors['name']) &&
-            !ValidationRules::isUniqueProductName($this->product->getName())){
+            !ValidationRules::isUniqueProductName($this->values['name'],$this->values['id'])){
             $this->errors['name'] = $this->errorValues['productAlreadyInDb'];
             $this->values['name'] = '';
         }

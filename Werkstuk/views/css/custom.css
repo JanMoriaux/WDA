@@ -1,9 +1,15 @@
+#mainNavBar{
+    height: 78px;
+}
+
+
+
 .error-label {
     color: red;
 }
 
 body {
-    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    padding-top: 80px; /* padding voor .navbar-fixed-top.*/
 }
 
 /*
@@ -54,8 +60,8 @@ footer {
     margin: 50px 0;
 }
 
-/*Admin/productOverview*/
-#admin_product_table td{
+/*Admin/productOverview Admin/categoryOverview*/
+#admin_product_table td, #admin_category_table td{
     overflow: hidden;
     white-space: nowrap;
 }
@@ -63,4 +69,9 @@ footer {
 /*Admin/editProduct*/
 .dropdown,.form-control,.btn-default, input[type="radio"]{
     margin-bottom: 2em;
+}
+/*Admin/deleteProduct*/
+.img-rounded{
+    width: 100%;
+
 }

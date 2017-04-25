@@ -107,8 +107,9 @@ class CategoryDb extends Database
     public static function insert($category)
     {
         //Controleren of category description al voor komt in de database
-        if(!(in_array($category->getDescription(),self::getAllDescriptions())))
+        if((in_array($category->getDescription(),self::getAllDescriptions()))){
             return false;
+        }
 
         $query = "INSERT INTO TINY_CLOUDS_CATEGORIES(description) VALUES ('?')";
         $parameters = array($category->getDescription());
@@ -122,10 +123,13 @@ class CategoryDb extends Database
      * Waarden van category in data base wijzigen
      */
     public static function update($category){
-
-        //Controleren of category description al voor komt in de database
-        if(!(in_array($category->getDescription(),self::getAllDescriptions())))
-            return false;
+        //controleren of er al aan category is met een ander id en zelfde omschrijving
+        foreach(CategoryDb::getAll() as $otherCategory){
+            if($category->getId() !== $otherCategory->getId() &&
+                $category->getDescription() === $otherCategory->getDescription()){
+                return false;
+            }
+        }
 
         //Category
         $query = "UPDATE TINY_CLOUDS_CATEGORIES SET description = '?' WHERE id = ?";

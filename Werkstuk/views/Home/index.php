@@ -8,7 +8,9 @@
 
 ?>
 
-Home page
+<div class="col-md-12">
+    <h3>Welkom op de thuispagina</h3>
+</div>
 
 
 

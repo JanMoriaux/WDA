@@ -27,6 +27,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     }
 }
 
-header("Location: home.php?message=$message");
+header("Location: index.php?message=$message");
 
 ?>

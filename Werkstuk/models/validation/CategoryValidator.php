@@ -30,12 +30,15 @@ class CategoryValidator extends ObjectValidator
 
     protected function setErrors()
     {
-        $this->errors = array('description' => '');
+        $this->errors = array(
+            'id' => '',
+            'description' => '');
     }
 
     protected function setValues()
     {
         $this->values= array(
+            'id' => $this->category->getId(),
             'description' => $this->category->getDescription()
         );
     }
@@ -58,7 +61,7 @@ class CategoryValidator extends ObjectValidator
 
     protected function validateUniqueCategoryDescription(){
         if(empty($this->errors['description']) &&
-            !ValidationRules::isUniqueCategoryDescription($this->category->getDescription())){
+            !ValidationRules::isUniqueCategoryDescription($this->values['description'],$this->values['id'])){
             $this->errors['description'] =
                 sprintf($this->errorValues['categoryAlreadyInDb'],$this->category->getDescription());
             $this->values['description'] = '';

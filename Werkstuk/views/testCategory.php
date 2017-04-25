@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <div class="container">
     <div class="container">
-        <h1>Test Category Input</h1>
+        <h3>Test Category Input</h3>
         <?php
         if (isset($categoryAdded)) {
             if ($categoryAdded) {

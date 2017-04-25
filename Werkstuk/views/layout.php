@@ -15,14 +15,23 @@
     <link href="/WDA/Werkstuk/views/css/bootstrap-theme.min.css" type="text/css" rel="stylesheet"/>
     <link href="/WDA/Werkstuk/views/css/custom.css" type="text/css" rel="stylesheet"/>
 
-    <title><?php echo isset($title) ? $title : '';?></title>
+    <title><?php echo isset($title) ? $title : ''; ?></title>
 </head>
 <body>
 
 <!-- navigatie -->
 <header>
-
     <?php require_once ROOT . '/views/partial/mainNavPartial.php' ?>
+
+    <?php //bericht in verband met geslaagde login
+    if (isset($userLoggedIn)) {
+        if (!$userLoggedIn) { ?>
+            <div class="col-md-12">
+                <div class="alert alert-danger col-md-9">Probleem met database: niet ingelogd!</div>
+            </div>
+        <?php }
+    } ?>
+
 
 </header>
 <!-- navigatie -->
@@ -39,22 +48,22 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="well well-lg">
-                        <h1 class=""><?php echo isset($title) ? $title : '';?></h1>
+                        <h1 class="">Tiny Clouds</h1>
                     </div>
                 </div>
             </div>
             <!-- banner -->
 
 
-            <!-- routing naar page content -->
+            <!-- view -->
             <div class="row">
                 <?php
-                    if(isset($view) && !empty($view)){
-                        require_once $view;
-                    }
+                if (isset($view) && !empty($view)) {
+                    require_once $view;
+                }
                 ?>
             </div>
-            <!-- routing -->
+            <!-- view -->
 
         </div>
     </div>

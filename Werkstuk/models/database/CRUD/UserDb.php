@@ -49,6 +49,26 @@ class UserDb
     }
 
     /**
+     * @param $username
+     * @param $password
+     * @return bool|User de user met $username en $password of false indien niet gevonden
+     */
+    public static function getByUsernameAndPassword($username,$password)
+    {
+        $query = "SELECT * FROM TINY_CLOUDS_USERS WHERE username='?' AND password='?'";
+        $parameters = array($username,$password);
+        $result = self::getConnection()->executeSqlQuery($query, $parameters);
+
+        if ($result->num_rows == 1) {
+            $user = self::convertRowToUser($result->fetch_array());
+            return $user;
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
      * @return array met alle userName-waarden in de users tabel
      */
     public static function getUserNames()
@@ -79,12 +99,12 @@ class UserDb
         }
         //TODO address FK constraints if not null
 
-            $parameters = array(
-                $user->getFirstName(), $user->getLastName(), $user->getUserName(), $user->getPassword(),
-                $user->getEmail(),(int)$user->isAdmin());
+        $parameters = array(
+            $user->getFirstName(), $user->getLastName(), $user->getUserName(), $user->getPassword(),
+            $user->getEmail(), (int)$user->isAdmin());
         $query =
             "INSERT INTO TINY_CLOUDS_USERS(firstName, lastName, userName, password, email, facturationAdressId, deliveryAddressId,isAdmin) " .
-            "VALUES ('?','?','?','?','?',null,null,?)";
+            "VALUES ('?','?','?','?','?',NULL,NULL,?)";
         //TODO password hash
 
 

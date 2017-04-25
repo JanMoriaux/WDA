@@ -25,22 +25,25 @@
         else if (isset($adminfunctions) && $adminfunctions) { ?>
             <a class="list-group-item"
                href="/WDA/Werkstuk/index.php?controller=Admin&action=productOverview"
-               title="/WDA/Werkstuk/index.php?controller=Admin&action=productOverview">Overzicht producten</a>
+               title="/WDA/Werkstuk/index.php?controller=Admin&action=productOverview">Product Overzicht</a>
             <a class="list-group-item"
-               href="#">Toevoegen producten</a>
+               href="/WDA/Werkstuk/index.php?controller=Admin&action=insertProduct"
+               title="/WDA/Werkstuk/index.php?controller=Admin&action=insertProduct">Product Toevoegen</a>
             <a class="list-group-item"
-                    href="#">Overzicht categorieën</a>
+               href="/WDA/Werkstuk/index.php?controller=Admin&action=categoryOverview"
+               title="/WDA/Werkstuk/index.php?controller=Admin&action=categoryOverview">Categorie Overzicht</a>
             <a class="list-group-item"
-                    href="#">Toevoegen categorieën</a>
+               href="/WDA/Werkstuk/index.php?controller=Admin&action=insertCategory"
+               title="/WDA/Werkstuk/index.php?controller=Admin&action=insertCategory">Categorie Toevoegen</a>
             <a class="list-group-item"
-               href="#">Overzicht bestellingen</a>
+               href="#">Overzicht bestellingen TODO</a>
             <a class="list-group-item"
-               href="#">Beheerder toevoegen</a>
+               href="#">Beheerder toevoegen TODO</a>
 
         <?php } ?>
 
 
-        <!-- TODO andere sidebar functies -->
+        <!-- TODO andere sidebar functies ????-->
     </div><!-- div.listgroup -->
 </div><!-- div.col md 3 -->
 

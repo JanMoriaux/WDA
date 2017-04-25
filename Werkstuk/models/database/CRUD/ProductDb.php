@@ -76,6 +76,7 @@ class ProductDb
      */
     public static function insert($product)
     {
+        //productnaam moet uniek zijn
         if(in_array($product->getName(),self::getNames())){
             return false;
         }
@@ -89,11 +90,19 @@ class ProductDb
         return self::getConnection()->executeSqlQuery($query, $parameters);
     }
 
-    //product info wijzigen
+    /**
+     * Product informatie wijzigen
+     * @param $product Product
+     * @return bool|mysqli_result false indien productnaam overeenkomt met die van een ander product
+     */
     public static function update($product)
     {
-        if(in_array($product->getName(),self::getNames())){
-            return false;
+        //productnaam moet uniek zijn
+        //alle producten met andere id dan de id van de meegegeven parameter worden gecontroleerd
+        foreach(self::getAll() as $otherProduct){
+            if($product->getId() !== $otherProduct->getId() && $product->getName() === $otherProduct->getName()){
+                return false;
+            }
         }
 
         $parameters = array(

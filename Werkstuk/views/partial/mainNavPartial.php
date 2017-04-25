@@ -5,9 +5,10 @@
  * Date: 22/04/2017
  * Time: 22:16
  */
+require_once ROOT . '/models/entities/User.php';
 ?>
 <!-- navigatie -->
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top" id="mainNavBar">
     <div class="container">
         <!-- navbar brand en links collapse-->
         <div class="navbar-header">
@@ -31,6 +32,35 @@
                     <a href="#">Contact</a>
                 </li>
             </ul>
+            <?php
+            //loginveld indien geen user aangemeld
+            //is admin aangelogd?
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            if (!isset($_SESSION['user'])) { ?>
+                <form class="navbar-form navbar-right" method="post"
+                      action="/WDA/Werkstuk/index.php?controller=User&action=login">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="userName" placeholder="Gebruikersnaam">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password" placeholder="Wachtwoord">
+                    </div>
+                    <button type="submit" class="btn btn-default">Aanmelden</button>
+                </form>
+
+            <?php } else { ?>
+                <ul class="nav navbar-nav navbar-right">
+                    <p class="navbar-text">Ingelogd als <?php echo $_SESSION['user']->getUserName(); ?></p>
+                    </li>
+                    <li>
+                        <a class=""
+                           href="/WDA/Werkstuk/index.php?controller=User&action=logout">Afmelden</a>
+                    </li>
+                </ul>
+
+            <?php } ?>
         </div>
         <!-- /.navbar-collapse -->
     </div>

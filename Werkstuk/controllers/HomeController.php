@@ -8,9 +8,9 @@
  */
 class HomeController
 {
-    public function home(){
+    public function index(){
         $title = 'Thuispagina';
-        $view = ROOT . '/views/Home/home.php';
+        $view = ROOT . '/views/Home/index.php';
 
         require_once ROOT . '/views/layout.php';
 
