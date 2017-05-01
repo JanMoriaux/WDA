@@ -10,10 +10,10 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php'; ?>
 
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 <!-- berichten in verband met product verwijderen -->
-<?php if (!isset($productDeleted)) { ?>
-    <div class="alert alert-warning col-md-12">
-        Bent u zeker dat u het volgende product wil verwijderen?
-    </div>
+<?php if (!isset($productDeleted) && $product) { ?>
+
+    <h3>Product verwijderen: <?php echo $product->getName(); ?>?</h3>
+
 <?php } else if (!$productDeleted) { ?>
     <div class="alert alert-warning col-md-12">
         Probleem met de database: product niet verwijderd!
@@ -26,7 +26,7 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php'; ?>
 
     <!-- product detail -->
 
-<?php require_once ROOT . '/views/Admin/showProduct.php'; ?>
+<?php require_once ROOT . '/views/partial/adminProductDetailPartial.php'; ?>
 
     <!-- verwijder post form enkel tonen indien product niet werd verwijderd -->
 <?php if (!isset($productDeleted)) { ?>

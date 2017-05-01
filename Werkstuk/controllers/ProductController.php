@@ -21,6 +21,7 @@ class ProductController
 
         //sidebar en title
         $categorySidebar = true;
+        $allCategories = true;
         $title = 'Alle Producten';
 
 
@@ -59,12 +60,14 @@ class ProductController
      * GET: verwacht url van de vorm ?controller=Product&action=showCategory&id=x
      */
     public function showCategory(){
-        //indien geen id redirect naar error page
-        if(!isset($_GET['id']))
-            return call('Home','error');
+        //indien geen id tonen we alle producten
+        if(!isset($_GET['id']) || !$_GET['id'])
+            return call('Product','index');
 
         //anders alle producten met categoryId = id ophalen
-        $products = ProductDb::getByCategoryId($_GET['id']);
+        $categoryId = $_GET['id'];
+        $products = ProductDb::getByCategoryId($categoryId);
+
 
         //title en sidebar
         $categorySidebar = true;

@@ -11,6 +11,7 @@
 <head>
     <meta charset="utf-8">
 
+    <link href='//fonts.googleapis.com/css?family=Annie Use Your Telescope' rel='stylesheet'>
     <link href="./views/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
     <link href="./views/css/bootstrap-theme.min.css" type="text/css" rel="stylesheet"/>
     <link href="./views/css/custom.css" type="text/css" rel="stylesheet"/>

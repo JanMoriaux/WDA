@@ -8,7 +8,7 @@
 
 if (count($products) > 0) {
     foreach ($products as $product) {
-        include ROOT . '/views/partial/productOverviewPartial.php';
+        include ROOT . '/views/partial/productThumbnailPartial.php';
     }
 } else { ?>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

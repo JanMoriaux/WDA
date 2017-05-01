@@ -7,8 +7,8 @@
  */ ?>
 
 <div class="col-md-12">
+    <h3>Gelieve aan te melden als beheerder om verder te gaan</h3>
     <form class="form" method="post" action="index.php?controller=Admin&action=index">
-        <h2>Gelieve aan te melden als beheerder om verder te gaan</h2>
 
         <?php require_once ROOT . '/views/partial/loginFormPartial.php' ?>
 

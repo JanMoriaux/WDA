@@ -8,7 +8,7 @@
 require_once ROOT . '/models/entities/User.php';
 ?>
 <!-- navigatie -->
-<nav class="navbar navbar-inverse navbar-fixed-top" id="mainNavBar">
+<nav class="navbar navbar-fixed-top" id="mainNavBar">
     <div class="container">
         <!-- navbar brand en links collapse-->
         <div class="navbar-header">

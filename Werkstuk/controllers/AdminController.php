@@ -16,6 +16,9 @@ require_once ROOT . '/models/validation/CategoryValidator.php';
 
 class AdminController
 {
+    //TODO necessary?
+    protected $currentController = "Admin";
+
     //GET index.php?controller=Admin&action=index
     public function index()
     {
@@ -46,27 +49,18 @@ class AdminController
             $values = $loginViewModelValidator->getValues();
 
             //foutboodschappen controleren en user opvragen indien valid
-            $valid = true;
-            foreach ($errors as $error) {
-                if ($error !== '') {
-                    $valid = false;
-                    break;
-                }
-            }
+            $valid = $this->isValidPost($errors);
 
             if ($valid) {
-                $userLoggedIn = false;
-
                 if ($user = UserDb::getByUsernameAndPassword($values['userName'], $values['password'])) {
                     //nieuwe sessie starten indien we hiervoor met een andere gebruikersnaam waren ingelogd
                     session_unset();
                     session_destroy();
                     session_start();
 
-
+                    //nieuwe user
                     $_SESSION['user'] = $user;
                     $_SESSION['admin'] = $user->isAdmin();
-                    $userLoggedIn = true;
                 }
             }
         }
@@ -92,6 +86,9 @@ class AdminController
         if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
             call('Admin', 'index');
 
+        //TODO test
+        $currentAction = "productOverview";
+
         //title sidebar zetten
         $title = "Overzicht producten";
         $adminfunctions = true;
@@ -115,13 +112,14 @@ class AdminController
             call('Admin', 'index');
 
         //zetten van title en sidebar
-        $title = "Detail Product ";
+        $title = "Detail Product:";
         $adminfunctions = true;
 
+        $product = null;
         //model is product met bepaald id
         if (isset($_GET['id']) && !empty($_GET['id'])) {
             if ($product = ProductDb::getById($_GET['id'])) {
-                $title = $title . $product->getId();
+                $title = $title . $product->getName();
             }
         }
 
@@ -145,7 +143,7 @@ class AdminController
         $currentAction = 'editProduct';
 
         //title sidebar zetten
-        $title = "Wijzig Product";
+        $title = "Wijzig Product: ";
         $adminfunctions = true;
 
 
@@ -159,9 +157,9 @@ class AdminController
                 //product met id uit de database halen
                 if ($product = ProductDb::getById($_GET['id'])) {
                     //productId in title
-                    $title = $title . ' ' . $product->getId();
+                    $title = $title . ' ' . $product->getName();
 
-                    //errors (normaal allemaal lege waarden) en values van ons product kunnen uit ProductValidator
+                    //values van ons product kunnen uit ProductValidator
                     //worden gehaald en ingevuld worden in de form
                     $pv = new ProductValidator($product);
 
@@ -177,18 +175,12 @@ class AdminController
 
             $product = $this->getProductFromPost();
 
-            //errors an values worden geset door ProductValidator
+            //errors en values worden geset door ProductValidator
             $pv = new ProductValidator($product);
             $errors = $pv->getErrors();
             $values = $pv->getValues();
 
-            $valid = true;
-            foreach ($errors as $error) {
-                if ($error != '') {
-                    $valid = false;
-                    break;
-                }
-            }
+            $valid = $this->isValidPost($errors);
 
             if ($valid) {
                 $productUpdated = false;
@@ -199,7 +191,6 @@ class AdminController
                 $target = $targetDir . $_FILES['image']['name'];
                 $source = $_FILES['image']['tmp_name'];
                 if (move_uploaded_file($source, $target)) {
-
                     //wanneer image bestand is toegevoegd kunnen we het product aanpassen
                     if (ProductDb::update($product)) {
                         $productUpdated = true;
@@ -249,13 +240,7 @@ class AdminController
 
             //indien geen foutboodschappen is het product valid en wordt het
             //toegevoegd aan db
-            $valid = true;
-            foreach ($errors as $error) {
-                if ($error != '') {
-                    $valid = false;
-                    break;
-                }
-            }
+            $valid = $this->isValidPost($errors);
 
             if ($valid) {
                 $productInserted = false;
@@ -292,12 +277,13 @@ class AdminController
 
         //title en sidebar zetten
         $adminfunctions = true;
-        $title = 'Verwijder Product ';
+        $title = 'Verwijder Product: ';
+
         $product = null;
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             if (isset($_GET['id']) && $_GET['id']) {
                 if ($product = ProductDb::getById($_GET['id'])) {
-                    $title = $title . $product->getId();
+                    $title = $title . $product->getName();
                 }
             }
         } else {
@@ -328,6 +314,8 @@ class AdminController
         if (!isset($_SESSION['admin']) || !$_SESSION['admin']) {
             call('Admin', 'index');
         }
+
+        $currentAction = 'categoryOverview';
 
         //title and sidebar zetten
         $title = 'Overzicht Categorieën';
@@ -393,15 +381,7 @@ class AdminController
             $values = $cv->getValues();
             $errors = $cv->getErrors();
 
-
-            $valid = true;
-            foreach ($errors as $error) {
-                if ($error != '') {
-                    $valid = false;
-                    break;
-                }
-            }
-
+            $valid = $this->isValidPost($errors);
             if ($valid) {
                 $categoryUpdated = false;
                 if (CategoryDb::update($category)) {
@@ -453,13 +433,7 @@ class AdminController
 
             //indien geen foutboodschappen is het Category valid en wordt ze
             //toegevoegd aan db
-            $valid = true;
-            foreach ($errors as $error) {
-                if ($error != '') {
-                    $valid = false;
-                    break;
-                }
-            }
+            $valid = $this->isValidPost($errors);
 
             if ($valid) {
                 $categoryAdded = false;
@@ -478,7 +452,8 @@ class AdminController
 
     //GET /index.php?controller=Admin&action=deleteCategory&id=x
     //POST /index.php?controller=Admin&action=deleteCategory
-    public function deleteCategory(){
+    public function deleteCategory()
+    {
         //is admin aangelogd?
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -499,22 +474,20 @@ class AdminController
                 if ($category = CategoryDb::getById($_GET['id'])) {
                     $title = $title . $category->getDescription();
                 }
+                if (in_array($_GET['id'], ProductDb::getCategoryIds())) {
+                    $errorMessage = 'Er bestaan nog producten uit deze categorie in de database';
+                }
             }
             //POST verwijdert categories uit de database
-            //tenzij nog niet wordt voldaan aan FK in de products database
         } else {
             if (isset($_POST['id']) && $_POST['id']) {
                 $categoryDeleted = false;
-                $errorMessage = false;
 
                 if ($category = ProductDb::getById($_POST['id'])) {
                     $title = $title . $category->getId();
-                }
-                if(in_array($_POST['id'],ProductDb::getCategoryIds())){
-                    $errorMessage = 'Er bestaan nog producten uit deze categorie in de database';
-                }
-                else if (ProductDb::deleteById($_POST['id'])) {
-                    $categoryDeleted = true;
+                    if (ProductDb::deleteById($_POST['id'])) {
+                        $categoryDeleted = true;
+                    }
                 }
             }
         }
@@ -524,7 +497,8 @@ class AdminController
     }
 
 
-    protected function getProductFromPost()
+    protected
+    function getProductFromPost()
     {
         $id = $name = $description = $image = $price = $highLighted = $categoryId = $inStock = null;
 
@@ -557,7 +531,8 @@ class AdminController
             $categoryId, $inStock, new DateTime());
     }
 
-    protected function getCategoryFromPost()
+    protected
+    function getCategoryFromPost()
     {
         $id = $description = null;
 
@@ -567,5 +542,17 @@ class AdminController
             $description = $_POST['description'];
 
         return new Category($id, $description);
+    }
+
+    protected
+    function isValidPost($errors)
+    {
+        foreach ($errors as $error) {
+            if ($error !== '') {
+                return false;
+                break;
+            }
+        }
+        return true;
     }
 }

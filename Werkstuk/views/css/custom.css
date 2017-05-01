@@ -1,15 +1,21 @@
 #mainNavBar{
     /*height: 78px;*/
+   background-color: #ECFAFF;
 }
 
-
+.well{
+    background-color: #ECFAFF;
+}
 
 .error-label {
     color: red;
 }
-
 body {
     padding-top: 80px; /* padding voor .navbar-fixed-top.*/
+    background-color: #FEFDFF;
+    font-family: 'Annie Use Your Telescope';
+    font-size: 22px;
+    font-weight: 400;
 }
 
 /*
@@ -18,19 +24,43 @@ thumbnail bevat .imageholder, .caption en .cart
 */
 
 .thumbnail {
-    padding: 0;
-    height: 250px;
+    /*padding: 10px;*/
+    height: 300px;
+
 }
 
 .imageholder {
-    padding: 0px;
+    position: relative;
+    padding: 10px;
     height: 50%;
     text-align: center;
+}
+
+.imageholder .glyphicon-star{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #A095EE;
+    font-size: 2em;
+}
+
+.imageholder img{
+    /*opacity: 0.25;*/
 }
 
 .caption {
     overflow: hidden;
     height: 35%;
+}
+
+.cart{
+    height:15%;
+    /*padding:10px;*/
+}
+
+.cart .glyphicon-shopping-cart{
+    font-size: 1.2em;
+    color:#FFBBBB;
 }
 
 .caption h5 {

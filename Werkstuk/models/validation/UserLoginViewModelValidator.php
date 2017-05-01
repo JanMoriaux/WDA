@@ -84,7 +84,7 @@ class UserLoginViewModelValidator extends ObjectValidator
     protected function validateUser(){
         if(empty($errors['userName']) && empty($errors['password'])){
             if(!ValidationRules::isAuthorizedUser($this->values['userName'],$this->values['password'])){
-                $this->errors['username'] = $this->errorValues['noUser'];
+                $this->errors['userName'] = $this->errorValues['noUser'];
                 $this->values['password'] = '';
             }
         }
