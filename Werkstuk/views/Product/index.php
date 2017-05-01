@@ -10,8 +10,10 @@ if (count($products) > 0) {
     foreach ($products as $product) {
         include ROOT . '/views/partial/productOverviewPartial.php';
     }
-} else{
-    echo '<div class="alert alert-warning">Geen producten teruggevonden</div>';
-}
+} else { ?>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="alert alert-warning">Geen producten teruggevonden</div>
+    </div>'
+<?php } ?>
 
 

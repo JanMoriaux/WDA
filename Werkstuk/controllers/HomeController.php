@@ -6,12 +6,17 @@
  * Date: 22/04/2017
  * Time: 20:53
  */
+
+
 class HomeController
 {
     public function index(){
-        $title = 'Thuispagina';
-        $view = ROOT . '/views/Home/index.php';
 
+        //title en sidebar zetten
+        $title = 'Thuispagina';
+        $categorySidebar = true;
+
+        $view = ROOT . '/views/Home/index.php';
         require_once ROOT . '/views/layout.php';
 
     }

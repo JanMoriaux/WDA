@@ -331,7 +331,7 @@ class AdminController
 
         //title and sidebar zetten
         $title = 'Overzicht Categorieën';
-        $adminfunction = true;
+        $adminfunctions = true;
 
         //model zetten
         $allCategories = CategoryDb::getAll();
@@ -474,6 +474,55 @@ class AdminController
         $view = ROOT . '/views/Admin/insertCategory.php';
         require_once ROOT . '/views/layout.php';
     }
+
+
+    //GET /index.php?controller=Admin&action=deleteCategory&id=x
+    //POST /index.php?controller=Admin&action=deleteCategory
+    public function deleteCategory(){
+        //is admin aangelogd?
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
+            call('Admin', 'index');
+
+        //title en sidebar zetten
+        $adminfunctions = true;
+        $title = 'Verwijder Categorie ';
+
+
+        $category = null;
+
+        //GET haalt Categorie uit de database voor een detailzicht
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            if (isset($_GET['id']) && $_GET['id']) {
+                if ($category = CategoryDb::getById($_GET['id'])) {
+                    $title = $title . $category->getDescription();
+                }
+            }
+            //POST verwijdert categories uit de database
+            //tenzij nog niet wordt voldaan aan FK in de products database
+        } else {
+            if (isset($_POST['id']) && $_POST['id']) {
+                $categoryDeleted = false;
+                $errorMessage = false;
+
+                if ($category = ProductDb::getById($_POST['id'])) {
+                    $title = $title . $category->getId();
+                }
+                if(in_array($_POST['id'],ProductDb::getCategoryIds())){
+                    $errorMessage = 'Er bestaan nog producten uit deze categorie in de database';
+                }
+                else if (ProductDb::deleteById($_POST['id'])) {
+                    $categoryDeleted = true;
+                }
+            }
+        }
+
+        $view = ROOT . '/views/Admin/deleteCategory.php';
+        require_once ROOT . '/views/layout.php';
+    }
+
 
     protected function getProductFromPost()
     {

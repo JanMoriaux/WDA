@@ -11,9 +11,9 @@
 <head>
     <meta charset="utf-8">
 
-    <link href="/WDA/Werkstuk/views/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
-    <link href="/WDA/Werkstuk/views/css/bootstrap-theme.min.css" type="text/css" rel="stylesheet"/>
-    <link href="/WDA/Werkstuk/views/css/custom.css" type="text/css" rel="stylesheet"/>
+    <link href="./views/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+    <link href="./views/css/bootstrap-theme.min.css" type="text/css" rel="stylesheet"/>
+    <link href="./views/css/custom.css" type="text/css" rel="stylesheet"/>
 
     <title><?php echo isset($title) ? $title : ''; ?></title>
 </head>
@@ -22,16 +22,18 @@
 <!-- navigatie -->
 <header>
     <?php require_once ROOT . '/views/partial/mainNavPartial.php' ?>
+    <div class="container">
+        <?php
+        //bericht in verband met fout bij login
+        if (isset($userLoggedIn)) {
 
-    <?php //bericht in verband met geslaagde login
-    if (isset($userLoggedIn)) {
-        if (!$userLoggedIn) { ?>
-            <div class="col-md-12">
-                <div class="alert alert-danger col-md-9">Probleem met database: niet ingelogd!</div>
-            </div>
-        <?php }
-    } ?>
-
+            if (!$userLoggedIn) { ?>
+                <div class="alert alert-danger row" style="">
+                    Probleem met database: niet ingelogd!
+                </div>
+            <?php }
+        } ?>
+    </div>
 
 </header>
 <!-- navigatie -->
@@ -44,9 +46,9 @@
         <!-- sidebar -->
 
         <!-- banner -->
-        <div class="col-md-9">
+        <div class="col-lg-9 col-md-9 col-sm-7 col-xs-7">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="well well-lg">
                         <h1 class="">Tiny Clouds</h1>
                     </div>
@@ -77,7 +79,7 @@
     <!-- footer -->
     <footer>
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <p>Copyright &copy; Tiny Clouds <?php echo date('Y'); ?> Dedicated to Felix and Abel Moriaux</p>
             </div>
         </div>
@@ -88,9 +90,9 @@
 
 <!-- scripts -->
 
-<script src="/WDA/Werkstuk/views/js/jquery-3.2.1.min.js"></script>
+<script src="./views/js/jquery-3.2.1.min.js"></script>
 <!--<script src="/WDA/Werkstuk/views/js/npm.js"></script>-->
-<script src="/WDA/Werkstuk/views/js/bootstrap.min.js"></script>
+<script src="./views/js/bootstrap.min.js"></script>
 
 <!-- scripts -->
 </body>

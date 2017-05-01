@@ -18,15 +18,15 @@ require_once ROOT . '/models/entities/User.php';
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/WDA/Werkstuk/index.php">Tiny Clouds</a>
+            <a class="navbar-brand" href="index.php">Tiny Clouds</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="/WDA/Werkstuk/index.php?controller=Product&action=index">Producten</a>
+                    <a href="index.php?controller=Product&action=index">Producten</a>
                 </li>
                 <li>
-                    <a href="/WDA/Werkstuk/index.php?controller=Admin&action=index">Admin</a>
+                    <a href="index.php?controller=Admin&action=index">Admin</a>
                 </li>
                 <li>
                     <a href="#">Contact</a>
@@ -40,7 +40,7 @@ require_once ROOT . '/models/entities/User.php';
             }
             if (!isset($_SESSION['user'])) { ?>
                 <form class="navbar-form navbar-right" method="post"
-                      action="/WDA/Werkstuk/index.php?controller=User&action=login">
+                      action="index.php?controller=User&action=login">
                     <div class="form-group">
                         <input type="text" class="form-control" name="userName" placeholder="Gebruikersnaam">
                     </div>
@@ -52,14 +52,14 @@ require_once ROOT . '/models/entities/User.php';
 
             <?php } else { ?>
                 <ul class="nav navbar-nav navbar-right">
-                    <p class="navbar-text">Ingelogd als <?php echo $_SESSION['user']->getUserName(); ?></p>
+                    <li>
+                        <p class="navbar-text">Ingelogd als <?php echo $_SESSION['user']->getUserName(); ?></p>
                     </li>
                     <li>
                         <a class=""
-                           href="/WDA/Werkstuk/index.php?controller=User&action=logout">Afmelden</a>
+                           href="index.php?controller=User&action=logout">Afmelden</a>
                     </li>
                 </ul>
-
             <?php } ?>
         </div>
         <!-- /.navbar-collapse -->

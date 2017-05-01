@@ -41,7 +41,9 @@ $controllers = array(
     'Product' => ['index', 'showDetail', 'showCategory'],
     'User' => ['login', 'logout'],
     'Admin' => ['index', 'productOverview', 'editProduct',
-        'showProduct', 'insertProduct', 'deleteProduct','categoryOverview','editCategory','insertCategory']
+        'showProduct', 'insertProduct', 'deleteProduct',
+        'categoryOverview','editCategory','insertCategory',
+        'deleteCategory']
 );
 
 //controleren of de controller en action toegestaan zijn

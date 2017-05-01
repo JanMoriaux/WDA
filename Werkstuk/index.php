@@ -6,11 +6,9 @@
  * Time: 20:38
  */
 
-define('ROOT',__DIR__);
+define('ROOT', __DIR__);
 
 //TODO reference http://requiremind.com/a-most-simple-php-mvc-beginners-tutorial/
-
-
 
 if(isset($_GET['controller']) && isset($_GET['action'])){
     $controller = $_GET['controller'];

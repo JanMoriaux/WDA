@@ -5,7 +5,12 @@
  * Date: 22/04/2017
  * Time: 21:36
  */
+
+//TODO
 ?>
+
+
+
 <ul>
     <li>id: <?php echo $product->getId(); ?></li>
     <li>name: <?php echo $product->getName(); ?></li>

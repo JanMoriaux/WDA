@@ -19,14 +19,13 @@ class ProductController
         //alle producten in variabele
         $products = ProductDb::getAll();
 
-        //alle categorieën voor de sidebar
-        $categories = CategoryDb::getAll();
+        //sidebar en title
+        $categorySidebar = true;
+        $title = 'Alle Producten';
 
 
         //view wordt embedded in de layout
         $view = ROOT. '/views/Product/index.php';
-        $title = 'Alle Producten';
-
         require_once ROOT. '/views/layout.php';
     }
 
@@ -46,12 +45,12 @@ class ProductController
         //id gebruiken om product op te halen
         $product = ProductDb::getById($_GET['id']);
 
-        //alle categorieën voor de sidebar
-        $categories = CategoryDb::getAll();
+        //sidebar en title
+        $categorySidebar = true;
+        $title = "Detail {$product->getName()}";
 
         //view wordt embedded in de layout
         $view =  ROOT . '/views/Product/showDetail.php';
-        $title = "Detail {$product->getName()}";
 
         require_once ROOT. '/views/layout.php';
     }
@@ -67,13 +66,13 @@ class ProductController
         //anders alle producten met categoryId = id ophalen
         $products = ProductDb::getByCategoryId($_GET['id']);
 
-        //alle categorieën voor de sidebar
-        $categories = CategoryDb::getAll();
+        //title en sidebar
+        $categorySidebar = true;
+        $title = CategoryDb::getById($_GET['id'])->getDescription();
+
 
         //view wordt embedded in de layout
         $view = ROOT. '/views/Product/index.php';
-        $title = CategoryDb::getById($_GET['id'])->getDescription();
-
         require_once ROOT. '/views/layout.php';
     }
 

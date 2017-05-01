@@ -24,7 +24,7 @@ if (isset($categoryAdded)) {
     <div class="col-md-12">
 
         <form class="form"
-              action="/WDA/Werkstuk/index.php?controller=Admin&action=<?php echo $currentAction; ?>&id=<?php echo isset($values['id']) ? $values['id'] : ''; ?> "
+              action="index.php?controller=Admin&action=<?php echo $currentAction; ?>&id=<?php echo isset($values['id']) ? $values['id'] : ''; ?> "
               method="post">
             <div class="form-group">
                 <h3>Categorie Toevoegen</h3>
