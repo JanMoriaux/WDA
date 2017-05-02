@@ -8,20 +8,18 @@
  */
 require_once ROOT . '/models/database/CRUD/ProductDb.php';
 require_once ROOT . '/models/database/CRUD/CategoryDb.php';
-require_once ROOT . '/models/entities/User.php';
-require_once ROOT . '/models/entities/ShoppingCart.php';
+require_once ROOT . '/controllers/Controller.php';
 
-class ProductController
+class ProductController extends Controller
 {
-    //TODO necessary
     protected $currentController = 'Product';
-
 
     /**
      * GET: verwacht url van de vorm ?controller=Product&action=index
      */
     public function index(){
-        $currentAction = 'index';
+
+        $this->setControllerAndActionSessionVariables('index');
 
         //alle producten in variabele
         $products = ProductDb::getAll();
@@ -30,15 +28,6 @@ class ProductController
         $categorySidebar = true;
         $allCategories = true;
         $title = 'Alle Producten';
-
-        //wanneer er op een winkelkar button gedrukt wordt
-        //product toevoegen aan kar en terugkeren naar huidige view
-        if(session_status() == PHP_SESSION_NONE){
-            session_start();
-        }
-        $_SESSION['previousController'] = $this->currentController;
-        $_SESSION['previousAction'] = $currentAction;
-
 
         //view wordt embedded in de layout
         $view = ROOT. '/views/Product/index.php';
@@ -52,7 +41,7 @@ class ProductController
      * GET: verwacht url van de vorm ?controller=Product&action=showDetail&id=x
      */
     public function showDetail(){
-
+        $this->setControllerAndActionSessionVariables('showDetail');
 
         //indien geen id redirect naar home page
         if(!isset($_GET['id']))
@@ -75,6 +64,9 @@ class ProductController
      * GET: verwacht url van de vorm ?controller=Product&action=showCategory&id=x
      */
     public function showCategory(){
+
+        $this->setControllerAndActionSessionVariables('showCategory');
+
         //indien geen id tonen we alle producten
         if(!isset($_GET['id']) || !$_GET['id'])
             return call('Product','index');

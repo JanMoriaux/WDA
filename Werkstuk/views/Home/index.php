@@ -10,20 +10,26 @@ require_once ROOT . '/models/entities/ShoppingCart.php';
 ?>
 
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <h3>Welkom in onze webwinkel</h3>
-    <div class="jumbotron">
-        <p>Nieuwste producten</p>
-        <?php if(isset($newProducts) && $newProducts != null){
-            foreach($newProducts as $product){
+    <p class="lead">Welkom in onze webwinkel!!</p>
+    <div class="">
+        <p class="">Onze laatste aanwinsten...</p>
+        <?php if (isset($new) && $new != null) {
+
+            foreach ($new as $product) {
                 include ROOT . '/views/partial/productThumbnailPartial.php';
             }
 
-
-        }?>
-
+        } ?>
     </div>
-    <div class="jumbotron">
-        <p>In de kijker</p>
+    <div class="">
+        <p class="">In de kijker</p>
+        <?php if (isset($highLighted) && $highLighted != null) {
+
+            foreach($highLighted as $product){
+                include ROOT . '/views/partial/productThumbnailPartial.php';
+            }
+
+        } ?>
 
     </div>
 </div>

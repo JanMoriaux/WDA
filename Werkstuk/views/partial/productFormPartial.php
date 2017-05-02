@@ -136,7 +136,7 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php';
         <div class="form-group">
             <div class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
                 <input class="btn btn-primary btn-lg" type="submit"
-                       value="<?php echo $currentAction === 'insertProduct' ? 'Toevoegen' : 'Wijzigen' ;?>"/>
+                       value="<?php echo $_SESSION['currentAction'] === 'insertProduct' ? 'Toevoegen' : 'Wijzigen' ;?>"/>
             </div>
         </div>
 

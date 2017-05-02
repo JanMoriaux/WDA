@@ -107,6 +107,7 @@
                 <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></td>
                 <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></td>
                 <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></td>
+                <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></td>
                 <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Totaal:</th>
                 <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-right">
                     &euro;<?php echo $totalPrice; ?>

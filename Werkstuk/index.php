@@ -7,6 +7,9 @@
  */
 
 define('ROOT', __DIR__);
+require_once ROOT . '/models/entities/ShoppingCart.php';
+require_once ROOT . '/models/entities/Product.php';
+require_once ROOT . '/models/entities/User.php';
 
 //TODO reference http://requiremind.com/a-most-simple-php-mvc-beginners-tutorial/
 

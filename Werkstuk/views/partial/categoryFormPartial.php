@@ -28,6 +28,6 @@
         <div class="form-group">
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                 <input class="btn btn-primary btn-lg" type="submit"
-                       value="<?php echo $currentAction === 'editCategory' ? 'Wijzigen' : 'Toevoegen' ;?>"/>
+                       value="<?php echo $_SESSION['currentAction'] === 'editCategory' ? 'Wijzigen' : 'Toevoegen' ;?>"/>
             </div>
         </div>

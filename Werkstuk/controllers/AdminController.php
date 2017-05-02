@@ -12,26 +12,23 @@
 require_once ROOT . '/models/validation/ProductValidator.php';
 require_once ROOT . '/models/validation/UserLoginViewModelValidator.php';
 require_once ROOT . '/models/validation/CategoryValidator.php';
+require_once ROOT . '/controllers/Controller.php';
 
 
-class AdminController
+class AdminController extends Controller
 {
-    //TODO necessary?
-    protected $currentController = "Admin";
+    protected $currentController = 'Admin';
 
     //GET index.php?controller=Admin&action=index
     public function index()
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
+        $this->setControllerAndActionSessionVariables('index');
 
         //verwerking van eventuele post-data van login form
-        $errors = array();
-        $values = array();
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+            $errors = array();
+            $values = array();
             $userName = null;
             $password = null;
 
@@ -79,15 +76,12 @@ class AdminController
     //GET index.php?controller=Admin&action=productOverview
     public function productOverview()
     {
+        $this->setControllerAndActionSessionVariables('productOverview');
+
         //is admin aangelogd?
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
         if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
             call('Admin', 'index');
 
-        //TODO test
-        $currentAction = "productOverview";
 
         //title sidebar zetten
         $title = "Overzicht producten";
@@ -104,14 +98,12 @@ class AdminController
     //GET index.php?controller=Admin&action=showProduct&id=x
     public function showProduct()
     {
-        //is admin aangelogd?
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
+        $this->setControllerAndActionSessionVariables('showProduct');
+
         if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
             call('Admin', 'index');
 
-        //zetten van title en sidebar
+        //title en sidebar
         $title = "Detail Product:";
         $adminfunctions = true;
 
@@ -132,10 +124,8 @@ class AdminController
     //POST
     public function editProduct()
     {
-        //is admin aangelogd?
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
+        $this->setControllerAndActionSessionVariables('editProduct');
+
         if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
             call('Admin', 'index');
 
@@ -209,27 +199,21 @@ class AdminController
     //POST index.php?controller=Admin&action=insertProduct
     public function insertProduct()
     {
+        $this->setControllerAndActionSessionVariables('insertProduct');
+
         //is admin aangelogd?
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
         if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
             call('Admin', 'index');
 
-        //zetten van eventuele form action
-        $currentAction = 'insertProduct';
-
-        //title sidebar zetten
+        //title & sidebar zetten
         $adminfunctions = true;
         $title = "Toevoegen Product";
-
-        //foutboodschappen en veldwaarden leeg
-        $errors = array();
-        $values = array();
 
         //POST request
         $product = null;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $errors = array();
+            $values = array();
 
             $product = $this->getProductFromPost();
 
@@ -268,10 +252,9 @@ class AdminController
     //POST index.php?controller=Admin&action=deleteProduct
     public function deleteProduct()
     {
+        $this->setControllerAndActionSessionVariables('deleteProduct');
+
         //is admin aangelogd?
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
         if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
             call('Admin', 'index');
 
@@ -307,15 +290,12 @@ class AdminController
     //GET /index.php?controller=Admin&action=categoryOverview
     public function categoryOverview()
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-        //indien geen admin ingelogd laten we index van het admin portaal zien
+        $this->setControllerAndActionSessionVariables('categoryOverview');
+
+        //admin aangelogd?
         if (!isset($_SESSION['admin']) || !$_SESSION['admin']) {
             call('Admin', 'index');
         }
-
-        $currentAction = 'categoryOverview';
 
         //title and sidebar zetten
         $title = 'Overzicht Categorieën';
@@ -332,15 +312,11 @@ class AdminController
     //GET /index.php?controller=Admin&action=editCategory
     public function editCategory()
     {
+        $this->setControllerAndActionSessionVariables('editCategory');
+
         //is admin aangelogd?
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
         if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
             call('Admin', 'index');
-
-        //zetten van form action
-        $currentAction = 'editCategory';
 
         //title sidebar zetten
         $title = "Wijzig Categorie";
@@ -400,31 +376,24 @@ class AdminController
     //GET /index.php?controller=Admin&action=insertCategory
     public function insertCategory()
     {
+        $this->setControllerAndActionSessionVariables('insertCategory');
 
         //is admin aangelogd?
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
         if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
             call('Admin', 'index');
-
-        //zetten van eventuele form action
-        $currentAction = 'insertCategory';
 
         //title sidebar zetten
         $adminfunctions = true;
         $title = "Toevoegen Category";
 
-        //foutboodschappen en veldwaarden leeg
-        $errors = array();
-        $values = array();
 
         //POST request
         $category = null;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+            $errors = array();
+            $values = array();
             $category = $this->getCategoryFromPost();
-
 
             //errors en values worden geset door Categoryvalidator
             $cv = new CategoryValidator($category);
@@ -454,10 +423,9 @@ class AdminController
     //POST /index.php?controller=Admin&action=deleteCategory
     public function deleteCategory()
     {
+        $this->setControllerAndActionSessionVariables('deleteCategory');
+
         //is admin aangelogd?
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
         if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
             call('Admin', 'index');
 
@@ -465,10 +433,10 @@ class AdminController
         $adminfunctions = true;
         $title = 'Verwijder Categorie ';
 
-
         $category = null;
 
         //GET haalt Categorie uit de database voor een detailzicht
+        //indien nog producten van deze category in db, wordt een foutboodschap getoond
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             if (isset($_GET['id']) && $_GET['id']) {
                 if ($category = CategoryDb::getById($_GET['id'])) {
@@ -497,8 +465,7 @@ class AdminController
     }
 
 
-    protected
-    function getProductFromPost()
+    protected function getProductFromPost()
     {
         $id = $name = $description = $image = $price = $highLighted = $categoryId = $inStock = null;
 
@@ -544,15 +511,4 @@ class AdminController
         return new Category($id, $description);
     }
 
-    protected
-    function isValidPost($errors)
-    {
-        foreach ($errors as $error) {
-            if ($error !== '') {
-                return false;
-                break;
-            }
-        }
-        return true;
-    }
 }

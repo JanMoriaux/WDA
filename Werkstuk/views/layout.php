@@ -5,7 +5,7 @@
  * Date: 17/04/2017
  * Time: 22:29
  */
-require_once ROOT . '/models/entities/ShoppingCart.php';
+
 ?>
 <!DOCTYPE html>
 <html>

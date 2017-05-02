@@ -6,95 +6,89 @@
  * Date: 25/04/2017
  * Time: 13:57
  */
-require_once ROOT . '/models/viewmodels/UserLoginViewModel.php';
 require_once ROOT . '/models/validation/UserLoginViewModelValidator.php';
 require_once ROOT . '/models/database/CRUD/CategoryDb.php';
+require_once ROOT . '/controllers/Controller.php';
 
-class UserController
+class UserController extends Controller
 {
+    protected $currentController = 'User';
+
+
     //POST /index.php?controller=User&action=login
-    public function login(){
-        //sessie starten indien dit niet het geval is
-        if(session_status() == PHP_SESSION_NONE ){
-            session_start();
+    public function login()
+    {
+        $this->setControllerAndActionSessionVariables('login');
+
+        if (isset($_SESSION['user'])) {
+            $this->returnToPreviousPage();
         }
 
-        //indien al aangelogd, gaan we naar homepage
-        if(isset($_SESSION['user'])){
-            call('Home','index');
-        }
-        //validatie van de loginform
-        else{
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
             //errors en values op ''
             $errors = array();
             $values = array();
 
-            //indien POST gaan we de form valideren
-            if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $userName = null;
+            $password = null;
 
-                $userName = null;
-                $password = null;
+            if (isset($_POST['userName'])) {
+                $userName = $_POST['userName'];
+            }
+            if (isset($_POST['password'])) {
+                $password = $_POST['password'];
+            }
 
-                if(isset($_POST['userName'])){
-                    $userName = $_POST['userName'];
-                }
-                if(isset($_POST['password'])){
-                    $password = $_POST['password'];
-                }
+            $loginViewModel = new UserLoginViewModel($userName, $password);
+            $loginViewModelValidator = new UserLoginViewModelValidator($loginViewModel);
 
-                $loginViewModel = new UserLoginViewModel($userName,$password);
-                $loginViewModelValidator = new UserLoginViewModelValidator($loginViewModel);
+            $errors = $loginViewModelValidator->getErrors();
+            $values = $loginViewModelValidator->getValues();
 
-                $errors = $loginViewModelValidator->getErrors();
-                $values = $loginViewModelValidator->getValues();
+            //foutboodschappen controleren en user opvragen indien valid
+            $valid = $this->isValidPost($errors);
 
-                //foutboodschappen controleren en user opvragen indien valid
-                $valid=true;
-                foreach($errors as $error){
-                    if($error !== ''){
-                        $valid = false;
-                        break;
-                    }
-                }
+            //indien valid gaan we terug naar Home page
+            //anders wordt een uitgebreider formulier getoond
+            if ($valid) {
+                $userLoggedIn = false;
 
-                //indien valid gaan we terug naar Home page
-                //anders wordt een uitgebreider formulier getoond
-                if($valid){
-                    $userLoggedIn = false;
+                if ($user = UserDb::getByUsernameAndPassword($values['userName'], $values['password'])) {
 
-                    if($user = UserDb::getByUsernameAndPassword($values['userName'],$values['password'])){
-                        //vorige user uit sessie verwijderen
-                        unset($_SESSION['user']);
+                    $_SESSION['user'] = $user;
+                    $_SESSION['admin'] = $user->isAdmin();
 
-                        $_SESSION['user'] = $user;
-                        $_SESSION['admin'] = $user->isAdmin();
-                        $userLoggedIn = true;
+                    $userLoggedIn = true;
+
+                    //infinite loop fix
+                    if($_SESSION['previousAction'] != 'login'){
+                        $this->returnToPreviousPage();
+                    } else{
                         call('Home','index');
                     }
-                } else{
-                    //voor sidebar
-                    $categories = CategoryDb::getAll();
-
-
-                    $view = ROOT . '/views/User/login.php';
-                    require_once ROOT . '/views/layout.php';
                 }
+            } else {
+                //sidebar & title
+                $categorySidebar = true;
+                $title = 'Login';
+
+
+                $view = ROOT . '/views/User/login.php';
+                require_once ROOT . '/views/layout.php';
             }
         }
     }
 
-    public function logout(){
-        if(session_status() == PHP_SESSION_NONE ){
-            session_start();
-        }
-        //indien er items in de shopping cart zitten
-        // gaan we eerst de stock van deze items terug rechtzetten
 
-
+    public function logout()
+    {
+        $this->setControllerAndActionSessionVariables('logout');
 
         session_unset();
         session_destroy();
-        call('Home','index');
+
+        $this->returnToPreviousPage();
     }
 
 }
