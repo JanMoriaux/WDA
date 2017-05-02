@@ -8,13 +8,20 @@
  */
 require_once ROOT . '/models/database/CRUD/ProductDb.php';
 require_once ROOT . '/models/database/CRUD/CategoryDb.php';
+require_once ROOT . '/models/entities/User.php';
+require_once ROOT . '/models/entities/ShoppingCart.php';
 
 class ProductController
 {
+    //TODO necessary
+    protected $currentController = 'Product';
+
+
     /**
      * GET: verwacht url van de vorm ?controller=Product&action=index
      */
     public function index(){
+        $currentAction = 'index';
 
         //alle producten in variabele
         $products = ProductDb::getAll();
@@ -23,6 +30,14 @@ class ProductController
         $categorySidebar = true;
         $allCategories = true;
         $title = 'Alle Producten';
+
+        //wanneer er op een winkelkar button gedrukt wordt
+        //product toevoegen aan kar en terugkeren naar huidige view
+        if(session_status() == PHP_SESSION_NONE){
+            session_start();
+        }
+        $_SESSION['previousController'] = $this->currentController;
+        $_SESSION['previousAction'] = $currentAction;
 
 
         //view wordt embedded in de layout
@@ -39,9 +54,9 @@ class ProductController
     public function showDetail(){
 
 
-        //indien geen id redirect naar error page
+        //indien geen id redirect naar home page
         if(!isset($_GET['id']))
-            return call('Home','error');
+            return call('Home','index');
 
         //id gebruiken om product op te halen
         $product = ProductDb::getById($_GET['id']);

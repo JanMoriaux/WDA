@@ -63,10 +63,8 @@ class UserController
                     $userLoggedIn = false;
 
                     if($user = UserDb::getByUsernameAndPassword($values['userName'],$values['password'])){
-                        //nieuwe sessie starten indien we hiervoor met een andere gebruikersnaam waren ingelogd
-                        session_unset();
-                        session_destroy();
-                        session_start();
+                        //vorige user uit sessie verwijderen
+                        unset($_SESSION['user']);
 
                         $_SESSION['user'] = $user;
                         $_SESSION['admin'] = $user->isAdmin();
@@ -89,6 +87,11 @@ class UserController
         if(session_status() == PHP_SESSION_NONE ){
             session_start();
         }
+        //indien er items in de shopping cart zitten
+        // gaan we eerst de stock van deze items terug rechtzetten
+
+
+
         session_unset();
         session_destroy();
         call('Home','index');

@@ -29,7 +29,9 @@ function call($controller, $action)
         case 'User':
             $controller = new UserController();
             break;
-
+        case 'Cart':
+            $controller = new CartController();
+            break;
     }
     $controller->{$action}();
 }
@@ -43,7 +45,8 @@ $controllers = array(
     'Admin' => ['index', 'productOverview', 'editProduct',
         'showProduct', 'insertProduct', 'deleteProduct',
         'categoryOverview','editCategory','insertCategory',
-        'deleteCategory']
+        'deleteCategory'],
+    'Cart' => ['addProduct','overview','deleteProduct','increaseUnits','decreaseUnits']
 );
 
 //controleren of de controller en action toegestaan zijn

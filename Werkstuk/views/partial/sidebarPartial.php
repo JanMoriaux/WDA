@@ -55,6 +55,17 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php';
         <?php } ?>
 
         <!-- TODO andere sidebar functies -->
+        <!-- TODO verwijderen -->
+<!--        --><?php
+//            foreach ($_SESSION as $key => $value){
+//                echo $key .': ' ;
+//            }
+//            echo '<br />';
+//            echo $_SESSION['previousController'];
+//            echo '<br/>';
+//        echo $_SESSION['previousAction'];
+//
+//        ?>
     </div><!-- div.listgroup -->
 </div><!-- div.col md 3 -->
 

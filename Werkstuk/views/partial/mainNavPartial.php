@@ -31,11 +31,17 @@ require_once ROOT . '/models/entities/User.php';
                 <li>
                     <a href="#">Contact</a>
                 </li>
+                <li>
+                    <a class=""
+                       href="index.php?controller=Cart&action=overview">
+                        Winkelmandje
+                    </a>
+                </li>
             </ul>
             <?php
             //loginveld indien geen user aangemeld
             //is admin aangelogd?
-            if (session_status() == PHP_SESSION_NONE) {
+            if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
             if (!isset($_SESSION['user'])) { ?>
@@ -53,7 +59,7 @@ require_once ROOT . '/models/entities/User.php';
             <?php } else { ?>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <p class="navbar-text">Ingelogd als <?php echo $_SESSION['user']->getUserName(); ?></p>
+                        <p class="navbar-text" >Ingelogd als <?php echo $_SESSION['user']->getUserName(); ?></p>
                     </li>
                     <li>
                         <a class=""

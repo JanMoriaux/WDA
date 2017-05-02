@@ -13,7 +13,7 @@ if (!isset($_SESSION['user']) || !$_SESSION['user']->isAdmin()) {
     require_once ROOT . '/views/Admin/login.php';
 
 } else { ?>
-    <div class="col-md-12">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <h3>Dag <?php echo $_SESSION['user']->getUserName(); ?>! Welkom in het administratieportaal!</h3>
     </div>
 <?php } ?>

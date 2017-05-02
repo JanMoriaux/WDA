@@ -5,6 +5,7 @@
  * Date: 17/04/2017
  * Time: 22:29
  */
+require_once ROOT . '/models/entities/ShoppingCart.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -59,6 +60,7 @@
 
 
             <!-- view -->
+            <!-- TODo row? -->
             <div class="row">
                 <?php
                 if (isset($view) && !empty($view)) {
@@ -66,11 +68,13 @@
                 }
                 ?>
             </div>
-            <!-- view -->
 
         </div>
+        <!-- view -->
+
     </div>
 </div>
+
 
 <!-- .container -->
 <div class="container">

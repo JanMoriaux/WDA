@@ -19,11 +19,12 @@ class ProductDb
         return DatabaseFactory::getDatabase();
     }
 
-    //alle producten uit db
+    /**
+     * @return array Product alle producten uit de products tabel
+     */
     public static function getAll()
     {
         $result = self::getConnection()->executeSqlQuery("SELECT * FROM TINY_CLOUDS_PRODUCTS");
-
 
         return self::getProductArrayFromResult($result);
 
@@ -140,6 +141,12 @@ class ProductDb
             $categoryids[$index] = $result->fetch_array()['categoryId'];
         }
         return $categoryids;
+    }
+
+    public static function updateStock($id,$quantity){
+        $product = self::getById($id);
+        $product->setInStock($product->getInStock() + $quantity);
+        self::update($product);
     }
 
     protected static function convertRowToProduct($dbRow)

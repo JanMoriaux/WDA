@@ -1,12 +1,12 @@
+/*general*/
+
 #mainNavBar{
     /*height: 78px;*/
    background-color: #ECFAFF;
 }
-
 .well{
     background-color: #ECFAFF;
 }
-
 .error-label {
     color: red;
 }
@@ -19,33 +19,32 @@ body {
 }
 
 /*
-productOverviewPartial
+productThumbnailPartial
 thumbnail bevat .imageholder, .caption en .cart
 */
 
 .thumbnail {
-    /*padding: 10px;*/
-    height: 300px;
-
+    height: 15em;
 }
 
 .imageholder {
     position: relative;
-    padding: 10px;
-    height: 50%;
+    padding: 5%;
+    height: 40%;
     text-align: center;
 }
 
 .imageholder .glyphicon-star{
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 10%;
+    right: 10%;
     color: #A095EE;
-    font-size: 2em;
+    font-size: 1.2em;
 }
 
 .imageholder img{
     /*opacity: 0.25;*/
+    /*width:75%;*/
 }
 
 .caption {
@@ -54,8 +53,7 @@ thumbnail bevat .imageholder, .caption en .cart
 }
 
 .cart{
-    height:15%;
-    /*padding:10px;*/
+    height:25%;
 }
 
 .cart .glyphicon-shopping-cart{
@@ -63,21 +61,16 @@ thumbnail bevat .imageholder, .caption en .cart
     color:#FFBBBB;
 }
 
-.caption h5 {
+.caption h4 {
     white-space: normal;
     overflow: hidden;
 }
 
 .thumbnail img {
-    width: 50%;
+    width: 3em;
 }
 
-/*
-.thumbnail .caption-full {
-    padding: 9px;
-    color: #333;
-}
-*/
+
 
 .cart{
     padding-right: 10px;
@@ -103,5 +96,17 @@ footer {
 /*Admin/deleteProduct*/
 .img-rounded{
     width: 100%;
+}
 
+/*button in productThumbNail */
+.cartIcon{
+    background: none;
+    border: none;
+    outline: none;
+}
+
+/*Cart/overview*/
+
+td img{
+    width: 100%;
 }
