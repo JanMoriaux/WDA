@@ -19,17 +19,15 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php';
         <?php if (isset($categorySidebar) && $categorySidebar) {?>
             <a href=
                 "index.php?controller=Product&action=index"
-                   title=
-                       "Alle Producten"
-                   class="list-group-item <?php echo (isset($allCategories) && $allCategories) ? 'active' : '';?>">
+                   title="Alle Producten"
+                   class="categoryFilter list-group-item <?php echo (isset($allCategories) && $allCategories) ? 'active' : '';?>">
                    Alle Producten
             </a>
             <?php foreach (CategoryDb::getAll() as $category) { ?>
-                <a href=
-                   "index.php?controller=Product&action=showCategory&id=<?php echo $category->getId(); ?>"
-                   title=
-                   "<?php echo $category->getDescription(); ?>"
-                   class="list-group-item <?php echo(isset($categoryId) && ($categoryId == $category->getId())) ? 'active' : '';?>">
+                <a id="category<?php echo $category->getId(); ?>"
+                   href="index.php?controller=Product&action=showCategory&id=<?php echo $category->getId(); ?>"
+                   title="<?php echo $category->getDescription(); ?>"
+                   class="categoryFilter list-group-item <?php echo(isset($categoryId) && ($categoryId == $category->getId())) ? 'active' : '';?>">
                     <?php echo $category->getDescription(); ?>
                 </a>
             <?php }
@@ -55,17 +53,7 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php';
         <?php } ?>
 
         <!-- TODO andere sidebar functies -->
-        <!-- TODO verwijderen -->
-<!--        --><?php
-//            foreach ($_SESSION as $key => $value){
-//                echo $key .': ' ;
-//            }
-//            echo '<br />';
-//            echo $_SESSION['previousController'];
-//            echo '<br/>';
-//        echo $_SESSION['previousAction'];
-//
-//        ?>
+
     </div><!-- div.listgroup -->
 </div><!-- div.col md 3 -->
 

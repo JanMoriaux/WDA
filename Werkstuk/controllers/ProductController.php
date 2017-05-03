@@ -44,11 +44,13 @@ class ProductController extends Controller
         $this->setControllerAndActionSessionVariables('showDetail');
 
         //indien geen id redirect naar home page
-        if(!isset($_GET['id']))
-            return call('Home','index');
+        if(!isset($_GET['id']) || empty($_GET['id']))
+            call('Home','index');
 
         //id gebruiken om product op te halen
-        $product = ProductDb::getById($_GET['id']);
+        if(!$product = ProductDb::getById($_GET['id'])){
+            call('Home','index');
+        }
 
         //sidebar en title
         $categorySidebar = true;

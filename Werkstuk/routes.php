@@ -32,6 +32,9 @@ function call($controller, $action)
         case 'Cart':
             $controller = new CartController();
             break;
+        case 'Ajax':
+            $controller = new AjaxController();
+            break;
     }
     $controller->{$action}();
 }
@@ -46,7 +49,8 @@ $controllers = array(
         'showProduct', 'insertProduct', 'deleteProduct',
         'categoryOverview','editCategory','insertCategory',
         'deleteCategory'],
-    'Cart' => ['addProduct','overview','deleteProduct','increaseUnits','decreaseUnits']
+    'Cart' => ['addProduct','overview','deleteProduct','increaseUnits','decreaseUnits'],
+    'Ajax' => ['showCategory','addItemToCart']
 );
 
 //controleren of de controller en action toegestaan zijn

@@ -9,7 +9,7 @@
 ?>
 
 
-<div class="col-xs-12 col-sm-4 col-lg-3 col-md-3 ">
+<div class="col-xs-12 col-sm-4 col-lg-3 col-md-3 productHolder">
 
     <div class="thumbnail">
         <div class="imageholder col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -26,8 +26,8 @@
                 </a>
             </h4>
         </div>
-        <div class="cart col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <h4 class=" pull-left ">&euro;<?php echo sprintf('%.2f', $product->getPrice()); ?></h4>
+        <div class="cart col-lg-12 col-md-12 col-sm-12 col-xs-12" id="cart<?php echo $product->getID(); ?>">
+            <span class=" pull-left ">&euro;<?php echo sprintf('%.2f', $product->getPrice()); ?></span>
 
             <?php
 
@@ -37,7 +37,7 @@
 
             if ($product->getInStock() <= 0) { ?>
 
-                <h4 class="label label-danger pull-right">Niet in voorraad</h4>
+                <span class="label label-danger pull-right">Niet in voorraad</span>
 
             <?php } else {
 
@@ -57,18 +57,19 @@
             }
             if (!$inCart){
                 ?>
-                <form class="pull-right" method="post"
-                      action="index.php?controller=Cart&action=addProduct">
+                <form class="pull-right addToCartForm" method="post"
+                      action="index.php?controller=Cart&action=addProduct"
+                      id="add<?php echo $product->getId(); ?>">
                     <input type="hidden" name="id" value="<?php echo $product->getId(); ?>"/>
-                    <button type="submit" class="cartIcon">
-                        <span class="glyphicon glyphicon-shopping-cart"/>
+                    <button type="submit" class="cartIcon addToCartButton" id="submit<?php echo $product->getId(); ?>">
+                        <span class="glyphicon glyphicon-shopping-cart"></span>
                     </button>
                 </form>
                 <?php
             }else{
             ?>
 
-            <h4 class="label label-info pull-right">Toegevoegd<h4><?php
+            <span class="label label-info pull-right">Toegevoegd</span><?php
             }
             } ?>
         </div>

@@ -16,6 +16,23 @@ body {
     font-family: 'Annie Use Your Telescope';
     font-size: 22px;
     font-weight: 400;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+
+/*fixed footer*/
+/*http://stackoverflow.com/questions/19756997/how-to-create-a-sticky-footer-that-plays-well-with-bootstrap-3 */
+html {
+    position: relative;
+    min-height: 100%;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #f5f5f5;
 }
 
 /*
@@ -56,7 +73,7 @@ thumbnail bevat .imageholder, .caption en .cart
     height:25%;
 }
 
-.cart .glyphicon-shopping-cart{
+.glyphicon-shopping-cart{
     font-size: 1.2em;
     color:#FFBBBB;
 }
@@ -110,3 +127,9 @@ footer {
 td img{
     width: 100%;
 }
+
+/*Product/showdDetail*/
+#productImage img{
+    width:100%;
+}
+

@@ -17,6 +17,17 @@
     <link href="./views/css/bootstrap-theme.min.css" type="text/css" rel="stylesheet"/>
     <link href="./views/css/custom.css" type="text/css" rel="stylesheet"/>
 
+
+    <!-- scripts -->
+
+    <script src="./views/js/jquery-3.2.1.min.js"></script>
+    <!--<script src="/WDA/Werkstuk/views/js/npm.js"></script>-->
+    <script src="./views/js/bootstrap.min.js"></script>
+    <script src="./views/js/ajax.js"></script>
+
+
+    <!-- scripts -->
+
     <title><?php echo isset($title) ? $title : ''; ?></title>
 </head>
 <body>
@@ -60,8 +71,7 @@
 
 
             <!-- view -->
-            <!-- TODo row? -->
-            <div class="row">
+            <div class="row" id="pageContent">
                 <?php
                 if (isset($view) && !empty($view)) {
                     require_once $view;
@@ -76,29 +86,16 @@
 </div>
 
 
-<!-- .container -->
-<div class="container">
+<!-- .footer -->
+    <footer class="footer" id="footer">
 
-    <hr>
-
-    <!-- footer -->
-    <footer>
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <p>Copyright &copy; Tiny Clouds <?php echo date('Y'); ?> Dedicated to Felix and Abel Moriaux</p>
-            </div>
+        <div class="container">
+            <p class="text-muted">Copyright &copy; Tiny Clouds <?php echo date('Y'); ?> Dedicated to Felix and Abel
+                Moriaux</p>
         </div>
+
     </footer>
+<!-- .footer -->
 
-</div>
-<!-- .container -->
-
-<!-- scripts -->
-
-<script src="./views/js/jquery-3.2.1.min.js"></script>
-<!--<script src="/WDA/Werkstuk/views/js/npm.js"></script>-->
-<script src="./views/js/bootstrap.min.js"></script>
-
-<!-- scripts -->
 </body>
 </html>

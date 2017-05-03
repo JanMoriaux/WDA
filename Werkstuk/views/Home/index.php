@@ -10,9 +10,9 @@ require_once ROOT . '/models/entities/ShoppingCart.php';
 ?>
 
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <p class="lead">Welkom in onze webwinkel!!</p>
+    <h2>Welkom in onze webwinkel!!</h2>
     <div class="">
-        <p class="">Onze laatste aanwinsten...</p>
+        <h3 class="">Onze laatste aanwinsten...</h3>
         <?php if (isset($new) && $new != null) {
 
             foreach ($new as $product) {
@@ -22,7 +22,7 @@ require_once ROOT . '/models/entities/ShoppingCart.php';
         } ?>
     </div>
     <div class="">
-        <p class="">In de kijker</p>
+        <h3 class="">In de kijker</h3>
         <?php if (isset($highLighted) && $highLighted != null) {
 
             foreach($highLighted as $product){
@@ -32,7 +32,9 @@ require_once ROOT . '/models/entities/ShoppingCart.php';
         } ?>
 
     </div>
+
 </div>
 
+<script src="./views/js/cartIconScript.js" />
 
 
