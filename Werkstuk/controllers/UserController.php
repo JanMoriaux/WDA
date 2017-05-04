@@ -58,6 +58,9 @@ class UserController extends Controller
 
 
                     $this->startSession();
+                    session_unset();
+                    session_destroy();
+                    $this->startSession();
                     $_SESSION['user'] = $user;
                     $_SESSION['admin'] = $user->isAdmin();
 

@@ -177,7 +177,7 @@ class ValidationRules
     }
     //TODO niet voor update
     public static function isUniqueUserName($username){
-        return !in_array($username,UserDb::getUserNames());
+        return !in_array(md5($username),UserDb::getUserNames());
 
     }
 
@@ -237,9 +237,6 @@ class ValidationRules
         }
 
         return true;
-
-
-
 
         return !in_array($description,CategoryDb::getAllDescriptions());
     }

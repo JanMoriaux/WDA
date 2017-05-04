@@ -26,7 +26,7 @@ if ($category != null) { ?>
     <div class="col-md-12">
 
         <form class="form"
-              action="index.php?controller=Admin&action=<?php echo $currentAction; ?>&id=<?php echo isset($values['id']) ? $values['id'] : ''; ?> "
+              action="index.php?controller=Admin&action=editCategory&id=<?php echo $category->getId();?>"
               method="post">
             <h3>Categorie <?php echo $values['id'];?> wijzigen?</h3>
 

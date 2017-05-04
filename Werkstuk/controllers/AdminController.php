@@ -22,8 +22,6 @@ class AdminController extends Controller
     //GET index.php?controller=Admin&action=index
     public function index()
     {
-        $this->setControllerAndActionSessionVariables('index');
-
         //verwerking van eventuele post-data van login form
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -49,8 +47,9 @@ class AdminController extends Controller
             $valid = $this->isValidPost($errors);
 
             if ($valid) {
-                if ($user = UserDb::getByUsernameAndPassword($values['userName'], $values['password'])) {
+                if ($user = UserDb::getByUsernameAndPassword(md5($values['userName']), md5($values['password']))) {
                     //nieuwe sessie starten indien we hiervoor met een andere gebruikersnaam waren ingelogd
+                    $this->startSession();
                     session_unset();
                     session_destroy();
                     session_start();
