@@ -62,7 +62,7 @@
         <div class="col-lg-9 col-md-9 col-sm-7 col-xs-7">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="well well-lg">
+                    <div class="well well-lg" id="banner">
                         <h1 class="">Tiny Clouds</h1>
                     </div>
                 </div>
@@ -87,14 +87,14 @@
 
 
 <!-- .footer -->
-    <footer class="footer" id="footer">
-
-        <div class="container">
-            <p class="text-muted">Copyright &copy; Tiny Clouds <?php echo date('Y'); ?> Dedicated to Felix and Abel
-                Moriaux</p>
-        </div>
-
-    </footer>
+<!--    <footer class="footer" id="footer">-->
+<!---->
+<!--        <div class="container">-->
+<!--            <p class="text-muted">Copyright &copy; Tiny Clouds --><?php //echo date('Y'); ?><!-- Dedicated to Felix and Abel-->
+<!--                Moriaux</p>-->
+<!--        </div>-->
+<!---->
+<!--    </footer>-->
 <!-- .footer -->
 
 </body>

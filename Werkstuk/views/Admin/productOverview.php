@@ -6,9 +6,11 @@
  * Time: 20:10
  */
 ?>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="pageTitle">
+    <h2>Overzicht Producten</h2>
+</div>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <h3>Overzicht Producten</h3>
-    <table class="table table-responsive" id="admin_product_table">
+    <table class="table" id="admin_product_table">
         <thead>
         <tr>
             <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Id</th>
@@ -26,26 +28,26 @@
         foreach ($products as $product) {
             ?>
             <tr>
-                <td class="col-md-1"><?php echo $product->getId(); ?></td>
-                <td class="col-md-1"><?php echo $product->getName(); ?></td>
-                <td class="col-md-1 text-right">&euro; <?php echo sprintf('%.2f', $product->getPrice()); ?></td>
-                <td class="col-md-1 text-center">
+                <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1"><?php echo $product->getId(); ?></td>
+                <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1"><?php echo $product->getName(); ?></td>
+                <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-right">&euro; <?php echo sprintf('%.2f', $product->getPrice()); ?></td>
+                <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center">
                     <?php echo $product->isHighLighted() ?
                         '<span class="glyphicon glyphicon-ok"></span>' : ''; ?></td>
-                <td class="col-md-1 text-center"><?php echo $product->getInStock(); ?></td>
-                <td class="col-md-1 text-center">
+                <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center"><?php echo $product->getInStock(); ?></td>
+                <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center">
                     <a class="text-info"
                        href="index.php?controller=Admin&action=showProduct&id=<?php echo $product->getId(); ?>"
                        title="Admin Show Detail Product <?php echo $product->getId(); ?>">
                         <span class="glyphicon glyphicon-search"></span>
                     </a></td>
-                <td class="col-md-1 text-center">
+                <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center">
                     <a class="text-info"
                        href="index.php?controller=Admin&action=editProduct&id=<?php echo $product->getId(); ?>"
                        title="Admin Edit Product <?php echo $product->getId(); ?>">
                         <span class="glyphicon glyphicon-edit"></span>
                     </a></td>
-                <td class="col-md-1 text-center">
+                <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center">
                     <a class="text-danger"
                        href="index.php?controller=Admin&action=deleteProduct&id=<?php echo $product->getId(); ?>"
                        title="Admin Delete Product <?php echo $product->getId(); ?>">
@@ -55,5 +57,6 @@
         <?php } ?>
         </tbody>
     </table>
+
 </div>
 

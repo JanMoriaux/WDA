@@ -52,6 +52,10 @@ class CartController extends Controller
 
         $this->setControllerAndActionSessionVariables('overview');
 
+        //title en sidebar
+        $title = 'Overzicht Winkelmandje';
+        $categorySidebar = true;
+
         //associatieve array met keys= producten in cart en values=hoeveelheden
         $orderDetails = array();
         if(isset($_SESSION['cart']) && $_SESSION['cart']){

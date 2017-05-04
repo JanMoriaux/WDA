@@ -7,7 +7,7 @@
  * Time: 12:50
  */
 
-require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/entities/User.php';
+require_once ROOT . '/models/entities/User.php';
 
 class UserRegistrationViewModel extends User
 {

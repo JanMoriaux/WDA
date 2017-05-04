@@ -45,6 +45,11 @@ require_once ROOT . '/models/entities/User.php';
                 session_start();
             }
             if (!isset($_SESSION['user'])) { ?>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="" href="index.php?controller=User&action=register">Registreren</a>
+                    </li>
+                </ul>
                 <form class="navbar-form navbar-right" method="post"
                       action="index.php?controller=User&action=login">
                     <div class="form-group">
@@ -53,13 +58,19 @@ require_once ROOT . '/models/entities/User.php';
                     <div class="form-group">
                         <input type="password" class="form-control" name="password" placeholder="Wachtwoord">
                     </div>
-                    <button type="submit" class="btn btn-default">Aanmelden</button>
+                    <div class="navbar-btn checkbox">
+                        <label class=small for="keeploggedin">
+                            <input class="autosubmit" id="keeploggedin" type="checkbox" name="keeploggedin" value="true">
+                            Onthoud mij
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Aanmelden</button>
                 </form>
 
             <?php } else { ?>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <p class="navbar-text" >Ingelogd als <?php echo $_SESSION['user']->getUserName(); ?></p>
+                        <p class="navbar-text" ><?php echo $_SESSION['user']->getFirstName() . ' ' . $_SESSION['user']->getLastName();  ?></p>
                     </li>
                     <li>
                         <a class=""

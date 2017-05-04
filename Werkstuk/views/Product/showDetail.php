@@ -12,9 +12,9 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="productName">
 
 
-        <h2 class="pull-left "><?php echo $product->getName(); ?>&nbsp;</h2>
+        <h2 class="pull-left "><?php echo $thisProduct->getName(); ?>&nbsp;</h2>
 
-        <?php if ($product->getInStock() <= 0) { ?>
+        <?php if ($thisProduct->getInStock() <= 0) { ?>
 
             <h2 class="">
                 <span class="label label-danger">Niet in voorraad</span>
@@ -30,7 +30,7 @@
             if (isset($_SESSION['cart'])) {
                 $cart = $_SESSION['cart'];
                 foreach ($cart->getOrderDetails() as $orderDetail) {
-                    if ($orderDetail->getProductId() === $product->getId()) {
+                    if ($orderDetail->getProductId() === $thisProduct->getId()) {
                         $inCart = true;
                         break;
                     }
@@ -40,9 +40,10 @@
 
                 <form class="addToCartForm" method="post"
                       action="index.php?controller=Cart&action=addProduct"
-                      id="add<?php echo $product->getId(); ?>">
-                    <input type="hidden" name="id" value="<?php echo $product->getId(); ?>"/>
-                    <button type="submit" class="cartIcon addToCartButtonDetail" id="submit<?php echo $product->getId(); ?>">
+                      id="add<?php echo $thisProduct->getId(); ?>">
+                    <input type="hidden" name="id" value="<?php echo $thisProduct->getId(); ?>"/>
+                    <button type="submit" class="cartIcon addToCartButtonDetail"
+                            id="submit<?php echo $thisProduct->getId(); ?>">
                         <h2 class="glyphicon glyphicon-shopping-cart"></h2>
                     </button>
                 </form>
@@ -50,9 +51,9 @@
             <?php } else { ?>
 
                 <h2 class="">
-                <span class="label label-info">Toegevoegd</span>
+                    <span class="label label-info">Toegevoegd</span>
                 </h2>
-            <?php
+                <?php
             }
         } ?>
 
@@ -61,41 +62,54 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="productInfo">
 
         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6" id="productImage">
-            <img src="./images/<?php echo $product->getImage(); ?>"
-                 title="<?php echo $product->getName(); ?>"
-                 alt="<?php echo $product->getName(); ?>"
+            <img src="./images/<?php echo $thisProduct->getImage(); ?>"
+                 title="<?php echo $thisProduct->getName(); ?>"
+                 alt="<?php echo $thisProduct->getName(); ?>"
             />
         </div>
 
         <div class="col-lg-9 col-md-9 col-sm-8 col-xs-6" id="productDetails">
-            <p><strong>Beschrijving: </strong></p>
-            <p><?php echo $product->getDescription(); ?></p>
             <p><strong>Categorie: </strong></p>
-            <p><?php echo CategoryDb::getById($product->getCategoryId())->getDescription(); ?></>
+            <p><?php echo $thisCategory->getDescription() ?></>
+            <p><strong>Beschrijving: </strong></p>
+            <p><?php echo $thisProduct->getDescription(); ?></p>
             <p><strong>Prijs: </strong></p>
-            <span>&euro;<?php echo sprintf('%.2f', $product->getPrice()); ?></span>
+            <span>&euro;<?php echo sprintf('%.2f', $thisProduct->getPrice()); ?></span>
         </div>
     </div>
 
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="ratings">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="ratings">
+            <h3>Wat gebruikers zeggen:</h3>
+            
 
 
-    </div>
+        </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="alsoInCategory">
+        <h3>Andere producten in categorie <?php
+            echo $thisCategory->getDescription(); ?></h3>
+        <?php
+        //vier andere producten uit dezelde categorie
+
+        $productsInCategory = ProductDb::getByCategoryId($thisCategory->getId());
+        $products= array();
+        shuffle($productsInCategory);
+
+        $teller = 0;
+        foreach ($productsInCategory as $product) {
+            if ($teller === 4) {
+                break;
+            }
+            if ($product->getId() !== $thisProduct->getId()) {
+                array_push($products,$product);
+                $teller++;
+            }
+        }
+
+        include_once ROOT . '/views/partial/productOverviewPartial.php'
 
 
+        ?>
     </div>
 
 </div>
-
-
-
-
-
-
-
-
-
-
-

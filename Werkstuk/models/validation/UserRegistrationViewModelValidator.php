@@ -7,8 +7,7 @@
  * Time: 12:55
  */
 require_once 'UserValidator.php';
-require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] .
-    '/WDA/Werkstuk/models/viewmodels/UserRegistrationViewModel.php';
+require_once ROOT . '/models/viewmodels/UserRegistrationViewModel.php';
 
 /**
  * Class UserRegistrationViewModelValidator
@@ -96,6 +95,7 @@ class UserRegistrationViewModelValidator extends UserValidator
 
         //extra validatie repeatPassword en password
         $this->validateRepeatPassword();
+
     }
 
     /**
@@ -118,6 +118,4 @@ class UserRegistrationViewModelValidator extends UserValidator
             }
         }
     }
-
-
 }

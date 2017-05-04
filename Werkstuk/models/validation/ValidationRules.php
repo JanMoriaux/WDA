@@ -251,7 +251,11 @@ class ValidationRules
      * @return bool|User false indien user niet in database of de user indien wel
      */
     public static function isAuthorizedUser($username,$password){
-        return UserDb::getByUsernameAndPassword($username,$password);
+
+        $hashedName = md5($username);
+        $hashedPw = md5($password);
+
+        return UserDb::getByUsernameAndPassword($hashedName,$hashedPw);
     }
 
 

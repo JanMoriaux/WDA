@@ -48,13 +48,15 @@ class ProductController extends Controller
             call('Home','index');
 
         //id gebruiken om product op te halen
-        if(!$product = ProductDb::getById($_GET['id'])){
+        if(!$thisProduct = ProductDb::getById($_GET['id'])){
             call('Home','index');
         }
 
+        $thisCategory = CategoryDb::getById($thisProduct->getCategoryId());
+
         //sidebar en title
         $categorySidebar = true;
-        $title = "Detail {$product->getName()}";
+        $title = "Detail {$thisProduct->getName()}";
 
         //view wordt embedded in de layout
         $view =  ROOT . '/views/Product/showDetail.php';

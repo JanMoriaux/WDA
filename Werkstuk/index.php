@@ -7,9 +7,24 @@
  */
 
 define('ROOT', __DIR__);
+define('SALT','7h151sMyS4Lt');
+
 require_once ROOT . '/models/entities/ShoppingCart.php';
 require_once ROOT . '/models/entities/Product.php';
 require_once ROOT . '/models/entities/User.php';
+require_once ROOT . '/models/database/CRUD/UserDb.php';
+
+//controleren op 'keeploggedin' cookie
+if(isset($_COOKIE['keeploggedin'])){
+    $cookieValue = $_COOKIE['keeploggedin'];
+    $userName = explode(':',$cookieValue)[0];
+    $password = explode(':',$cookieValue)[1];
+
+    if($user = UserDb::getByUsernameAndPassword($userName,$password)){
+        session_start();
+        $_SESSION['user'] = $user;
+    };
+}
 
 //TODO reference http://requiremind.com/a-most-simple-php-mvc-beginners-tutorial/
 

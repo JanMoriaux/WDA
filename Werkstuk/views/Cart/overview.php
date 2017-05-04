@@ -8,7 +8,7 @@
 ?>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-    <h3>Overzicht Winkelmandje</h3>
+    <h2>Overzicht Winkelmandje</h2>
 
     <?php if (isset($orderDetails) && count($orderDetails) > 0) { ?>
 
@@ -120,7 +120,11 @@
 
     <?php } else { ?>
 
-        <p>Het winkelmandje is leeg!</p>
+
+        <p class="">
+            Er zitten momenteel geen producten in het winkelmandje
+        </p>
+
 
     <?php } ?>
 

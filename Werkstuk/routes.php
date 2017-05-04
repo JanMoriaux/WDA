@@ -44,7 +44,7 @@ function call($controller, $action)
 $controllers = array(
     'Home' => ['index', 'error'],
     'Product' => ['index', 'showDetail', 'showCategory'],
-    'User' => ['login', 'logout'],
+    'User' => ['login', 'logout','register'],
     'Admin' => ['index', 'productOverview', 'editProduct',
         'showProduct', 'insertProduct', 'deleteProduct',
         'categoryOverview','editCategory','insertCategory',

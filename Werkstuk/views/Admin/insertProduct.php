@@ -6,8 +6,6 @@
  * Time: 10:12
  */
 
-
-
 //bericht in verband met geslaagde insert
 if (isset($productInserted)) {
     if ($productInserted) {

@@ -12,7 +12,7 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php';
 ?>
 
     <form class="form"
-          action="index.php?controller=Admin&action=<?php echo $currentAction;?><?php echo isset($values['id']) ? '&id=' .$values['id'] : ''; ?>"
+          action="index.php?controller=Admin&action=<?php echo $_SESSION['currentAction'];?><?php echo isset($values['id']) ? '&id=' .$values['id'] : ''; ?>"
           method="post" enctype="multipart/form-data">
 
         <div class="form-group">
