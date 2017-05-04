@@ -37,14 +37,14 @@
 
 <div class="checkboxcol-lg-12 col-md-12 col-sm-12 col-xs-12">
     <label><input type="checkbox" name="keeploggedin" value="true" id="keeploggedin" />
-    Ingelogd blijven
+    Aangemeld blijven
     </label>
 </div>
 
 <div class="form-group">
     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
         <input class="btn btn-primary btn-lg" type="submit"
-               value="Inloggen"/>
+               value="Aanmelden"/>
     </div>
 </div>
 

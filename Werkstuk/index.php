@@ -7,7 +7,7 @@
  */
 
 define('ROOT', __DIR__);
-define('SALT','7h151sMyS4Lt');
+
 
 require_once ROOT . '/models/entities/ShoppingCart.php';
 require_once ROOT . '/models/entities/Product.php';

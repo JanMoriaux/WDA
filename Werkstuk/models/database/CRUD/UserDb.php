@@ -105,7 +105,7 @@ class UserDb
         $query =
             "INSERT INTO TINY_CLOUDS_USERS(firstName, lastName, userName, password, email, facturationAdressId, deliveryAddressId,isAdmin) " .
             "VALUES ('?','?','?','?','?',NULL,NULL,?)";
-        //TODO password hash
+
 
 
         return self::getConnection()->executeSqlQuery($query, $parameters);
@@ -122,7 +122,7 @@ class UserDb
             return false;
         }
         //TODO foreign key constraints op address id's
-        //TODO password hash
+
         $query = "UPDATE TINY_CLOUDS_USERS SET firstName='?',lastName='?',userName='?',password='?',email='?'," .
             "facturationAdressId=?,deliveryAddressId=?,isAdmin= ? WHERE id=?";
 
@@ -179,7 +179,6 @@ class UserDb
      */
     protected static function convertRowToUser($dbRow)
     {
-        //TODO password hash
         return new User($dbRow['id'], $dbRow['firstName'], $dbRow['lastName'], $dbRow['userName'], $dbRow['password'],
             $dbRow['email'], $dbRow['facturationAdressId'], $dbRow['deliveryAddressId'], $dbRow['isAdmin']);
     }

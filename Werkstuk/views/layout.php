@@ -34,22 +34,12 @@
 
 <!-- navigatie -->
 <header>
-    <?php require_once ROOT . '/views/partial/mainNavPartial.php' ?>
-    <div class="container">
-        <?php
-        //bericht in verband met fout bij login
-        if (isset($userLoggedIn)) {
 
-            if (!$userLoggedIn) { ?>
-                <div class="alert alert-danger row" style="">
-                    Probleem met database: niet ingelogd!
-                </div>
-            <?php }
-        } ?>
-    </div>
+    <?php require_once ROOT . '/views/partial/mainNavPartial.php' ?>
 
 </header>
 <!-- navigatie -->
+
 <div class="container">
 
     <div class="row">

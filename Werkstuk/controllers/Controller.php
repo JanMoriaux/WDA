@@ -35,6 +35,7 @@ class Controller
             $previousController = 'Home';
             $previousAction = 'index';
         }
+
         //terug naar vorige view
         call($previousController, $previousAction);
     }
@@ -50,8 +51,13 @@ class Controller
         if(isset($_SESSION['currentAction'])){
             $_SESSION['previousAction'] = $_SESSION['currentAction'];
         }
+        if(isset($_SESSION['currentId'])){
+            $_SESSION['previousId'] = $_SESSION['currentId'];
+        }
+
         $_SESSION['currentController'] = $this->currentController;
         $_SESSION['currentAction'] = $currentAction;
+
     }
 
     protected function isValidPost($errors)

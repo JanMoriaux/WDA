@@ -42,7 +42,9 @@ abstract class ObjectValidator
         'categoryNoExist' => 'Deze category bestaat niet in de database',
         'productAlreadyInDb' => 'Er bestaat al een product met deze naam',
         //foutboodschappen voor category validatie
-        'categoryAlreadyInDb' => 'Categorie met naam "%s" bestaat al'
+        'categoryAlreadyInDb' => 'Categorie met naam "%s" bestaat al',
+        //foutboodschappen voor rating validatie
+        'alreadyRated' => 'U heeft al een beoordeling aan dit product gegeven'
     );
 
     // De volgende properties zijn arrays met namen van velden die op een bepaalde

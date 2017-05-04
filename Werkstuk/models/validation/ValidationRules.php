@@ -15,6 +15,7 @@
 require_once ROOT . '/models/database/CRUD/ProductDb.php';
 require_once ROOT . '/models/database/CRUD/CategoryDb.php';
 require_once ROOT . '/models/database/CRUD/UserDb.php';
+require_once ROOT . '/models/database/CRUD/RatingDb.php';
 
 /**
  * Class ValidationRules bevat de validatieregels voor verschillende entities en formulieren
@@ -256,6 +257,16 @@ class ValidationRules
         $hashedPw = md5($password);
 
         return UserDb::getByUsernameAndPassword($hashedName,$hashedPw);
+    }
+
+    //Rating
+
+    /**
+     * @param $userId int
+     * @param $productId int
+     */
+    public static function isUniqueUserRating($userId,$productId){
+        return !RatingDb::getByUserIdAndProductId($userId,$productId);
     }
 
 

@@ -20,10 +20,8 @@ class UserController extends Controller
     //POST /index.php?controller=User&action=login
     public function login()
     {
-        $this->setControllerAndActionSessionVariables('login');
-
         if (isset($_SESSION['user'])) {
-            $this->returnToPreviousPage();
+           call('Home','index');
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -31,9 +29,6 @@ class UserController extends Controller
             //errors en values op ''
             $errors = array();
             $values = array();
-
-            $userName = null;
-            $password = null;
 
             $userName = $password = $keeploggedin = null;
 
@@ -47,40 +42,35 @@ class UserController extends Controller
                 $keeploggedin = $_POST['keeploggedin'];
             }
 
+
             $loginViewModel = new UserLoginViewModel($userName, $password);
             $loginViewModelValidator = new UserLoginViewModelValidator($loginViewModel);
 
             $errors = $loginViewModelValidator->getErrors();
             $values = $loginViewModelValidator->getValues();
 
-
             //indien valid gaan we terug naar Home page
-            //anders wordt een uitgebreider formulier getoond
+            //anders wordt formulier opnieuw getoond
             if ($this->isValidPost($errors)) {
                 $userLoggedIn = false;
 
                 if ($user = UserDb::getByUsernameAndPassword(md5($values['userName']), md5($values['password']))) {
 
+
+                    $this->startSession();
+                    $_SESSION['user'] = $user;
+                    $_SESSION['admin'] = $user->isAdmin();
+
                     //als gebruiker ingelogd wil blijven maken we semi-permanente cookie aan,
                     //geldig voor zeven dagen
                     if($keeploggedin){
-
                         setcookie('keeploggedin',
                             "{$user->getUserName()}:{$user->getPassword()}",
                             time() + 60 *60 *24*7);
                     }
 
-                    $_SESSION['user'] = $user;
-                    $_SESSION['admin'] = $user->isAdmin();
+                    call('Home','index');
 
-                    $userLoggedIn = true;
-
-                    //infinite loop fix
-                    if(isset($_SESSION['previousAction']) && $_SESSION['previousAction'] != 'login'){
-                        $this->returnToPreviousPage();
-                    } else{
-                        call('Home','index');
-                    }
                 }
             } else {
                 //sidebar & title
@@ -97,15 +87,15 @@ class UserController extends Controller
 
     public function logout()
     {
-        $this->setControllerAndActionSessionVariables('logout');
-
+        $this->startSession();
         session_unset();
         session_destroy();
 
         //keeploggedin cookie verwijderen
         setcookie('keeploggedin','',time() -1);
 
-        $this->returnToPreviousPage();
+
+        call('Home','index');
     }
 
     //registratie van een nieuwe gebruiker
@@ -115,12 +105,14 @@ class UserController extends Controller
         $categorySidebar = true;
         $title = 'Registreren';
 
-        //post komt terug in deze actie voor validatie
+        //post komt terug in deze action voor validatie
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
-            //todo move?
             $errors = array();
             $values = array();
+
+            $firstName = $lastName = $userName = $password =
+            $repeatPassword = $email = $keeploggedin =null;
 
             //nieuwe UserRegistrationViewModel aanmaken en valideren
             if(isset($_POST['firstName'])){
@@ -141,6 +133,11 @@ class UserController extends Controller
             if(isset($_POST['email'])){
                 $email = $_POST['email'];
             }
+            if(isset($_POST['keeploggedin'])){
+                $keeploggedin = $_POST['keeploggedin'];
+            }
+
+
 
             $userRegistrationViewModel = new UserRegistrationViewModel(null, $firstName, $lastName, $userName,
                 $password, $email, null, null, false, $repeatPassword);
@@ -150,17 +147,27 @@ class UserController extends Controller
 
             if($this->isValidPost($errors)){
 
+                //password en userName hash
                 $user = $urvmValidator->getUser();
                 $user->setUserName(md5($user->getUserName()));
                 $user->setPassword(md5($user->getPassword()));
 
+                //als user is toegevoegd aan de database: inloggen en eventueel cookie setten
                 if($userAdded = UserDb::insertWithoutAddressIds($urvmValidator->getUser())){
                     $values=array();
                     $this->startSession();
-                    $_SESSION['user'] = $urvmValidator->getUser();
-                    $_SESSION['admin'] = $urvmValidator->getUser()->isAdmin();
-                }
 
+                    $user = UserDb::getByUsernameAndPassword(md5($userName),md5($password));
+
+                    $_SESSION['user'] = $user;
+                    $_SESSION['admin'] = $user->isAdmin();
+
+                    if($keeploggedin){
+                        setcookie('keeploggedin',
+                            "{$user->getUserName()}:{$user->getPassword()}",
+                            time() + 60 *60 *24*7);
+                    }
+                }
             };
         }
 

@@ -101,6 +101,12 @@
                     </div>
                 </div>
 
+                <div class="checkboxcol-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label><input type="checkbox" name="keeploggedin" value="true" id="keeploggedin" />
+                        Aangemeld blijven
+                    </label>
+                </div>
+
                 <div class="form-group">
                     <div class="col-md-2">
                         <input class="btn btn-primary btn-lg" type="submit"
