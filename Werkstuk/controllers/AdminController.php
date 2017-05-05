@@ -450,9 +450,9 @@ class AdminController extends Controller
             if (isset($_POST['id']) && $_POST['id']) {
                 $categoryDeleted = false;
 
-                if ($category = ProductDb::getById($_POST['id'])) {
+                if ($category = CategoryDb::getById($_POST['id'])) {
                     $title = $title . $category->getId();
-                    if (ProductDb::deleteById($_POST['id'])) {
+                    if (CategoryDb::deleteById($_POST['id'])) {
                         $categoryDeleted = true;
                     }
                 }
