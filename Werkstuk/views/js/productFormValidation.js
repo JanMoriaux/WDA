@@ -74,6 +74,9 @@ function validateNameField(el) {
     } else if (!hasValidLength(el, 2, 255)) {
         el.addClass('error');
         $(errorLabelId).html('Bevat minimum 2 en maximum 255 tekens');
+    } else if(!isValidName(el)){
+        el.addClass('error');
+        $(errorLabelId).html('Bevat ongeldige tekens');
     }
 }
 
@@ -154,7 +157,7 @@ function valueProvided(el) {
 //http://stackoverflow.com/questions/6449611/how-to-check-whether-a-value-is-a-number-in-javascript-or-jquery
 function isNumeric(el) {
     var number = el.val();
-    number.replace(',', '.');
+    number = number.replace(',', '.');
 
     return !isNaN(parseFloat(number)) && isFinite(number);
 }
@@ -162,10 +165,21 @@ function isNumeric(el) {
 //http://stackoverflow.com/questions/14636536/how-to-check-if-a-variable-is-an-integer-in-javascript
 function isStrictPosInt(el) {
     var number = el.val();
-    number.replace(',', '.');
+    number = number.replace(',', '.');
 
     var x = parseFloat(number);
     return !isNaN(number) && (x | 0) === x && x > 0;
+}
+
+//deze regex verschilt van de PCRE regex in models/validation/ValidationRules.php
+//omdat javascript geen unicode categories toelaat
+//we gaan hier enkel na of er een aantal vreemde tekens, waaronder cijfers, voorkomen
+//in de naam. De rest van de validatie gebeurt server side
+function isValidName(el){
+
+    var regex = new RegExp(/^([^0-9%+=/#@&|{}£^\[\]()*_°]*)$/);
+    return regex.test(el.val());
+
 }
 
 function hasValidBoundariesIncl(el, min, max) {
@@ -174,7 +188,7 @@ function hasValidBoundariesIncl(el, min, max) {
         return false;
 
     var number = el.val();
-    number.replace(',', '.');
+    number = number.replace(',', '.');
 
     return parseFloat(number) >= min && parseFloat(number) <= max;
 }

@@ -16,4 +16,23 @@ $(function () {
         $('span.glyphicon-shopping-cart').hide();
     });
 
+    //toevoegen aan winkelmandje via ajax
+    $('.addToCartButton').click(function(e){
+
+        e.preventDefault();
+        var productId = this.id.substr(6);
+
+        $.ajax(
+            {
+                type:'POST',
+                url: 'index.php?controller=Ajax&action=addItemToCart',
+                data: $('#add' + productId).serialize(),
+                datatype: 'html',
+                success: function(){
+                    $('#add' + productId).replaceWith('<span class="label label-info pull-right">Toegevoegd</span>');
+                }
+            }
+        )
+    });
+
 });

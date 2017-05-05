@@ -35,6 +35,6 @@ require_once ROOT . '/models/entities/ShoppingCart.php';
 
 </div>
 
-<script src="./views/js/cartIconScript.js" />
+<script src="./views/js/cartIconScript.js"></script>
 
 

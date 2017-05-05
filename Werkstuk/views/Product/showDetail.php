@@ -168,8 +168,10 @@
         <div class="" id="alsoInCategory">
             <div class="panel panel-default">
                 <div class="panel-title">
-                    <h3>Andere producten in categorie <?php
-                        echo $thisCategory->getDescription(); ?></h3>
+                    <div class="container">
+                        <h3>Andere producten in categorie <?php
+                            echo $thisCategory->getDescription(); ?></h3>
+                    </div>
                 </div>
                 <div class="panel-body">
                     <?php

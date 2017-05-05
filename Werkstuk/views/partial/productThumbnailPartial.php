@@ -37,7 +37,7 @@
 
             if ($product->getInStock() <= 0) { ?>
 
-                <span class="label label-danger pull-right">Niet in voorraad</span>
+                <span class="label label-danger pull-right">Uitverkocht</span>
 
             <?php } else {
 
