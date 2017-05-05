@@ -37,7 +37,7 @@ abstract class ObjectValidator
         'userNameAlreadyInDb' => '"%s" is niet meer beschikbaar',
         'noUser' => 'Ongeldige combinatie wachtwoord en gebruikersnaam',
         //foutboodschappen voor product validatie
-        'image' => 'Ongeldige bestandsnaam. Enkel afbeeldingen toegelaten.',
+        'image' => 'gro',
         'passwordNotSame' => 'Wachtwoord waarden komen niet overeen',
         'categoryNoExist' => 'Deze category bestaat niet in de database',
         'productAlreadyInDb' => 'Er bestaat al een product met deze naam',

@@ -11,6 +11,10 @@
 .error-label {
     color: red;
 }
+.error{
+    border-color: red;
+}
+
 body {
     padding-top: 80px; /* padding voor .navbar-fixed-top.*/
     background-color: #FEFDFF;

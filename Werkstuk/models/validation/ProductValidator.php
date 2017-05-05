@@ -135,8 +135,9 @@ class ProductValidator extends ObjectValidator
     }
 
     protected function validateUniqueProductName(){
+
         if(empty($this->errors['name']) &&
-            !ValidationRules::isUniqueProductName($this->values['name'],$this->values['id'])){
+            !ValidationRules::isUniqueProductName(trim($this->values['name']),$this->values['id'])){
             $this->errors['name'] = $this->errorValues['productAlreadyInDb'];
             $this->values['name'] = '';
         }

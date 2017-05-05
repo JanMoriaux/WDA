@@ -9,6 +9,7 @@
 require_once ROOT . '/controllers/Controller.php';
 require_once ROOT . '/models/database/CRUD/CategoryDb.php';
 require_once ROOT . '/models/database/CRUD/ProductDb.php';
+require_once ROOT . '/models/validation/ProductValidator.php';
 
 class AjaxController extends Controller
 {
@@ -59,4 +60,5 @@ class AjaxController extends Controller
             }
         }
     }
+
 }

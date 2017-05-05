@@ -113,7 +113,7 @@ class ValidationRules
      */
     public static function isValidName($name){
 
-        $regex = '~^(?:[\p{L}\p{Mn}\p{Pd}\'\x{2019}\s])+$~u';
+        $regex = '/^(?:[\p{L}\p{Mn}\p{Pd}\'\x{2019}\s])+$/u';
 
         if(preg_match($regex,$name)){
             return true;

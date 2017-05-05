@@ -26,7 +26,7 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php';
         <div class="form-group">
             <label class="control-label col-lg-6 col-md-6 col-sm-12 col-xs-12" for="name">Naam:</label>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <label class="error-label control-label">
+                <label class="error-label control-label" id="nameError">
                     <?php echo(isset($errors['name']) ? $errors['name'] : ''); ?>
                 </label>
             </div>
@@ -40,7 +40,7 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php';
         <div class="form-group">
             <label class="control-label col-lg-6 col-md-6 col-sm-12 col-xs-12" for="description">Beschrijving:</label>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <label class="error-label control-label">
+                <label class="error-label control-label" id="descriptionError">
                     <?php echo(isset($errors['description']) ? $errors['description'] : ''); ?>
                 </label>
             </div>
@@ -54,7 +54,7 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php';
         <div class="form-group">
             <label class="control-label col-lg-6 col-md-6 col-sm-12 col-xs-12" for="image">Afbeelding:</label>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <label class="error-label control-label">
+                <label class="error-label control-label" id="imageError">
                     <?php echo(isset($errors['image']) ? $errors['image'] : ''); ?>
                 </label>
             </div>
@@ -68,7 +68,7 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php';
         <div class="form-group">
             <label class="control-label col-lg-6 col-md-6 col-sm-12 col-xs-12" for="price">Prijs:</label>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <label class="error-label control-label">
+                <label class="error-label control-label" id="priceError">
                     <?php echo(isset($errors['price']) ? $errors['price'] : ''); ?>
                 </label>
             </div>
@@ -82,18 +82,18 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php';
         <div class="form-group">
             <label class="control-label col-lg-6 col-md-6 col-sm-12 col-xs-12">Uitlichten:</label>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <label class="error-label control-label">
+                <label class="error-label control-label" id="highLightedError">
                     <?php echo(isset($errors['highLighted']) ? $errors['highLighted'] : ''); ?>
                 </label>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6"><label class="control-label" for="hlyes">Ja</label>
-                    <input class="" type="radio" name="highLighted" id="hlyes" value="1"
+                    <input class="" type="radio" name="highLighted" value="1"
                         <?php echo isset($values['highLighted']) && $values['highLighted'] ?
                             'checked' : '' ?>/>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6"><label class="control-label" for="hlno">Nee</label>
-                    <input class="" type="radio" name="highLighted" id="hlno" value="0"
+                    <input class="" type="radio" name="highLighted" value="0"
                         <?php echo !isset($values['highLighted']) || !$values['highLighted'] ?
                             'checked' : '' ?>/>
                 </div>
@@ -103,7 +103,7 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php';
         <div class="form-group">
             <label class="control-label col-lg-6 col-md-6 col-sm-12 col-xs-12" for="categoryId">Categorie:</label>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <label class="error-label control-label">
+                <label class="error-label control-label" id="categoryIdError">
                     <?php echo(isset($errors['categoryId']) ? $errors['categoryId'] : ''); ?>
                 </label>
             </div>
@@ -122,7 +122,7 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php';
         <div class="form-group">
             <label class="control-label col-lg-6 col-md-6 col-sm-12 col-xs-12" for="inStock">In voorraad:</label>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <label class="error-label control-label">
+                <label class="error-label control-label" id="inStockError">
                     <?php echo(isset($errors['inStock']) ? $errors['inStock'] : ''); ?>
                 </label>
             </div>
@@ -139,5 +139,5 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php';
                        value="<?php echo $_SESSION['currentAction'] === 'insertProduct' ? 'Toevoegen' : 'Wijzigen' ;?>"/>
             </div>
         </div>
-
     </form>
+<script src="./views/js/productFormValidation.js"></script>

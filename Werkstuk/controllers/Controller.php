@@ -71,4 +71,38 @@ class Controller
         return true;
     }
 
+    protected function getProductFromPost()
+    {
+        $id = $name = $description = $image = $price = $highLighted = $categoryId = $inStock = null;
+
+        if (isset($_POST['id'])) {
+            $id = $_POST['id'];
+        }
+        if (isset($_POST['name'])) {
+            $name = $_POST['name'];
+        }
+        if (isset($_POST['description'])) {
+            $description = $_POST['description'];
+        }
+        if (isset($_FILES['image'])) {
+            $image = $_FILES['image']['name'];
+        }
+        if (isset($_POST['price'])) {
+            $price = $_POST['price'];
+        }
+        if (isset($_POST['highLighted'])) {
+            $highLighted = $_POST['highLighted'];
+        }
+        if (isset($_POST['categoryId'])) {
+            $categoryId = $_POST['categoryId'];
+        }
+        if (isset($_POST['inStock'])) {
+            $inStock = $_POST['inStock'];
+        }
+
+        return new Product($id, $name, $description, $image, $price, $highLighted,
+            $categoryId, $inStock, new DateTime());
+    }
+
+
 }

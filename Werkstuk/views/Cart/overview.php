@@ -19,7 +19,7 @@
                 <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4">Naam</th>
                 <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-right">Eenheidsprijs</th>
                 <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center">Aantal</th>
-                <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center">Stock</th>
+                <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center">Beschikbaar</th>
                 <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></th>
                 <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></th>
                 <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></th>
