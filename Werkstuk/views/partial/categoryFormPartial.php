@@ -7,7 +7,7 @@
  */
 ?>
         <!-- id -->
-        <input type="hidden" name="id" value="<?php echo isset($values['id']) ? $values['id'] : '' ;?>"
+        <input type="hidden" name="id" value="<?php echo isset($values['id']) ? $values['id'] : '' ;?>" />
 
         <!-- description -->
         <div class="form-group">

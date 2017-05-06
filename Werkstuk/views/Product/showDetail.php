@@ -47,7 +47,8 @@
                             <input type="hidden" name="id" value="<?php echo $thisProduct->getId(); ?>"/>
                             <button type="submit" class="cartIcon addToCartButtonDetail"
                                     id="submit<?php echo $thisProduct->getId(); ?>">
-                                <h2 class="glyphicon glyphicon-shopping-cart"></h2>
+                                <span class="glyphicon glyphicon-shopping-cart">
+                                </span>
                             </button>
                         </form>
 
@@ -73,7 +74,7 @@
 
                 <div class="col-lg-9 col-md-9 col-sm-8 col-xs-6" id="productDetails">
                     <p><strong>Categorie: </strong></p>
-                    <p><?php echo $thisCategory->getDescription() ?></>
+                    <p><?php echo $thisCategory->getDescription() ?></p>
                     <p><strong>Beschrijving: </strong></p>
                     <p><?php echo $thisProduct->getDescription(); ?></p>
                     <p><strong>Prijs: </strong></p>

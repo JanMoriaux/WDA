@@ -53,14 +53,14 @@ require_once ROOT . '/models/entities/User.php';
                 <form class="navbar-form navbar-right" method="post"
                       action="index.php?controller=User&action=login">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="userName" placeholder="Gebruikersnaam">
+                        <input type="text" class="form-control" name="userName" placeholder="Gebruikersnaam" id="userNameNav">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" name="password" placeholder="Wachtwoord">
+                        <input type="password" class="form-control" name="password" placeholder="Wachtwoord" id="passwordNav">
                     </div>
                     <div class="navbar-btn checkbox">
-                        <label class=small for="keeploggedin">
-                            <input class="autosubmit" id="keeploggedin" type="checkbox" name="keeploggedin" value="true">
+                        <label class=small for="keeploggedinNav">
+                            <input class="autosubmit" id="keeploggedinNav" type="checkbox" name="keeploggedin" value="true">
                             Onthoud mij
                         </label>
                     </div>

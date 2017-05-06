@@ -124,8 +124,8 @@
             <h2>U ben geregistreerd!</h2>
         </div>
 
-
     <?php } ?>
+</div>
 
 
 

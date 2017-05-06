@@ -10,12 +10,12 @@
     <h2>Overzicht Producten</h2>
 </div>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <table class="table" id="admin_product_table">
+    <table class="table " id="admin_product_table">
         <thead>
         <tr>
             <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Id</th>
-            <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Naam</th>
-            <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-right">Prijs</th>
+            <th class="">Naam</th>
+            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-right">Prijs</th>
             <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center">Uitgelicht</th>
             <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center">Stock</th>
             <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center">Detail</th>
@@ -29,7 +29,7 @@
             ?>
             <tr>
                 <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1"><?php echo $product->getId(); ?></td>
-                <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1"><?php echo $product->getName(); ?></td>
+                <td class=""><div class="row-fluid"><?php echo $product->getName(); ?></div></td>
                 <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-right">&euro; <?php echo sprintf('%.2f', $product->getPrice()); ?></td>
                 <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center">
                     <?php echo $product->isHighLighted() ?

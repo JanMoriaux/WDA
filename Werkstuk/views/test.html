@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <link href='//fonts.googleapis.com/css?family=Annie%20Use%20Your%20Telescope' rel='stylesheet'>
+    <link href="./views/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+    <link href="./views/css/bootstrap-theme.min.css" type="text/css" rel="stylesheet"/>
+    <link href="./views/css/custom.css" type="text/css" rel="stylesheet"/>
+
+
+    <!-- scripts -->
+
+    <script src="./views/js/jquery-3.2.1.min.js"></script>
+    <!--<script src="/WDA/Werkstuk/views/js/npm.js"></script>-->
+    <script src="./views/js/bootstrap.min.js"></script>
+    <script src="./views/js/ajax.js"></script>
+
+
+    <!-- scripts -->
+
+    <title>Registreren</title>
+</head>
+<body>
+
+<!-- navigatie -->
+<header>
+
+    <!-- navigatie -->
+    <nav class="navbar navbar-fixed-top" id="mainNavBar">
+        <div class="container">
+            <!-- navbar brand en links collapse-->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.php">Tiny Clouds</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="index.php?controller=Product&action=index">Producten</a>
+                    </li>
+                    <li>
+                        <a href="index.php?controller=Admin&action=index">Admin</a>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                    <li>
+                        <a class=""
+                           href="index.php?controller=Cart&action=overview">
+                            Winkelmandje
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="" href="index.php?controller=User&action=register">Registreren</a>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-right" method="post"
+                      action="index.php?controller=User&action=login">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="userName" placeholder="Gebruikersnaam"
+                               id="userNameNav">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password" placeholder="Wachtwoord"
+                               id="passwordNav">
+                    </div>
+                    <div class="navbar-btn checkbox">
+                        <label class=small for="keeploggedin">
+                            <input class="autosubmit" id="keeploggedinNav" type="checkbox" name="keeploggedin"
+                                   value="true">
+                            Onthoud mij
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Aanmelden</button>
+                </form>
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+</header>
+<!-- navigatie -->
+
+<div class="container">
+    <div class="row">
+        <!-- sidebar -->
+
+
+        <div class="col-lg-3 col-md-3 col-sm-5 col-xs-5">
+            <p class="lead"> Tiny Clouds </p>
+            <div class="list-group">
+
+                <!-- sidebar met de verschillende productcategorieën -->
+                <a href=
+                           "index.php?controller=Product&action=index"
+                   title="Alle Producten"
+                   class="categoryFilter list-group-item ">
+                    Alle Producten
+                </a>
+                <a id="category5"
+                   href="index.php?controller=Product&action=showCategory&id=5"
+                   title="Eten"
+                   class="categoryFilter list-group-item ">
+                    Eten </a>
+                <a id="category16"
+                   href="index.php?controller=Product&action=showCategory&id=16"
+                   title="Kleding"
+                   class="categoryFilter list-group-item ">
+                    Kleding </a>
+                <a id="category6"
+                   href="index.php?controller=Product&action=showCategory&id=6"
+                   title="Onderweg"
+                   class="categoryFilter list-group-item ">
+                    Onderweg </a>
+                <a id="category7"
+                   href="index.php?controller=Product&action=showCategory&id=7"
+                   title="Slapen"
+                   class="categoryFilter list-group-item ">
+                    Slapen </a>
+                <a id="category1"
+                   href="index.php?controller=Product&action=showCategory&id=1"
+                   title="Speelgoed"
+                   class="categoryFilter list-group-item ">
+                    Speelgoed </a>
+                <a id="category15"
+                   href="index.php?controller=Product&action=showCategory&id=15"
+                   title="Veiligheid"
+                   class="categoryFilter list-group-item ">
+                    Veiligheid </a>
+
+                <!-- TODO andere sidebar functies -->
+
+            </div><!-- div.listgroup -->
+        </div><!-- div.col md 3 -->
+
+
+        <!-- sidebar -->
+        <!-- banner -->
+        <div class="col-lg-9 col-md-9 col-sm-7 col-xs-7">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="well well-lg" id="banner">
+                        <h1 class="">Tiny Clouds</h1>
+                    </div>
+                </div>
+            </div>
+            <!-- banner -->
+            <!-- view -->
+            <div class="row" id="pageContent">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="pageTitle">
+                        <h2>Gebruiker Registreren</h2>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                        <form class="form" method="post" action="index.php?controller=User&action=register"
+                              id="userRegistrationForm">
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-6 col-md-6 col-sm-12 col-xs-12" for="firstName">
+                                    Voornaam:</label>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label class="error-label control-label" id="firstNameError">
+                                    </label>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <input class="form-control" type="text" name="firstName" id="firstName"
+                                           value=""
+                                           placeholder="Voornaam"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-6 col-md-6 col-sm-12 col-xs-12" for="lastName">Achternaam:</label>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label class="error-label control-label" id="lastNameError">
+                                    </label>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <input class="form-control" type="text" name="lastName" id="lastName"
+                                           value=""
+                                           placeholder="Achternaam"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-6 col-md-6 col-sm-12 col-xs-12" for="userName">Gebruikersnaam:</label>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label class="error-label control-label" id="userNameError">
+                                    </label>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <input class="form-control" type="text" name="userName" id="userName"
+                                           value=""
+                                           placeholder="Gebruikersnaam"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-6 col-md-6 col-sm-12 col-xs-12" for="password">Wachtwoord:</label>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label class="error-label control-label" id="passwordError">
+                                    </label>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <input class="form-control" type="password" name="password" id="password"
+                                           value=""
+                                           placeholder="Wachtwoord"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-6 col-md-6 col-sm-12 col-xs-12" for="repeatPassword">Herhaal
+                                    Wachtwoord:</label>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label class="error-label control-label" id="repeatPasswordError">
+                                    </label>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <input class="form-control" type="password" name="repeatPassword"
+                                           id="repeatPassword"
+                                           value=""
+                                           placeholder="Herhaal wachtwoord"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-6 col-md-6 col-sm-12 col-xs-12"
+                                       for="email">Email:</label>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label class="error-label control-label" id="emailError">
+                                    </label>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <input class="form-control" type="text" name="email" id="email"
+                                           value=""
+                                           placeholder="jan.janssen@voorbeeld.com"/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <label><input type="checkbox" name="keeploggedin" value="true" id="keeploggedin"/>
+                                    Aangemeld blijven
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <input class="btn btn-primary btn-lg" type="submit"
+                                           value="Registreren"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <script src="./views/js/validationRules.js"></script>
+                    <script src="./views/js/userRegistrationFormValidation.js"></script>
+
+
+                </div>
+            </div>
+            <!-- view -->
+        </div>
+    </div></div>
+    <!-- .footer -->
+    <!--    <footer class="footer" id="footer">-->
+    <!---->
+    <!--        <div class="container">-->
+    <!--            <p class="text-muted">Copyright &copy; Tiny Clouds -->
+    <!-- Dedicated to Felix and Abel-->
+    <!--                Moriaux</p>-->
+    <!--        </div>-->
+    <!---->
+    <!--    </footer>-->
+    <!-- .footer -->
+</body>
+</html>

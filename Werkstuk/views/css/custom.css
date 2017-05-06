@@ -4,6 +4,7 @@
     /*height: 78px;*/
    background-color: #ECFAFF;
 }
+
 #banner{
     background-color: #ECFAFF;
 
@@ -82,7 +83,7 @@ thumbnail bevat .imageholder, .caption en .cart
     height:25%;
 }
 
-.glyphicon-shopping-cart{
+.productHolder .glyphicon-shopping-cart{
     font-size: 1.2em;
     color:#FFBBBB;
 }
@@ -111,8 +112,8 @@ footer {
 
 /*Admin/productOverview Admin/categoryOverview*/
 #admin_product_table td, #admin_category_table td{
-    overflow: hidden;
-    white-space: nowrap;
+    /*overflow: hidden;*/
+    /*white-space: nowrap;*/
 }
 
 /*Admin/editProduct*/
@@ -142,3 +143,8 @@ td img{
     width:100%;
 }
 
+.panel-body .glyphicon{
+    font-size: 30px;
+    color:#FFBBBB;
+    margin: 20px;
+}

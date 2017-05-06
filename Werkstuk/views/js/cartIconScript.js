@@ -3,7 +3,7 @@
  */
 $(function () {
     //alle winkelmandje iconen verbergen
-    $('span.glyphicon-shopping-cart').hide();
+    $('.thumbnail span.glyphicon-shopping-cart').hide();
 
     //tonen bij mouseenter en mouseover, verbergen bij mouseleave
     $('div.productHolder').mouseover(function (e) {

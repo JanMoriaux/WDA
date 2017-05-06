@@ -12,7 +12,7 @@
 <head>
     <meta charset="utf-8">
 
-    <link href='//fonts.googleapis.com/css?family=Annie Use Your Telescope' rel='stylesheet'>
+    <link href='//fonts.googleapis.com/css?family=Annie%20Use%20Your%20Telescope' rel='stylesheet'>
     <link href="./views/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
     <link href="./views/css/bootstrap-theme.min.css" type="text/css" rel="stylesheet"/>
     <link href="./views/css/custom.css" type="text/css" rel="stylesheet"/>
@@ -41,13 +41,10 @@
 <!-- navigatie -->
 
 <div class="container">
-
     <div class="row">
-
         <!-- sidebar -->
         <?php require_once ROOT . '/views/partial/sidebarPartial.php' ?>
         <!-- sidebar -->
-
         <!-- banner -->
         <div class="col-lg-9 col-md-9 col-sm-7 col-xs-7">
             <div class="row">
@@ -58,8 +55,6 @@
                 </div>
             </div>
             <!-- banner -->
-
-
             <!-- view -->
             <div class="row" id="pageContent">
                 <?php
@@ -68,24 +63,20 @@
                 }
                 ?>
             </div>
-
         </div>
         <!-- view -->
-
     </div>
 </div>
-
-
 <!-- .footer -->
 <!--    <footer class="footer" id="footer">-->
 <!---->
 <!--        <div class="container">-->
-<!--            <p class="text-muted">Copyright &copy; Tiny Clouds --><?php //echo date('Y'); ?><!-- Dedicated to Felix and Abel-->
+<!--            <p class="text-muted">Copyright &copy; Tiny Clouds -->
+<?php //echo date('Y'); ?><!-- Dedicated to Felix and Abel-->
 <!--                Moriaux</p>-->
 <!--        </div>-->
 <!---->
 <!--    </footer>-->
 <!-- .footer -->
-
 </body>
 </html>
