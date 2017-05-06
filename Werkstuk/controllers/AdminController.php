@@ -22,6 +22,8 @@ class AdminController extends Controller
     //GET index.php?controller=Admin&action=index
     public function index()
     {
+        $this->setControllerAndActionSessionVariables('index');
+
         //verwerking van eventuele post-data van login form
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -32,13 +34,13 @@ class AdminController extends Controller
             $userName = $password = $keeploggedin = null;
 
             if (isset($_POST['userName'])) {
-                $userName = $_POST['userName'];
+                $userName = trim($_POST['userName']);
             }
             if (isset($_POST['password'])) {
-                $password = $_POST['password'];
+                $password = trim($_POST['password']);
             }
             if(isset($_POST['keeploggedin'])){
-                $keeploggedin = $_POST['keeploggedin'];
+                $keeploggedin = trim($_POST['keeploggedin']);
             }
 
             $loginViewModel = new UserLoginViewModel($userName, $password);
@@ -482,7 +484,7 @@ class AdminController extends Controller
         if (isset($_POST['id']))
             $id = $_POST['id'];
         if (isset($_POST['description']))
-            $description = $_POST['description'];
+            $description = trim($_POST['description']);
 
         return new Category($id, $description);
     }

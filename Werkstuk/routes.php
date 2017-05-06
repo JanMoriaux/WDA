@@ -50,7 +50,7 @@ $controllers = array(
         'categoryOverview','editCategory','insertCategory',
         'deleteCategory'],
     'Cart' => ['addProduct','overview','deleteProduct','increaseUnits','decreaseUnits'],
-    'Ajax' => ['showCategory','addItemToCart','insertProduct']
+    'Ajax' => ['showCategory','addItemToCart','validateUniqueUserName','validateUniqueProductName']
 );
 
 //controleren of de controller en action toegestaan zijn

@@ -33,13 +33,13 @@ class UserController extends Controller
             $userName = $password = $keeploggedin = null;
 
             if (isset($_POST['userName'])) {
-                $userName = $_POST['userName'];
+                $userName = trim($_POST['userName']);
             }
             if (isset($_POST['password'])) {
-                $password = $_POST['password'];
+                $password = trim($_POST['password']);
             }
             if(isset($_POST['keeploggedin'])){
-                $keeploggedin = $_POST['keeploggedin'];
+                $keeploggedin = trim($_POST['keeploggedin']);
             }
 
 
@@ -82,7 +82,6 @@ class UserController extends Controller
         }
     }
 
-
     public function logout()
     {
         $this->startSession();
@@ -114,22 +113,22 @@ class UserController extends Controller
 
             //nieuwe UserRegistrationViewModel aanmaken en valideren
             if(isset($_POST['firstName'])){
-                $firstName = $_POST['firstName'];
+                $firstName = trim($_POST['firstName']);
             }
             if(isset($_POST['lastName'])){
-                $lastName = $_POST['lastName'];
+                $lastName = trim($_POST['lastName']);
             }
             if(isset($_POST['userName'])){
-                $userName = $_POST['userName'];
+                $userName = trim($_POST['userName']);
             }
             if(isset($_POST['password'])){
-                $password = $_POST['password'];
+                $password = trim($_POST['password']);
             }
             if(isset($_POST['repeatPassword'])){
-                $repeatPassword = $_POST['repeatPassword'];
+                $repeatPassword = trim($_POST['repeatPassword']);
             }
             if(isset($_POST['email'])){
-                $email = $_POST['email'];
+                $email = trim($_POST['email']);
             }
             if(isset($_POST['keeploggedin'])){
                 $keeploggedin = $_POST['keeploggedin'];
@@ -172,5 +171,4 @@ class UserController extends Controller
         $view = ROOT . '/views/User/register.php';
         require_once ROOT . '/views/layout.php';
     }
-
 }
