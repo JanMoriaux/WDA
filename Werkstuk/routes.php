@@ -44,13 +44,15 @@ function call($controller, $action)
 $controllers = array(
     'Home' => ['index', 'error'],
     'Product' => ['index', 'showDetail', 'showCategory'],
-    'User' => ['login', 'logout','register'],
+    'User' => ['login', 'logout', 'register'],
     'Admin' => ['index', 'productOverview', 'editProduct',
         'showProduct', 'insertProduct', 'deleteProduct',
-        'categoryOverview','editCategory','insertCategory',
+        'categoryOverview', 'editCategory', 'insertCategory',
         'deleteCategory'],
-    'Cart' => ['addProduct','overview','deleteProduct','increaseUnits','decreaseUnits'],
-    'Ajax' => ['showCategory','addItemToCart','validateUniqueUserName','validateUniqueProductName']
+    'Cart' => ['addProduct', 'overview', 'deleteProduct', 'increaseUnits', 'decreaseUnits',
+        'createOrder', 'addDeliveryAddress', 'addFacturationAddress', 'chooseDeliveryPaymentAndAcceptTerms',
+        'reviewOrder'],
+    'Ajax' => ['showCategory', 'addItemToCart', 'validateUniqueUserName', 'validateUniqueProductName']
 );
 
 //controleren of de controller en action toegestaan zijn

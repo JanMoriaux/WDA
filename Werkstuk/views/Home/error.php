@@ -6,6 +6,14 @@
  * Time: 20:56
  */
 ?>
-<p>A tiny little error</p>
 
-<p>Looks like something went wrong.</p>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+    <p class="alert alert-danger">
+        <?php echo (isset($errorMessage) && !empty($errorMessage)) ?
+            $errorMessage : 'Er heeft zich een probleem voorgedaan' ;?>
+    </p>
+
+
+</div>
+

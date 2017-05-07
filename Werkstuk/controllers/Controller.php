@@ -45,15 +45,22 @@ class Controller
     //die product aan winkelwagen toevoegt en dan de vorige action weer oproept
     protected function setControllerAndActionSessionVariables($currentAction){
         $this->startSession();
+
         if(isset($_SESSION['currentController'])){
             $_SESSION['previousController'] = $_SESSION['currentController'];
+        } else{
+            $_SESSION['previousController'] = $this->currentController;
         }
+
         if(isset($_SESSION['currentAction'])){
             $_SESSION['previousAction'] = $_SESSION['currentAction'];
+        } else{
+            $_SESSION['previousAction'] = $currentAction;
         }
-        if(isset($_SESSION['currentId'])){
-            $_SESSION['previousId'] = $_SESSION['currentId'];
-        }
+
+//        if(isset($_SESSION['currentId'])){
+//            $_SESSION['previousId'] = $_SESSION['currentId'];
+//        }
 
         $_SESSION['currentController'] = $this->currentController;
         $_SESSION['currentAction'] = $currentAction;

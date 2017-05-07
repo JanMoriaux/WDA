@@ -113,9 +113,12 @@
                     &euro;<?php echo $totalPrice; ?>
                 </th>
             </tr>
-
             </tbody>
         </table>
+
+        <a href="index.php?controller=Cart&action=createOrder" class="btn btn-lg btn-primary">
+            Bestellen
+        </a>
 
 
     <?php } else { ?>
