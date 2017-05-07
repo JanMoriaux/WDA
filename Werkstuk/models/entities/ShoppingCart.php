@@ -48,7 +48,7 @@ class ShoppingCart
     }
 
     public function addOrderDetail($productId,$quantity){
-        $orderDetail = new OrderDetail($productId,$quantity);
+        $orderDetail = new OrderDetail(null,$productId,$quantity);
         $this->orderDetails[$productId] = $orderDetail;
     }
 

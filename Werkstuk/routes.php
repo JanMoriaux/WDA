@@ -51,7 +51,7 @@ $controllers = array(
         'deleteCategory'],
     'Cart' => ['addProduct', 'overview', 'deleteProduct', 'increaseUnits', 'decreaseUnits',
         'createOrder', 'addDeliveryAddress', 'addFacturationAddress', 'chooseDeliveryPaymentAndAcceptTerms',
-        'reviewOrder'],
+        'reviewOrder','placeOrder'],
     'Ajax' => ['showCategory', 'addItemToCart', 'validateUniqueUserName', 'validateUniqueProductName']
 );
 

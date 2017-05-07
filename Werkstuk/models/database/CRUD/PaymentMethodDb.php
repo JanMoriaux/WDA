@@ -17,9 +17,6 @@ class PaymentMethodDb
         return DatabaseFactory::getDatabase();
     }
 
-    /**
-     * @return array Product alle producten uit de products tabel
-     */
     public static function getAll()
     {
         $result = self::getConnection()->executeSqlQuery("SELECT * FROM TINY_CLOUDS_PAYMENT_METHODS");

@@ -150,10 +150,10 @@ class ProductDb
     }
 
     protected static function convertRowToProduct($dbRow)
-    {
-        return new Product($dbRow['id'], $dbRow['name'], $dbRow['description'], $dbRow['image'], $dbRow['price'],
-            (boolean)$dbRow['isHighlighted'], $dbRow['categoryId'], $dbRow['inStock'], new DateTime($dbRow['dateAdded']));
-    }
+{
+    return new Product($dbRow['id'], $dbRow['name'], $dbRow['description'], $dbRow['image'], $dbRow['price'],
+        (boolean)$dbRow['isHighlighted'], $dbRow['categoryId'], $dbRow['inStock'], new DateTime($dbRow['dateAdded']));
+}
 
     protected static function getProductArrayFromResult($result){
         $resultArray = array();

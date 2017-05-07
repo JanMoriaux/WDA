@@ -12,6 +12,15 @@ require_once ROOT . '/models/entities/Address.php';
 class Order
 {
     /**
+     * @var int
+     */
+    protected $id;
+    /**
+     * @var int
+     */
+    protected $userId;
+
+    /**
      * @var ShoppingCart
      */
     protected $cart;
@@ -35,13 +44,109 @@ class Order
      * @var boolean
      */
     protected $termsAccepted;
+    /**
+     * @var boolean
+     */
+    protected $payed;
+    /**
+     * @var DateTime
+     */
+    protected $dateOrdered;
 
-
-    public function __construct($cart)
+    /**
+     * Order constructor.
+     * @param int $id
+     * @param int $userId
+     * @param ShoppingCart $cart
+     * @param Address $deliveryAddress
+     * @param Address $facturationAddress
+     * @param int $deliveryMethodId
+     * @param int $paymentMethodId
+     * @param bool $termsAccepted
+     * @param bool $payed
+     * @param DateTime $dateOrdered
+     */
+    public function __construct($id, $userId, ShoppingCart $cart, Address $deliveryAddress, Address $facturationAddress, $deliveryMethodId, $paymentMethodId, $termsAccepted, $payed, DateTime $dateOrdered)
     {
+        $this->id = $id;
+        $this->userId = $userId;
         $this->cart = $cart;
-
+        $this->deliveryAddress = $deliveryAddress;
+        $this->facturationAddress = $facturationAddress;
+        $this->deliveryMethodId = $deliveryMethodId;
+        $this->paymentMethodId = $paymentMethodId;
+        $this->termsAccepted = $termsAccepted;
+        $this->payed = $payed;
+        $this->dateOrdered = $dateOrdered;
     }
+
+    /**
+     * @return bool
+     */
+    public function isPayed()
+    {
+        return $this->payed;
+    }
+
+    /**
+     * @param bool $payed
+     */
+    public function setPayed($payed)
+    {
+        $this->payed = $payed;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param int $userId
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+    }
+
+
+
+    /**
+     * @return DateTime
+     */
+    public function getDateOrdered()
+    {
+        return $this->dateOrdered;
+    }
+
+    /**
+     * @param DateTime $dateOrdered
+     */
+    public function setDateOrdered($dateOrdered)
+    {
+        $this->dateOrdered = $dateOrdered;
+    }
+
 
     /**
      * @return ShoppingCart

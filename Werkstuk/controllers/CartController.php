@@ -12,6 +12,10 @@ require_once ROOT . '/models/validation/AddressValidator.php';
 require_once ROOT . '/models/database/CRUD/PaymentMethodDb.php';
 require_once ROOT . '/models/database/CRUD/DeliveryMethodDb.php';
 require_once ROOT . '/models/database/CRUD/ProductDb.php';
+require_once ROOT . '/models/database/CRUD/AddressDb.php';
+require_once ROOT . '/models/database/CRUD/OrderDetailDb.php';
+require_once ROOT . '/models/database/CRUD/OrderDb.php';
+
 
 
 class CartController extends Controller
@@ -159,7 +163,19 @@ class CartController extends Controller
                 //indien er artikels in het winkelmandje zitten voegen we een nieuwe
                 // Order sessionvariabele toe en gaan we door naar invoer van het besteladres
                 if ($cart->getOrderDetails() !== null && count($cart->getOrderDetails()) > 0) {
-                    $_SESSION['order'] = new Order($cart);
+
+                    $_SESSION['order'] = new Order(null,
+                        null,
+                        $cart,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        0,
+                        null
+                    );
+
                     call('Cart', 'addDeliveryAddress');
                 } else {
                     call('Home', 'index');
@@ -390,6 +406,42 @@ class CartController extends Controller
 
         $view = ROOT . '/views/Cart/reviewOrder.php';
         require_once ROOT . '/views/layout.php';
+    }
+
+    public function placeOrder(){
+        //todo adressen wegscrhijven naar db en id' terugvangen
+        //todo order aanmaken in db met address id's, userid,deliverymethodid,paymentmethodid,ispayed nul
+        //todo ispayed toevoegen afhankelijk van betaalwijze
+        //id terugvangen
+        //per artikel aantal eenheden aftrekken en een orderdetail lijn maken met id van order
+
+        $this->setControllerAndActionSessionVariables('placeOrder');
+
+//        $facturationAddressId = AddressDb::insert($_SESSION['order']->getFacturationAddress());
+//        echo 'id: ' . $facturationAddressId;
+
+//        foreach($_SESSION['order']->getCart()->getOrderDetails() as $orderDetail){
+//
+//            $orderDetail->setOrderId(1);
+//
+//            OrderDetailDb::insert($orderDetail);
+//        }
+
+        $order = $_SESSION['order'];
+
+        //indien er niet bij levering wordt betaald zetten we de
+        //status van de bestelling op betaald
+        $order->getPaymentMethodId() != 3 ? $order->setPayed(true) : $order->setPayed(false);
+
+        //de userid aan de order toevoegen
+        $order->setUserId($_SESSION['user']->getId());
+
+        $orderId = OrderDb::insert($order);
+
+
+
+
+
 
     }
 

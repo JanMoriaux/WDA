@@ -168,7 +168,12 @@
         </div>
         <!-- Overzicht artikelen en totaalprijs -->
 
-        
+        <!-- Bestel button -->
+        <a class="btn btn-primary btn-lg" href="index.php?controller=Cart&action=placeOrder" title="Bestellen">
+            Bestellen
+        </a>
+
+        <!-- /Bestel button -->
 
     <?php } ?>
 

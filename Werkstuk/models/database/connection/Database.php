@@ -41,7 +41,7 @@ class Database
             $this->connection->connect_error);
     }
 
-    protected function closeDatabaseConnection(){
+    public function closeDatabaseConnection(){
         if($this->connection != null){
             $this->connection->close();
             $this->connection = null;
@@ -55,6 +55,10 @@ class Database
 
     public function executeSqlQuery($sqlQuery, $parameterArray = null){
         return $this->executeAdvancedSqlQuery($sqlQuery, true, $parameterArray);
+    }
+
+    public function executeSqlQueryWithoutClosing($sqlQuery, $parameterArray = null){
+        return $this->executeAdvancedSqlQuery($sqlQuery, false, $parameterArray);
     }
 
     /**
@@ -84,5 +88,9 @@ class Database
             $this->closeDatabaseConnection();
         }
         return $result;
+    }
+
+    public function getInsertId(){
+        return $this->connection->insert_id;
     }
 }

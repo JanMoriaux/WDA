@@ -13,6 +13,10 @@ class OrderDetail
     /**
      * @var int
      */
+    protected $orderId;
+    /**
+     * @var int
+     */
     protected $productId;
     /**
      * @var int
@@ -21,13 +25,31 @@ class OrderDetail
 
     /**
      * OrderDetail constructor.
+     * @param int $orderId
      * @param int $productId
      * @param int $quantity
      */
-    public function __construct($productId, $quantity)
+    public function __construct($orderId,$productId, $quantity)
     {
+        $this->orderId = $orderId;
         $this->productId = $productId;
         $this->quantity = $quantity;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrderId()
+    {
+        return $this->orderId;
+    }
+
+    /**
+     * @param int $orderId
+     */
+    public function setOrderId($orderId)
+    {
+        $this->orderId = $orderId;
     }
 
     /**
