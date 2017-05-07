@@ -53,17 +53,18 @@ class OrderDb
             $deliveryAddressId = AddressDb::insert($order->getDeliveryAddress());
             $facturationAddressId = AddressDb::insert($order->getFacturationAddress());
 
+
             //dan het order zelf toevoegen
             $query = 'INSERT INTO TINY_CLOUDS_ORDERS(userId, facturationAddressId, deliveryAddressId, deliveryMethodId, paymentMethodId, isPayed) ' .
                 'VALUES(?,?,?,?,?,?)';
             $parameters = array($order->getUserId(),$facturationAddressId,$deliveryAddressId,$order->getDeliveryMethodId(),
-                $order->getPaymentMethodId(),$order->isPayed());
+                $order->getPaymentMethodId(),(int)$order->isPayed());
 
             self::getConnection()->executeSqlQueryWithoutClosing($query,$parameters);
             $orderId = self::getConnection()->getInsertId();
             self::getConnection()->closeDatabaseConnection();
 
-            //daarna alle orderdetails toevoegen en hoeveelheden aanpassen
+            //daarna alle orderdetails toevoegen en product stock aanpassen
             foreach($order->getCart()->getOrderDetails() as $orderDetail){
                 $orderDetail->setOrderId($orderId);
                 ProductDb::updateStock($orderDetail->getProductId(),-$orderDetail->getQuantity());
@@ -76,16 +77,19 @@ class OrderDb
         }
     }
 
-    protected static function convertRowToProduct($dbRow)
+    //mapping voor Order lijn in db naar Order object
+    //opvragen van alle orderdetails en in de $cart property
+    //opvragen van facturationAddress en deliveryAddress
+    protected static function convertRowToOrder($dbRow)
     {
         $order =  new Order($dbRow['id'], $dbRow['userId'], null, null, null,
-            $dbRow['deliveryMethodId'], $dbRow['payementMethodId'], true,(boolean)$dbRow['isPayed'], new DateTime($dbRow['dateOrdered']));
+            $dbRow['deliveryMethodId'], $dbRow['paymentMethodId'], true,(boolean)$dbRow['isPayed'], new DateTime($dbRow['dateOrdered']));
 
         //alle orderlijnen toevoegen aan het order
         $order->setCart(new ShoppingCart());
         $orderDetails = OrderDetailDb::getByOrderId($order->getId());
         foreach($orderDetails as $orderDetail){
-            $order->getCart()->addOrderDetail($orderDetail->getProduct(),$orderDetail->getQuantity);
+            $order->getCart()->addOrderDetail($orderDetail->getProductId(),$orderDetail->getQuantity());
         }
 
         //adressen aan het order toevoegen
@@ -94,7 +98,7 @@ class OrderDb
         $order->setFacturationAddress($facturationAddress);
         $order->setDeliveryAddress($deliveryAddressId);
 
-        return order;
+        return $order;
     }
 
     protected static function getOrderArrayFromResult($result){

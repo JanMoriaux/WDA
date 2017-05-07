@@ -11,7 +11,7 @@
  *
  *
  */
-require_once $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/WDA/Werkstuk/models/database/connection/Database.PHP';
+require_once ROOT . '/models/database/connection/Database.php';
 
 class DatabaseFactory
 {

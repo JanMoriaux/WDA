@@ -8,9 +8,6 @@
 define (ROOT,__DIR__);
 
 require_once __DIR__ . '/models/database/CRUD/AddressDb.php';
+require_once __DIR__ . '/models/database/CRUD/ProductDb.php';
 
-$address = AddressDb::getAll();
-
-foreach($address as $a){
-    echo $a->getStreet();
-}
+ProductDb::updateStock(15,-9);

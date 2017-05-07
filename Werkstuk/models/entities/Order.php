@@ -66,7 +66,7 @@ class Order
      * @param bool $payed
      * @param DateTime $dateOrdered
      */
-    public function __construct($id, $userId, ShoppingCart $cart, Address $deliveryAddress, Address $facturationAddress, $deliveryMethodId, $paymentMethodId, $termsAccepted, $payed, DateTime $dateOrdered)
+    public function __construct($id, $userId,$cart,$deliveryAddress,$facturationAddress, $deliveryMethodId, $paymentMethodId, $termsAccepted, $payed,$dateOrdered)
     {
         $this->id = $id;
         $this->userId = $userId;

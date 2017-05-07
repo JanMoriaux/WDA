@@ -85,9 +85,10 @@ class ProductDb
         $query = "INSERT INTO TINY_CLOUDS_PRODUCTS(name, description, image, price, isHighlighted, categoryId, inStock) " .
             "VALUES ('?','?','?',?,?,?,?)";
         $parameters = array(
-            $product->getName(), $product->getDescription(), $product->getImage(), $product->getPrice(), $product->isHighLighted(),
+            $product->getName(), $product->getDescription(), $product->getImage(), $product->getPrice(), (int)$product->isHighLighted(),
             $product->getCategoryId(), $product->getInStock()
         );
+
         return self::getConnection()->executeSqlQuery($query, $parameters);
     }
 
@@ -101,15 +102,15 @@ class ProductDb
         //productnaam moet uniek zijn
         //alle producten met andere id dan de id van de meegegeven parameter worden gecontroleerd
         foreach(self::getAll() as $otherProduct){
-            if($product->getId() !== $otherProduct->getId() && $product->getName() === $otherProduct->getName()){
+            if($product->getId() != $otherProduct->getId() && $product->getName() == $otherProduct->getName()){
                 return false;
             }
         }
-
         $parameters = array(
-            $product->getName(), $product->getDescription(), $product->getImage(), $product->getPrice(), $product->isHighLighted(),
+            $product->getName(), $product->getDescription(), $product->getImage(), $product->getPrice(), (int)$product->isHighLighted(),
             $product->getCategoryId(), $product->getInStock(), $product->getId()
         );
+
         $query = "UPDATE TINY_CLOUDS_PRODUCTS SET name='?',description='?',image='?',price=?," .
             "isHighlighted=?,categoryId=?,inStock=? WHERE id=?";
 
@@ -145,6 +146,7 @@ class ProductDb
 
     public static function updateStock($id,$quantity){
         $product = self::getById($id);
+
         $product->setInStock($product->getInStock() + $quantity);
         self::update($product);
     }

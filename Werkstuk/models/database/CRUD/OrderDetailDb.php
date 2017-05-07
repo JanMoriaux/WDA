@@ -32,7 +32,7 @@ class OrderDetailDb
 
         $result = self::getConnection()->executeSqlQuery($query,$parameters);
 
-        return self::getOrderDetailsArrayFromResult($result);
+        return self::getOrderDetailArrayFromResult($result);
     }
 
     /**

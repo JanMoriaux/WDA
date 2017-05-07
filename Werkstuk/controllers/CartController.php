@@ -409,46 +409,47 @@ class CartController extends Controller
     }
 
     public function placeOrder(){
-        //todo adressen wegscrhijven naar db en id' terugvangen
-        //todo order aanmaken in db met address id's, userid,deliverymethodid,paymentmethodid,ispayed nul
-        //todo ispayed toevoegen afhankelijk van betaalwijze
-        //id terugvangen
-        //per artikel aantal eenheden aftrekken en een orderdetail lijn maken met id van order
+        //todo address client side validation
 
         $this->setControllerAndActionSessionVariables('placeOrder');
 
-//        $facturationAddressId = AddressDb::insert($_SESSION['order']->getFacturationAddress());
-//        echo 'id: ' . $facturationAddressId;
+        //indien geen User sessievariabele gaan we naar login
+        if(!isset($_SESSION['user']) || empty($_SESSION['user'])){
+            call('User','login');
+        }
+        //indien geen Order sessievariabele gaan we naar Home Page
+        if(!isset($_SESSION['order']) || empty($_SESSION['order'])){
+            call('Home','index');
+        } else{
+            $order = $_SESSION['order'];
 
-//        foreach($_SESSION['order']->getCart()->getOrderDetails() as $orderDetail){
-//
-//            $orderDetail->setOrderId(1);
-//
-//            OrderDetailDb::insert($orderDetail);
-//        }
+            //indien er niet bij levering wordt betaald zetten we de
+            //status van de bestelling op betaald
+            $order->getPaymentMethodId() != 3 ? $order->setPayed(true) : $order->setPayed(false);
 
-        $order = $_SESSION['order'];
-
-        //indien er niet bij levering wordt betaald zetten we de
-        //status van de bestelling op betaald
-        $order->getPaymentMethodId() != 3 ? $order->setPayed(true) : $order->setPayed(false);
-
-        //de userid aan de order toevoegen
-        $order->setUserId($_SESSION['user']->getId());
-
-        $orderId = OrderDb::insert($order);
+            //de userid aan de order toevoegen
+            $order->setUserId($_SESSION['user']->getId());
 
 
 
+            //order in database, we krijgen het id terug
+            //hiermee maken we een nieuwe sessievariabele aan voor het bestellingsoverzicht
+            $orderId = OrderDb::insert($order);
 
+            $errorMessage = '';
+            if($orderId){
+                $_SESSION['orderSummary'] = OrderDb::getById($orderId);
+                //todo unset
+                //unset($_SESSION['order']);
+                //unset($_SESSION['cart']);
+            } else{
+                $errorMessage =
+                    'Er heeft zich een probleem voorgedaan bij het plaatsen van uw bestelling.<br />';
+            }
 
-
-    }
-
-
-    public function showOrderDetails()
-    {
-
+            $view = ROOT . '/views/Cart/placeOrder.php';
+            require_once ROOT . '/views/layout.php';
+        }
     }
 
     protected function getAddressFromPost()
@@ -456,17 +457,17 @@ class CartController extends Controller
         $id = $street = $number = $bus = $postalCode = $city = null;
 
         if (isset($_POST['id']))
-            $id = $_POST['id'];
+            $id = trim($_POST['id']);
         if (isset($_POST['street']))
-            $street = $_POST['street'];
+            $street = trim($_POST['street']);
         if (isset($_POST['number']))
-            $number = $_POST['number'];
+            $number = trim($_POST['number']);
         if (isset($_POST['bus']))
-            $bus = $_POST['bus'];
+            $bus = trim($_POST['bus']);
         if (isset($_POST['postalCode']))
-            $postalCode = $_POST['postalCode'];
+            $postalCode = trim($_POST['postalCode']);
         if (isset($_POST['city']))
-            $city = $_POST['city'];
+            $city = trim($_POST['city']);
 
         return new Address(null, $street, $number, $bus, $postalCode, $city);
     }

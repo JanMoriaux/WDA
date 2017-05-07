@@ -21,7 +21,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                    <h3 class="text text-info">Leveringsadres</h3>
+                    <h3 class="text-info">Leveringsadres</h3>
                     <ul class="list-unstyled">
                         <li class="list-unstyled">Straat:
                             <strong><?php echo $order->getDeliveryAddress()->getStreet(); ?></strong></li>
@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                    <h3 class="text text-info">Facturatieadres</h3>
+                    <h3 class="text-info">Facturatieadres</h3>
                     <ul class="list-unstyled">
                         <li class="list-unstyled">Straat:
                             <strong><?php echo $order->getFacturationAddress()->getStreet(); ?></strong></li>
@@ -60,7 +60,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                    <h3 class="text text-info">Betalingswijze</h3>
+                    <h3 class="text-info">Betalingswijze</h3>
                     <ul class="list-unstyled">
                         <li class="list-unstyled">
                             <?php
