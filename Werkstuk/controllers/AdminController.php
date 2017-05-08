@@ -484,7 +484,7 @@ class AdminController extends Controller
             $deliveryMethod = DeliveryMethodDb::getById($order->getDeliveryMethodId());
             $paymentMethod = PaymentMethodDb::getById($order->getPaymentMethodId());
         }
-        $view = ROOT . './views/Admin/showOrder.php';
+        $view = ROOT . '/views/Admin/showOrder.php';
         require_once ROOT . '/views/layout.php';
     }
 

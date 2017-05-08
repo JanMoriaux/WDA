@@ -11,20 +11,15 @@
 
     <?php
     if (isset($errorMessage) && !empty($errorMessage)) { ?>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <p class="text-danger"><?php echo $errorMessage; ?></p>
-        </div>
+
+            <p class="alert alert-danger"><?php echo $errorMessage; ?></p>
+
     <?php } ?>
-
-
-    <h2>Kies de betaalwijze, leveringsopties en accepteer de algemene voorwaarden</h2>
-
-
 
     <form method="post" action="index.php?controller=Cart&action=chooseDeliveryPaymentAndAcceptTerms">
         <!-- paymentmethod -->
         <div class="panel panel-default" id="paymentMethodPanel">
-            <div class="panel-title">
+            <div class="panel-heading">
                 <div class="container">
                     <h3>Kies betaalwijze</h3>
                 </div>
@@ -41,7 +36,7 @@
 
         <!-- deliverymethod -->
         <div class="panel panel-default" id="deliveryMethodPanel">
-            <div class="panel-title">
+            <div class="panel-heading">
                 <div class="container">
                     <h3>Kies leveringsopties</h3>
                 </div>

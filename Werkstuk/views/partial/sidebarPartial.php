@@ -54,10 +54,9 @@ global $checkoutzone;
             <a class="list-group-item <?php echo (isset($currentAction) && $currentAction == 'insertCategory') ? 'active' : ''; ?>"
                href="index.php?controller=Admin&action=insertCategory"
                title="Admin Add Category">Categorie Toevoegen</a>
-            <a class="list-group-item"
+            <a class="list-group-item <?php echo (isset($currentAction) && $currentAction == 'orderOverview') ? 'active' : ''; ?>"
                href="index.php?controller=Admin&action=orderOverview"
-               title="Admin Order Overview"
-            >Overzicht bestellingen</a>
+               title="Admin Order Overview">Overzicht bestellingen</a>
 
 
         <?php } else if(isset($checkoutzone) && $checkoutzone){ ?>

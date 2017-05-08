@@ -59,7 +59,7 @@ require_once ROOT . '/models/entities/User.php';
                         <input type="password" class="form-control" name="password" placeholder="Wachtwoord" id="passwordNav">
                     </div>
                     <div class="navbar-btn checkbox">
-                        <label class=small for="keeploggedinNav">
+                        <label class="small" for="keeploggedinNav">
                             <input class="autosubmit" id="keeploggedinNav" type="checkbox" name="keeploggedin" value="true">
                             Onthoud mij
                         </label>

@@ -321,7 +321,7 @@ class CartController extends Controller
                 $errorMessage = $errorMessage . 'Gelieve een betaalmethode aan te vinken<br />';
             }
             if (!isset($_POST['acceptTerms']) || empty($_POST['acceptTerms'])) {
-                $errorMessage = $errorMessage . 'Gelieve de algemene voorwaarde te accepteren<br />';
+                $errorMessage = $errorMessage . 'Gelieve de algemene voorwaarden te accepteren<br />';
             }
 
 
@@ -388,7 +388,7 @@ class CartController extends Controller
     {
         $this->setControllerAndActionSessionVariables('placeOrder');
         $this->checkUserAndOrderSessionVariables();
-        $this->setSideBarAndTitle('Overzicht bestelling');
+        $title = 'Overzicht bestelling';
 
         $errorMessage = '';
 

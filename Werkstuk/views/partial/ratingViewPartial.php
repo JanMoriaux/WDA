@@ -9,7 +9,7 @@ require_once ROOT . '/models/database/CRUD/UserDb.php';
 
 if ($user = UserDb::getById($rating->getUserId())) {
     ?>
-    <div class="well well-sm">
+    <div class="">
         <h3><strong>"<?php echo $rating->getComment() ?>"</strong></h3>
         <h4><?php echo $user->getFirstName() . ' ' . $user->getLastName() ?> gaf dit product <?php
             echo $rating->getRatingValue() ?>/5

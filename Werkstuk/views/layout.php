@@ -14,7 +14,8 @@ global $title;
 <head>
     <meta charset="utf-8">
 
-    <link href='//fonts.googleapis.com/css?family=Annie%20Use%20Your%20Telescope' rel='stylesheet'>
+    <link href='//fonts.googleapis.com/css?family=Architects%20Daughter' rel='stylesheet'/>
+    <!-- <link href='//fonts.googleapis.com/css?family=Annie%20Use%20Your%20Telescope' rel='stylesheet'/> -->
     <link href="./views/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
     <link href="./views/css/bootstrap-theme.min.css" type="text/css" rel="stylesheet"/>
     <link href="./views/css/custom.css" type="text/css" rel="stylesheet"/>

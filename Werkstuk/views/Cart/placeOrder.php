@@ -29,8 +29,8 @@
         ?>
 
         <div class="alert alert-success">
-            <p>Wij hebben uw bestelling goed ontvangen en gaan meteen aan de slag om uw spullen ter verzenden.
-                Hieronder vindt u nog een overzicht van uw bestelling. Hartelijk bedankt en tot ziens!
+            <p>Wij hebben uw bestelling goed ontvangen en gaan meteen aan de slag om uw spullen te verzenden.
+                Hieronder vindt u nog een overzicht van uw bestelling. Bedankt en tot ziens!
             </p>
         </div>
 

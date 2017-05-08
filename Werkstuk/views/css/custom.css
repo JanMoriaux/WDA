@@ -1,14 +1,26 @@
 /*general*/
 
 #mainNavBar{
-    /*height: 78px;*/
-   background-color: #ECFAFF;
+    background-color: #c7ddef;
+    background-image: none;
 }
 
-#banner{
-    background-color: #ECFAFF;
-
+.well-lg{
+    background-color: #c7ddef;
+    background-image: none;
 }
+
+a.list-group-item:active, a.list-group-item:hover, a.list-group-item:focus, .list-group a.list-group-item.active{
+    background-color: #c7ddef;
+    background-image: none;
+    color: #555555;
+}
+
+.panel-default > .panel-heading{
+    background-color:lavenderblush;
+    background-image: none;
+}
+
 .error-label {
     color: red;
 }
@@ -32,9 +44,11 @@ html {
 }
 
 body {
-    padding-top: 80px; /* padding voor .navbar-fixed-top.*/
+    padding-top: 140px; /* padding voor .navbar-fixed-top.*/
     background-color: #FEFDFF;
-    font-family: 'Annie Use Your Telescope';
+    /* font-family: 'Annie Use Your Telescope'; */
+    font-family: 'Architects Daughter';font-size: 22px;
+
     font-size: 22px;
     font-weight: 400;
     /* Margin bottom by footer height */
@@ -49,18 +63,15 @@ body {
 productThumbnailPartial
 thumbnail bevat .imageholder, .caption en .cart
 */
-
 .thumbnail {
-    height: 15em;
+    height: 12em;
 }
-
 .imageholder {
     position: relative;
     padding: 5%;
     height: 40%;
     text-align: center;
 }
-
 .imageholder .glyphicon-star{
     position: absolute;
     top: 10%;
@@ -68,26 +79,21 @@ thumbnail bevat .imageholder, .caption en .cart
     color: #A095EE;
     font-size: 1.2em;
 }
-
 .imageholder img{
-    /*opacity: 0.25;*/
-    /*width:75%;*/
+    height:80%
 }
 
 .caption {
     overflow: hidden;
-    height: 35%;
+    height: 40%;
 }
-
 .cart{
-    height:25%;
+    height:20%;
 }
-
 .productHolder .glyphicon-shopping-cart{
     font-size: 1.2em;
     color:#FFBBBB;
 }
-
 .caption h4 {
     white-space: normal;
     overflow: hidden;
@@ -97,8 +103,6 @@ thumbnail bevat .imageholder, .caption en .cart
     width: 3em;
 }
 
-
-
 .cart{
     padding-right: 10px;
     padding-left: 10px;
@@ -106,9 +110,7 @@ thumbnail bevat .imageholder, .caption en .cart
     height:15%;
 }
 
-footer {
-    margin: 50px 0;
-}
+
 
 /*Admin/productOverview Admin/categoryOverview*/
 #admin_product_table td, #admin_category_table td{
@@ -132,6 +134,15 @@ footer {
     outline: none;
 }
 
+/*button in showDetail*/
+.addToCartButtonDetail{
+    width:50%;
+}
+
+button.addToCartButtonDetail span.glyphicon{
+    font-size: 30pt;
+}
+
 /*Cart/overview*/
 
 td img{
@@ -139,14 +150,29 @@ td img{
 }
 
 /*Product/showdDetail*/
+#productImage{
+    position: relative;
+}
+
+
 #productImage img{
     width:100%;
 }
 
-.panel-body .glyphicon{
-    font-size: 30px;
+#productImage .panel-default{
+    height:50%;
+}
+
+
+
+#productImage .glyphicon-shopping-cart{
+    font-size: 40px;
     color:#FFBBBB;
     margin: 20px;
+}
+
+#productImage .panel-default{
+    height: 50%;
 }
 
 .paymentMethodLabel{

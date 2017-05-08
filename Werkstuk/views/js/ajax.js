@@ -28,7 +28,7 @@ $(function () {
                     var $productOverview = $(data);
 
                     $('#pageContent').empty();
-                    $('#pageContent').append($productOverview.filter('#productOverview'));
+                    $('#pageContent').append($productOverview);
 
 
                     $('.categoryFilter').removeClass("active");
