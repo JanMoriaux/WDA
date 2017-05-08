@@ -28,7 +28,7 @@ if ($category != null) { ?>
         <form class="form"
               action="index.php?controller=Admin&action=editCategory&id=<?php echo $category->getId();?>"
               method="post">
-            <h3>Categorie <?php echo $values['id'];?> wijzigen?</h3>
+            <h2>Categorie <?php echo $values['id'];?> wijzigen?</h2>
 
             <?php require_once ROOT . '/views/partial/categoryFormPartial.php'; ?>
 

@@ -27,7 +27,7 @@ if (isset($categoryAdded)) {
               action="index.php?controller=Admin&action=insertCategory"
               method="post">
             <div class="form-group">
-                <h3>Categorie Toevoegen</h3>
+                <h2>Categorie Toevoegen</h2>
             </div>
 
             <?php require_once ROOT . '/views/partial/categoryFormPartial.php'; ?>

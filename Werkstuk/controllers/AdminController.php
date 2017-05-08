@@ -13,6 +13,9 @@ require_once ROOT . '/models/validation/ProductValidator.php';
 require_once ROOT . '/models/validation/UserLoginViewModelValidator.php';
 require_once ROOT . '/models/validation/CategoryValidator.php';
 require_once ROOT . '/controllers/Controller.php';
+require_once ROOT . '/models/database/CRUD/OrderDb.php';
+require_once ROOT . '/models/database/CRUD/DeliveryMethodDb.php';
+require_once ROOT . '/models/database/CRUD/PaymentMethodDb.php';
 
 
 class AdminController extends Controller
@@ -23,6 +26,7 @@ class AdminController extends Controller
     public function index()
     {
         $this->setControllerAndActionSessionVariables('index');
+        $this->setSideBarAndTitle('Portaal Beheerder');
 
         //verwerking van eventuele post-data van login form
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -39,7 +43,7 @@ class AdminController extends Controller
             if (isset($_POST['password'])) {
                 $password = trim($_POST['password']);
             }
-            if(isset($_POST['keeploggedin'])){
+            if (isset($_POST['keeploggedin'])) {
                 $keeploggedin = trim($_POST['keeploggedin']);
             }
 
@@ -62,20 +66,16 @@ class AdminController extends Controller
                     $_SESSION['admin'] = $user->isAdmin();
 
                     //cookie aanmaken als gebruiker wil aangemeld blijven
-                    if($keeploggedin){
+                    if ($keeploggedin) {
                         setcookie('keeploggedin',
                             "{$user->getUserName()}:{$user->getPassword()}",
-                            time() + 60 *60 *24*7);
+                            time() + 60 * 60 * 24 * 7);
                     }
 
-                    call('Home','index');
+                    call('Home', 'index');
                 }
             }
         }
-
-        //title en sidebar zetten
-        $title = 'Portaal Beheerder';
-        $adminfunctions = true;
 
         //views laden
         $view = ROOT . '/views/Admin/index.php';
@@ -88,15 +88,8 @@ class AdminController extends Controller
     public function productOverview()
     {
         $this->setControllerAndActionSessionVariables('productOverview');
-
-        //is admin aangelogd?
-        if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
-            call('Admin', 'index');
-
-
-        //title sidebar zetten
-        $title = "Overzicht producten";
-        $adminfunctions = true;
+        $this->authorize();
+        $this->setSideBarAndTitle('Overzicht producten');
 
         //model = alle producten uit db
         $products = ProductDb::getAll();
@@ -110,18 +103,14 @@ class AdminController extends Controller
     public function showProduct()
     {
         $this->setControllerAndActionSessionVariables('showProduct');
-
-        if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
-            call('Admin', 'index');
-
-        //title en sidebar
-        $title = "Detail Product:";
-        $adminfunctions = true;
+        $this->authorize();
+        $this->setSideBarAndTitle('Detail Product: ');
 
         $product = null;
         //model is product met bepaald id
         if (isset($_GET['id']) && !empty($_GET['id'])) {
             if ($product = ProductDb::getById($_GET['id'])) {
+                global $title;
                 $title = $title . $product->getName();
             }
         }
@@ -136,17 +125,11 @@ class AdminController extends Controller
     public function editProduct()
     {
         $this->setControllerAndActionSessionVariables('editProduct');
-
-        if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
-            call('Admin', 'index');
+        $this->authorize();
+        $this->setSideBarAndTitle('Wijzig Product: ');
 
         //zetten van form action
-        $currentAction = 'editProduct';
-
-        //title sidebar zetten
-        $title = "Wijzig Product: ";
-        $adminfunctions = true;
-
+        //$currentAction = 'editProduct';
 
         //GET request
         //model is product met bepaald id
@@ -158,6 +141,7 @@ class AdminController extends Controller
                 //product met id uit de database halen
                 if ($product = ProductDb::getById($_GET['id'])) {
                     //productId in title
+                    global $title;
                     $title = $title . ' ' . $product->getName();
 
                     //values van ons product kunnen uit ProductValidator
@@ -211,14 +195,8 @@ class AdminController extends Controller
     public function insertProduct()
     {
         $this->setControllerAndActionSessionVariables('insertProduct');
-
-        //is admin aangelogd?
-        if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
-            call('Admin', 'index');
-
-        //title & sidebar zetten
-        $adminfunctions = true;
-        $title = "Toevoegen Product";
+        $this->authorize();
+        $this->setSideBarAndTitle('Toevoegen Product');
 
         //POST request
         $product = null;
@@ -264,19 +242,14 @@ class AdminController extends Controller
     public function deleteProduct()
     {
         $this->setControllerAndActionSessionVariables('deleteProduct');
-
-        //is admin aangelogd?
-        if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
-            call('Admin', 'index');
-
-        //title en sidebar zetten
-        $adminfunctions = true;
-        $title = 'Verwijder Product: ';
+        $this->authorize();
+        $this->setSideBarAndTitle('Verwijder product: ');
 
         $product = null;
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             if (isset($_GET['id']) && $_GET['id']) {
                 if ($product = ProductDb::getById($_GET['id'])) {
+                    global $title;
                     $title = $title . $product->getName();
                 }
             }
@@ -284,6 +257,7 @@ class AdminController extends Controller
             if (isset($_POST['id']) && $_POST['id']) {
                 $productDeleted = false;
                 if ($product = ProductDb::getById($_POST['id'])) {
+                    global $title;
                     $title = $title . $product->getId();
                 }
                 if (ProductDb::deleteById($_POST['id'])) {
@@ -302,15 +276,9 @@ class AdminController extends Controller
     public function categoryOverview()
     {
         $this->setControllerAndActionSessionVariables('categoryOverview');
+        $this->authorize();
+        $this->setSideBarAndTitle('Overzicht categorieën');
 
-        //admin aangelogd?
-        if (!isset($_SESSION['admin']) || !$_SESSION['admin']) {
-            call('Admin', 'index');
-        }
-
-        //title and sidebar zetten
-        $title = 'Overzicht Categorieën';
-        $adminfunctions = true;
 
         //model zetten
         $allCategories = CategoryDb::getAll();
@@ -324,15 +292,8 @@ class AdminController extends Controller
     public function editCategory()
     {
         $this->setControllerAndActionSessionVariables('editCategory');
-
-        //is admin aangelogd?
-        if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
-            call('Admin', 'index');
-
-        //title sidebar zetten
-        $title = "Wijzig Categorie";
-        $adminfunctions = true;
-
+        $this->authorize();
+        $this->setSideBarAndTitle('Wijzig categorie');
 
         //GET request
         //model is Category met bepaald id
@@ -346,6 +307,7 @@ class AdminController extends Controller
                 if ($category = CategoryDb::getById($_GET['id'])) {
 
                     //productId in title
+                    global $title;
                     $title = $title . ' ' . $category->getId();
 
                     //errors (normaal allemaal lege waarden) en values van ons product kunnen uit CategoryValidator
@@ -377,7 +339,6 @@ class AdminController extends Controller
             }
         }
 
-
         //views laden
         $view = ROOT . '/views/Admin/editCategory.php';
         require_once ROOT . '/views/layout.php';
@@ -388,15 +349,8 @@ class AdminController extends Controller
     public function insertCategory()
     {
         $this->setControllerAndActionSessionVariables('insertCategory');
-
-        //is admin aangelogd?
-        if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
-            call('Admin', 'index');
-
-        //title sidebar zetten
-        $adminfunctions = true;
-        $title = "Toevoegen Category";
-
+        $this->authorize();
+        $this->setSideBarAndTitle('Toevoegen Categorie');
 
         //POST request
         $category = null;
@@ -435,14 +389,8 @@ class AdminController extends Controller
     public function deleteCategory()
     {
         $this->setControllerAndActionSessionVariables('deleteCategory');
-
-        //is admin aangelogd?
-        if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
-            call('Admin', 'index');
-
-        //title en sidebar zetten
-        $adminfunctions = true;
-        $title = 'Verwijder Categorie ';
+        $this->authorize();
+        $this->setSideBarAndTitle('Verwijder categorie');
 
         $category = null;
 
@@ -451,6 +399,7 @@ class AdminController extends Controller
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             if (isset($_GET['id']) && $_GET['id']) {
                 if ($category = CategoryDb::getById($_GET['id'])) {
+                    global $title;
                     $title = $title . $category->getDescription();
                 }
                 if (in_array($_GET['id'], ProductDb::getCategoryIds())) {
@@ -463,6 +412,7 @@ class AdminController extends Controller
                 $categoryDeleted = false;
 
                 if ($category = CategoryDb::getById($_POST['id'])) {
+                    global $title;
                     $title = $title . $category->getId();
                     if (CategoryDb::deleteById($_POST['id'])) {
                         $categoryDeleted = true;
@@ -475,18 +425,86 @@ class AdminController extends Controller
         require_once ROOT . '/views/layout.php';
     }
 
-
-    protected
-    function getCategoryFromPost()
+    //GET: index.php?controller=Cart&action=orderOverview
+    public function orderOverview()
     {
-        $id = $description = null;
 
-        if (isset($_POST['id']))
-            $id = $_POST['id'];
-        if (isset($_POST['description']))
-            $description = trim($_POST['description']);
+        $this->setControllerAndActionSessionVariables('orderOverview');
+        $this->authorize();
+        $this->setSideBarAndTitle('Overzicht Bestellingen');
 
-        return new Category($id, $description);
+        $errorMessage = '';
+        $orders = null;
+        if (!$orders = OrderDb::getAll()) {
+            $errorMessage = 'Geen bestellingen teruggevonden';
+        }
+
+        $view = './views/Admin/orderOverview.php';
+        require_once './views/layout.php';
     }
+
+    //GET: index.php?controller=Admin&action=showOrder&id=x
+    public function showOrder()
+    {
+        $this->setControllerAndActionSessionVariables('showOrder');
+        $this->authorize();
+        $this->setSideBarAndTitle('Detail Bestelling:');
+
+        $errorMessage = '';
+        if (!isset($_GET['id']) && empty($_GET['id'])) { //indien geen id naar home
+            call('Home', 'Index');
+        }
+        if (!$order = OrderDb::getById($_GET['id'])) { //indien bestelling niet teruggevonden
+            $errorMessage = 'Product niet teruggevonden';
+        } else{
+            $user = UserDb::getById($order->getUserId());
+            $products = array();
+            $orderDetails = $order->getCart()->getOrderDetails();
+            foreach ($orderDetails as $orderDetail) {
+                $products[$orderDetail->getProductId()] = ProductDb::getById($orderDetail->getProductId());
+            }
+            $deliveryMethod = DeliveryMethodDb::getById($order->getDeliveryMethodId());
+            $paymentMethod = PaymentMethodDb::getById($order->getPaymentMethodId());
+        }
+        $view = ROOT . './views/Admin/showOrder.php';
+        require_once ROOT . '/views/layout.php';
+    }
+
+
+
+
+protected function authorize()
+{
+
+    $this->startSession();
+
+    //is admin aangelogd?
+    if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
+        call('Admin', 'index');
+}
+
+protected
+function setSideBarAndTitle($text)
+{
+
+    global $adminfunctions;
+    global $title;
+
+    $adminfunctions = true;
+    $title = $text;
+}
+
+protected
+function getCategoryFromPost()
+{
+    $id = $description = null;
+
+    if (isset($_POST['id']))
+        $id = $_POST['id'];
+    if (isset($_POST['description']))
+        $description = trim($_POST['description']);
+
+    return new Category($id, $description);
+}
 
 }

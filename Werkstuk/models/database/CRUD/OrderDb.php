@@ -44,7 +44,7 @@ class OrderDb
     /**
      * @param $order Order
      */
-    //todo beveiligen
+    //todo transactie
     public static function insert($order){
 
         if(isset($order) && $order !== null){
@@ -72,8 +72,6 @@ class OrderDb
             }
 
             return $orderId;
-
-
         }
     }
 
@@ -112,10 +110,4 @@ class OrderDb
 
         return $resultArray;
     }
-
-
-
-
-
-
 }

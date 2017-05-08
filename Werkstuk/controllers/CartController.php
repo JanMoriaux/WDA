@@ -414,27 +414,31 @@ class CartController extends Controller
 
         $errorMessage = '';
 
-        $order = $_SESSION['order'];
+        if(isset($_SESSION['order']) && !empty($_SESSION['order'])){
+            $order = $_SESSION['order'];
 
-        //indien er niet bij levering wordt betaald zetten we de
-        //status van de bestelling op betaald
-        $order->getPaymentMethodId() != 3 ? $order->setPayed(true) : $order->setPayed(false);
+            //indien er niet bij levering wordt betaald zetten we de
+            //status van de bestelling op betaald
+            $order->getPaymentMethodId() != 3 ? $order->setPayed(true) : $order->setPayed(false);
 
-        //de userid aan de order toevoegen
-        $order->setUserId($_SESSION['user']->getId());
+            //de userid aan de order toevoegen
+            $order->setUserId($_SESSION['user']->getId());
 
 
-        //order in database, we krijgen het id terug
-        //hiermee maken we een nieuwe sessievariabele aan voor het bestellingsoverzicht
-        $orderId = OrderDb::insert($order);
+            //order in database, we krijgen het id terug
+            //hiermee maken we een nieuwe sessievariabele aan voor het bestellingsoverzicht
+            $orderId = OrderDb::insert($order);
 
-        if ($orderId) {
-            $_SESSION['orderSummary'] = OrderDb::getById($orderId);
-            unset($_SESSION['order']);
-            unset($_SESSION['cart']);
-        } else {
-            $errorMessage =
-                'Er heeft zich een probleem voorgedaan bij het plaatsen van uw bestelling.<br />';
+            if ($orderId) {
+                $_SESSION['orderSummary'] = OrderDb::getById($orderId);
+                unset($_SESSION['order']);
+                unset($_SESSION['cart']);
+            } else {
+                $errorMessage =
+                    'Er heeft zich een probleem voorgedaan bij het plaatsen van uw bestelling.<br />';
+            }
+        } else{
+            $errorMessage = 'Bestelling niet teruggevonden';
         }
 
         $view = ROOT . '/views/Cart/placeOrder.php';

@@ -14,8 +14,13 @@
             <h2>Alle Producten</h2>
         <?php } ?>
     </div>
+    <div class="panel-default">
+        <div class="row">
+            <?php include_once ROOT . '/views/partial/productOverviewPartial.php'; ?>
+        </div>
 
-    <?php include_once ROOT . '/views/partial/productOverviewPartial.php'; ?>
+    </div>
+
 
 </div>
 

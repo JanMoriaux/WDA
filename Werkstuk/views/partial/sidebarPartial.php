@@ -13,6 +13,8 @@ if(isset($_SESSION['currentAction']) && !empty($_SESSION['currentAction'])){
     $currentAction = $_SESSION['currentAction'];
 }
 
+global $adminfunctions;
+
 ?>
 
 
@@ -52,9 +54,10 @@ if(isset($_SESSION['currentAction']) && !empty($_SESSION['currentAction'])){
                href="index.php?controller=Admin&action=insertCategory"
                title="Admin Add Category">Categorie Toevoegen</a>
             <a class="list-group-item"
-               href="#">Overzicht bestellingen TODO</a>
-            <a class="list-group-item"
-               href="#">Beheerder toevoegen TODO</a>
+               href="index.php?controller=Admin&action=orderOverview"
+               title="Admin Order Overview"
+            >Overzicht bestellingen</a>
+
 
         <?php } else if(isset($checkoutzone) && $checkoutzone){ ?>
 

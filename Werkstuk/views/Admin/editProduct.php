@@ -36,7 +36,7 @@ if (isset($productUpdated)) {
 
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <?php if (isset($product) && $product) { ?>
-        <h3>Wijzig product: <?php echo $product->getName();?>?</h3>
+        <h2>Wijzig product: <?php echo $product->getName();?>?</h2>
 
         <?php
 

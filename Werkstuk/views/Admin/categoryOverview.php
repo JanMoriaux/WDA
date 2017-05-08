@@ -7,7 +7,7 @@
  */
 ?>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <h3>Overzicht categorieën</h3>
+    <h2>Overzicht categorieën</h2>
     <table class="table table-responsive" id="admin_category_table">
         <thead>
         <tr>

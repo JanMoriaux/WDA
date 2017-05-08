@@ -6,6 +6,8 @@
  * Time: 22:29
  */
 
+global $title;
+
 ?>
 <!DOCTYPE html>
 <html>

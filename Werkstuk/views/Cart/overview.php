@@ -10,7 +10,9 @@
 
     <h2>Overzicht Winkelmandje</h2>
 
-    <?php if (isset($orderDetails) && count($orderDetails) > 0) { ?>
+    <div class="panel-default">
+
+        <?php if (isset($orderDetails) && count($orderDetails) > 0) { ?>
 
         <table class="table">
             <thead>
@@ -116,9 +118,11 @@
             </tbody>
         </table>
 
-        <a href="index.php?controller=Cart&action=createOrder" class="btn btn-lg btn-primary">
-            Bestellen
-        </a>
+    </div>
+
+    <a href="index.php?controller=Cart&action=createOrder" class="btn btn-lg btn-primary">
+        Bestellen
+    </a>
 
 
     <?php } else { ?>

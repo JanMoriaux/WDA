@@ -10,7 +10,7 @@
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <?php if (isset($product) && $product) { ?>
 
-        <h3>Detail Product: <?php echo $product->getName(); ?></h3>
+        <h2>Detail Product: <?php echo $product->getName(); ?></h2>
 
         <!-- product detail -->
         <?php require_once ROOT . '/views/partial/adminProductDetailPartial.php';

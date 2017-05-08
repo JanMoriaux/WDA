@@ -48,7 +48,7 @@ $controllers = array(
     'Admin' => ['index', 'productOverview', 'editProduct',
         'showProduct', 'insertProduct', 'deleteProduct',
         'categoryOverview', 'editCategory', 'insertCategory',
-        'deleteCategory'],
+        'deleteCategory','orderOverview','showOrder'],
     'Cart' => ['addProduct', 'overview', 'deleteProduct', 'increaseUnits', 'decreaseUnits',
         'createOrder', 'addDeliveryAddress', 'addFacturationAddress', 'chooseDeliveryPaymentAndAcceptTerms',
         'reviewOrder','placeOrder'],
