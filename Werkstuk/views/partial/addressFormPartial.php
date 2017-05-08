@@ -7,11 +7,6 @@
  */
 
 ?>
-
-
-
-
-
 <form class="form" action="index.php?controller=Cart&action=<?php echo
 (isset($_SESSION['currentAction']) && !empty($_SESSION['currentAction'])) ?
     $_SESSION['currentAction'] : ''; ?>" method="post">
@@ -126,7 +121,6 @@
     <!-- script -->
     <script src="./views/js/validationRules.js"></script>
     <script src="./views/js/addressFormValidation.js"></script>
-
     <!-- /script -->
 
 </form>
