@@ -9,6 +9,7 @@
 
 
 require_once ROOT . '/models/database/connection/DatabaseFactory.php';
+require_once ROOT . '/models/database/CRUD/OrderDetailDb.php';
 
 require_once ROOT . '/models/entities/Product.php';
 
@@ -120,7 +121,6 @@ class ProductDb
     //Product verwijderen op id
     public static function deleteById($id)
     {
-        //TODO controleer of id nog voorkomt in orderdetails
         $query = "DELETE FROM TINY_CLOUDS_PRODUCTS WHERE id = ?";
         $parameters = array($id);
         return self::getConnection()->executeSqlQuery($query,$parameters);
@@ -128,7 +128,6 @@ class ProductDb
 
     //Product verwijderen
     public static function delete($product){
-        //TODO controleren of id nog voorkomt in orderdetails
         $query = "DELETE FROM TINY_CLOUDS_PRODUCTS WHERE id = ?";
         $parameters = array($product->getId());
         return self::getConnection()->executeSqlQuery($query,$parameters);

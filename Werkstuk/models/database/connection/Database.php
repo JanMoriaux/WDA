@@ -9,7 +9,7 @@
  * English version of the Database class from the solutions of the Web Development Advanced class workshops (part 4).
  * Original author (dutch version): Frauke Vanderzijpe
  */
-//TODO Exception handling for database classes
+
 class Database
 {
     protected $servername;
@@ -36,9 +36,10 @@ class Database
             $this->username,
             $this->password,
             $this->databasename);
-        if($this->connection->connect_error)
+        if($this->connection->connect_error){
             die("Connect Error(" . $this->connection->connect_errno . "): " .
             $this->connection->connect_error);
+        }
     }
 
     public function closeDatabaseConnection(){

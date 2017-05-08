@@ -69,16 +69,16 @@ global $title;
         <!-- view -->
     </div>
 </div>
-<!-- .footer -->
-<!--    <footer class="footer" id="footer">-->
-<!---->
-<!--        <div class="container">-->
-<!--            <p class="text-muted">Copyright &copy; Tiny Clouds -->
-<?php //echo date('Y'); ?><!-- Dedicated to Felix and Abel-->
-<!--                Moriaux</p>-->
-<!--        </div>-->
-<!---->
-<!--    </footer>-->
-<!-- .footer -->
+ <!-- .footer -->
+    <footer class="footer" id="footer">
+
+        <div class="container">
+            <p class="text-muted">Copyright &copy; Tiny Clouds
+<?php echo date('Y'); ?> Dedicated to Felix and Abel
+                Moriaux</p>
+        </div>
+
+    </footer>
+ <!-- .footer -->
 </body>
 </html>

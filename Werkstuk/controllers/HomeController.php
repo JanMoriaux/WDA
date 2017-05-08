@@ -8,6 +8,7 @@
  */
 require_once ROOT . '/models/database/CRUD/ProductDb.php';
 require_once ROOT . '/controllers/Controller.php';
+require_once ROOT . '/models/validation/EmailValidator.php';
 
 class HomeController extends Controller
 {
@@ -41,8 +42,53 @@ class HomeController extends Controller
         require_once ROOT . '/views/layout.php';
     }
 
+    //GET & POST: index.php?controller=Home&action=contact
+    public function contact(){
+
+        $this->setControllerAndActionSessionVariables('contact');
+
+        //sidebar en title
+        $title = 'Thuispagina';
+        $categorySidebar = true;
+
+        $mailReceived = false;
+
+        //bij GET tonen we het formulier
+        //bij POST sturen we de mail door en tonen een 'ontvangen' boodschap
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+            //validatie
+            $errors = $values = array();
+            $email = $this->getEmailFromPost();
+            $ev = new EmailValidator($email);
+
+            $errors = $ev->getErrors();
+            $values = $ev->getValues();
+
+            if($this->isValidPost($errors)){
+
+                $message = $email->getEmailaddress() . '#' .$email->getMessage();
+                $message = wordwrap($message, 70, "\r\n");
+
+                if(mail('janmoriaux1@gmail.com',
+                    'Tiny Clouds Contact',
+                    $message,
+                    "From: jan.moriaux@student.ehb.be")){
+                    $successMessage = 'We hebben je bericht goed ontvangen';
+                } else{
+                    $errorMessage = 'Er was een probleem bij het verzenden van het bericht.' .
+                        'Gelieve een mail te verzenden via onderstaand link.';
+                }
+
+            }
+        }
+
+        $view = ROOT  . '/views/Home/contact.php';
+        require_once ROOT . '/views/layout.php';
+    }
+
     //geeft een array terug van 4 random uitgelichte producten
-    private function getHighLightedProducts($products){
+    protected function getHighLightedProducts($products){
         $highLighted = array();
         foreach ($products as $product) {
             if ($product->isHighLighted()) {
@@ -55,7 +101,7 @@ class HomeController extends Controller
 
     //geeft een array terug van de 4 nieuwste, niet uigelichte producten
     //(dubbels voorkomen)
-    private function getNewProducts($products){
+    protected function getNewProducts($products){
 
         //eerst alle producten desceding sorteren op datum
         usort($products, function ($a, $b) {
@@ -85,6 +131,18 @@ class HomeController extends Controller
 
         return $new;
     }
+
+    protected function getEmailFromPost(){
+        $emailaddress = $message = null;
+
+        if(isset($_POST['emailaddress']))
+            $emailaddress = $_POST['emailaddress'];
+        if(isset($_POST['message']))
+            $message = $_POST['message'];
+
+        return new Email($emailaddress,$message);
+    }
+
 }
 
 ?>

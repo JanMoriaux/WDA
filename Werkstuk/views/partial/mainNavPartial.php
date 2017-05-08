@@ -29,7 +29,7 @@ require_once ROOT . '/models/entities/User.php';
                     <a href="index.php?controller=Admin&action=index">Admin</a>
                 </li>
                 <li>
-                    <a href="#">Contact</a>
+                    <a href="index.php?controller=Home&action=contact">Contact</a>
                 </li>
                 <li>
                     <a class=""

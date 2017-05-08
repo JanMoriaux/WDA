@@ -143,10 +143,7 @@ class CartController extends Controller
     {
 
         $this->setControllerAndActionSessionVariables('createOrder');
-
-        //title en sidebar
-        $title = 'Bestelling aanmaken';
-        $checkoutzone = true;
+        $this->setSideBarAndTitle('Bestelling aanmaken');
 
         $errorMessage = '';
 
@@ -193,7 +190,7 @@ class CartController extends Controller
     {
         $this->setControllerAndActionSessionVariables('addDeliveryAddress');
         $this->checkUserAndOrderSessionVariables();
-
+        $this->setSideBarAndTitle('Leveringsadres invoeren');
         //title en sidebar
         $title = 'Leveringsadres invoeren';
         $checkoutzone = true;
@@ -252,7 +249,7 @@ class CartController extends Controller
             }
         }
 
-        //todo settitleandsidebar;
+
         $view = ROOT . '/views/Cart/addDeliveryAddress.php';
 
         require_once ROOT . '/views/layout.php';
@@ -262,14 +259,10 @@ class CartController extends Controller
     {
         $this->setControllerAndActionSessionVariables('addFacturationAddress');
         $this->checkUserAndOrderSessionVariables();
-
-        //title en sidebar
-        $title = 'FacturatieAdres invoeren';
-        $checkoutzone = true;
+        $this->setSideBarAndTitle('Facturatieadres invoeren');
 
         $errorMessage = '';
         $errors = $values = array();
-
 
         //bij GET tonen we het formulier
         //bij POST eerst valideren
@@ -281,7 +274,6 @@ class CartController extends Controller
                 $av = new AddressValidator($order->getFacturationAddress());
                 $values = $av->getValues();
             }
-
 
         } else {
 
@@ -305,23 +297,15 @@ class CartController extends Controller
             }
         }
 
-        //todo settitleandsidebar;
         $view = ROOT . '/views/Cart/addFacturationAddress.php';
-
         require_once ROOT . '/views/layout.php';
-
     }
 
-    //todo reference images https://www.multisafepay.com/nl_nl/oplossingen/betaalmethoden/
-    //todo link naar algemene voorwaarden
     public function chooseDeliveryPaymentAndAcceptTerms()
     {
         $this->setControllerAndActionSessionVariables('chooseDeliveryPaymentAndAcceptTerms');
         $this->checkUserAndOrderSessionVariables();
-
-        //title en sidebar
-        $title = 'Verzend- en betaalopties kiezen';
-        $checkoutzone = true;
+        $this->setSideBarAndTitle('Verzend- en betaalopties kiezen');
 
         $errorMessage = '';
 
@@ -365,10 +349,7 @@ class CartController extends Controller
     {
         $this->setControllerAndActionSessionVariables('reviewOrder');
         $this->checkUserAndOrderSessionVariables();
-
-        //title en sidebar
-        $title = 'Nazicht bestelling';
-        $checkoutzone = true;
+        $this->setSideBarAndTitle('Nazicht bestelling');
 
         $errorMessage = '';
 
@@ -407,10 +388,7 @@ class CartController extends Controller
     {
         $this->setControllerAndActionSessionVariables('placeOrder');
         $this->checkUserAndOrderSessionVariables();
-
-        //title en sidebar
-        $title = 'Overzicht bestelling';
-        $categorySidebar = true;
+        $this->setSideBarAndTitle('Overzicht bestelling');
 
         $errorMessage = '';
 
@@ -479,4 +457,16 @@ class CartController extends Controller
             call('Home', 'index');
         }
     }
+
+    protected
+    function setSideBarAndTitle($text)
+    {
+
+        global $checkoutzone;
+        global $title;
+
+        $checkoutzone = true;
+        $title = $text;
+    }
+
 }

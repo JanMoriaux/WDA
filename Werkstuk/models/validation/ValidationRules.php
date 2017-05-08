@@ -175,7 +175,7 @@ class ValidationRules
     public static function isValidCategoryId($id){
         return in_array($id,CategoryDb::getIds());
     }
-    //TODO niet voor update
+
     public static function isUniqueUserName($username){
         return !in_array(md5($username),UserDb::getUserNames());
 

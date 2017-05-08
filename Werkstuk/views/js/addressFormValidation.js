@@ -2,8 +2,6 @@
  * Created by janmo on 8/05/2017.
  */
 
-//TODO reference Frauke Vanderzijpe
-
 $(function () {
 
     var validForm = false;

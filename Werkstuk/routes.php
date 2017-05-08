@@ -6,9 +6,6 @@
  * Time: 20:45
  */
 
-//http://requiremind.com/a-most-simple-php-mvc-beginners-tutorial/
-
-
 function call($controller, $action)
 {
     //Controller class require
@@ -42,7 +39,7 @@ function call($controller, $action)
 
 //lijst van geldige controllers en actions
 $controllers = array(
-    'Home' => ['index', 'error'],
+    'Home' => ['index', 'error','contact'],
     'Product' => ['index', 'showDetail', 'showCategory'],
     'User' => ['login', 'logout', 'register'],
     'Admin' => ['index', 'productOverview', 'editProduct',

@@ -174,7 +174,7 @@
                             echo $thisCategory->getDescription(); ?></h3>
                     </div>
                 </div>
-                <div class="panel-body">
+                <div class="row">
                     <?php
                     //vier andere producten uit dezelde categorie
 

@@ -67,8 +67,6 @@ class UserController extends Controller
                             time() + 60 *60 *24*7);
                     }
 
-                    //TODO debug
-                    //call('Home','index');
                     $this->returnToPreviousPage();
 
                 }

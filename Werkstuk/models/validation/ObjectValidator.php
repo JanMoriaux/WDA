@@ -14,7 +14,7 @@ abstract class ObjectValidator
 {
     /* @var array */
 
-    //TODO extract $errorvalues naar een globale constante
+
     /**
      * @var array met de waarden van foutboodschappen
      */

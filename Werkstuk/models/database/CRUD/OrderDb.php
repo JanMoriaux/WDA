@@ -44,7 +44,6 @@ class OrderDb
     /**
      * @param $order Order
      */
-    //todo transactie
     public static function insert($order){
 
         if(isset($order) && $order !== null){

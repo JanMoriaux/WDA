@@ -43,7 +43,7 @@
     <div class="form-group">
         <label class="control-label col-lg-6 col-md-6 col-sm-12 col-xs-12" for="comment">Beoordeling:</label>
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <label class="error-label control-label">
+            <label class="error-label control-label" id="commentError">
                 <?php echo isset($errors['comment']) ? $errors['comment'] : ''; ?>
             </label>
         </div>
@@ -63,3 +63,8 @@
         </div>
     </div>
 </form>
+
+<!-- script -->
+<script src="./views/js/validationRules.js"></script>
+<script src="./viewS/js/ratingFormValidation.js"></script>
+<!-- /script -->

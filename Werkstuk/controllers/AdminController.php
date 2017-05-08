@@ -16,6 +16,7 @@ require_once ROOT . '/controllers/Controller.php';
 require_once ROOT . '/models/database/CRUD/OrderDb.php';
 require_once ROOT . '/models/database/CRUD/DeliveryMethodDb.php';
 require_once ROOT . '/models/database/CRUD/PaymentMethodDb.php';
+require_once ROOT . '/models/database/CRUD/OrderDetailDb.php';
 
 
 class AdminController extends Controller
@@ -247,14 +248,24 @@ class AdminController extends Controller
 
         $product = null;
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+
             if (isset($_GET['id']) && $_GET['id']) {
                 if ($product = ProductDb::getById($_GET['id'])) {
                     global $title;
                     $title = $title . $product->getName();
+
+                    $errorMessage = '';
+                    //we kijken of er nog openstaande bestellingen zijn
+                    //voor dit product: indien wel kunnen we niet verwijderen
+                    if (in_array($_GET['id'], OrderDetailDb::getProductIds())) {
+                        $errorMessage = 'Er zijn nog openstaande bestellingen voor dit product';
+                    }
                 }
             }
+
         } else {
             if (isset($_POST['id']) && $_POST['id']) {
+
                 $productDeleted = false;
                 if ($product = ProductDb::getById($_POST['id'])) {
                     global $title;
@@ -266,14 +277,16 @@ class AdminController extends Controller
             }
         }
 
+
         $view = ROOT . '/views/Admin/deleteProduct.php';
         require_once ROOT . '/views/layout.php';
     }
 
-    //actions voor Category administratie
+//actions voor Category administratie
 
-    //GET /index.php?controller=Admin&action=categoryOverview
-    public function categoryOverview()
+//GET /index.php?controller=Admin&action=categoryOverview
+    public
+    function categoryOverview()
     {
         $this->setControllerAndActionSessionVariables('categoryOverview');
         $this->authorize();
@@ -287,9 +300,10 @@ class AdminController extends Controller
         require_once ROOT . '/views/layout.php';
     }
 
-    //GET /index.php?controller=Admin&action=editCategory&id=x
-    //GET /index.php?controller=Admin&action=editCategory
-    public function editCategory()
+//GET /index.php?controller=Admin&action=editCategory&id=x
+//GET /index.php?controller=Admin&action=editCategory
+    public
+    function editCategory()
     {
         $this->setControllerAndActionSessionVariables('editCategory');
         $this->authorize();
@@ -344,9 +358,10 @@ class AdminController extends Controller
         require_once ROOT . '/views/layout.php';
     }
 
-    //GET /index.php?controller=Admin&action=insertCategory&id=x
-    //GET /index.php?controller=Admin&action=insertCategory
-    public function insertCategory()
+//GET /index.php?controller=Admin&action=insertCategory&id=x
+//GET /index.php?controller=Admin&action=insertCategory
+    public
+    function insertCategory()
     {
         $this->setControllerAndActionSessionVariables('insertCategory');
         $this->authorize();
@@ -384,9 +399,10 @@ class AdminController extends Controller
     }
 
 
-    //GET /index.php?controller=Admin&action=deleteCategory&id=x
-    //POST /index.php?controller=Admin&action=deleteCategory
-    public function deleteCategory()
+//GET /index.php?controller=Admin&action=deleteCategory&id=x
+//POST /index.php?controller=Admin&action=deleteCategory
+    public
+    function deleteCategory()
     {
         $this->setControllerAndActionSessionVariables('deleteCategory');
         $this->authorize();
@@ -425,8 +441,9 @@ class AdminController extends Controller
         require_once ROOT . '/views/layout.php';
     }
 
-    //GET: index.php?controller=Cart&action=orderOverview
-    public function orderOverview()
+//GET: index.php?controller=Cart&action=orderOverview
+    public
+    function orderOverview()
     {
 
         $this->setControllerAndActionSessionVariables('orderOverview');
@@ -443,8 +460,9 @@ class AdminController extends Controller
         require_once './views/layout.php';
     }
 
-    //GET: index.php?controller=Admin&action=showOrder&id=x
-    public function showOrder()
+//GET: index.php?controller=Admin&action=showOrder&id=x
+    public
+    function showOrder()
     {
         $this->setControllerAndActionSessionVariables('showOrder');
         $this->authorize();
@@ -456,7 +474,7 @@ class AdminController extends Controller
         }
         if (!$order = OrderDb::getById($_GET['id'])) { //indien bestelling niet teruggevonden
             $errorMessage = 'Product niet teruggevonden';
-        } else{
+        } else {
             $user = UserDb::getById($order->getUserId());
             $products = array();
             $orderDetails = $order->getCart()->getOrderDetails();
@@ -471,40 +489,39 @@ class AdminController extends Controller
     }
 
 
+    protected
+    function authorize()
+    {
 
+        $this->startSession();
 
-protected function authorize()
-{
+        //is admin aangelogd?
+        if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
+            call('Admin', 'index');
+    }
 
-    $this->startSession();
+    protected
+    function setSideBarAndTitle($text)
+    {
 
-    //is admin aangelogd?
-    if (!isset($_SESSION['admin']) || !$_SESSION['admin'])
-        call('Admin', 'index');
-}
+        global $adminfunctions;
+        global $title;
 
-protected
-function setSideBarAndTitle($text)
-{
+        $adminfunctions = true;
+        $title = $text;
+    }
 
-    global $adminfunctions;
-    global $title;
+    protected
+    function getCategoryFromPost()
+    {
+        $id = $description = null;
 
-    $adminfunctions = true;
-    $title = $text;
-}
+        if (isset($_POST['id']))
+            $id = $_POST['id'];
+        if (isset($_POST['description']))
+            $description = trim($_POST['description']);
 
-protected
-function getCategoryFromPost()
-{
-    $id = $description = null;
-
-    if (isset($_POST['id']))
-        $id = $_POST['id'];
-    if (isset($_POST['description']))
-        $description = trim($_POST['description']);
-
-    return new Category($id, $description);
-}
+        return new Category($id, $description);
+    }
 
 }

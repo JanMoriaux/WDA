@@ -65,24 +65,4 @@ class ShoppingCart
         return false;
     }
 
-    //todo delete?
-//    public function isInCart($productId){
-//
-//            $inCart = false;
-//
-//            if (session_status() === PHP_SESSION_NONE) {
-//                session_status();
-//            }
-//            if (isset($_SESSION['cart'])) {
-//                $cart = $_SESSION['cart'];
-//                foreach ($cart->getOrderDetails() as $orderDetail) {
-//                    if ($orderDetail->getProductId() === $productId) {
-//                        $inCart = true;
-//                        break;
-//                    }
-//                };
-//            }
-//            return $inCart;
-//    }
-
 }

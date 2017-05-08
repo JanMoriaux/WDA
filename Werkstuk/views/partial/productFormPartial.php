@@ -50,7 +50,6 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php';
         </div>
     </div>
 
-    <!-- TODO moet filename tonen-->
     <div class="form-group">
         <label class="control-label col-lg-6 col-md-6 col-sm-12 col-xs-12" for="">Afbeelding:</label>
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -59,16 +58,6 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php';
             </label>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <!--                <label class="btn btn-default btn-file">Browse-->
-            <!--                    <input type="file" name="image" id="image" accept="image/*" style="display: none">-->
-            <!--                </label>-->
-            <!--todo reference http://stackoverflow.com/questions/11235206/twitter-bootstrap-form-file-element-upload-button/25053973#25053973 -->
-            <!--                <label class="btn btn-primary" for="image">-->
-            <!--                    <input id="image" name="image" type="file" style="display:none;" onchange="$('#upload-file-info').attr('value',$(this).val());" />-->
-            <!--                    Zoek Bestand-->
-            <!--                </label>-->
-            <!--                <input class='form-control' id="upload-file-info" />-->
-
 
             <div class="input-group">
                 <span class="input-group-btn">
@@ -77,7 +66,6 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php';
                      </span>
                 <span class="form-control"></span>
             </div>
-
 
         </div>
     </div>

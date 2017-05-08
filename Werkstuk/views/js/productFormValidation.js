@@ -2,8 +2,6 @@
  * Created by janmo on 5/05/2017.
  */
 
-//TODO reference Frauke Vanderzijpe
-
 $(function () {
 
     var validForm = false;
@@ -65,7 +63,6 @@ function validateField(el) {
     }
 }
 
-//TODO name type validation.
 function validateNameField(el) {
 
     var errorLabelId = getErrorFieldId(el);

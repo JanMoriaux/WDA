@@ -31,7 +31,9 @@ if (isset($_COOKIE['keeploggedin'])) {
     };
 }
 
-//TODO reference http://requiremind.com/a-most-simple-php-mvc-beginners-tutorial/
+//test van database
+DatabaseFactory::getDatabase();
+
 
 if (isset($_GET['controller']) && isset($_GET['action'])) {
     $controller = $_GET['controller'];

@@ -98,14 +98,4 @@ class OrderDetail
             $this->quantity--;
         }
     }
-
-    //todo delete
-//    /**
-//     * @return float subtotaal voor het orderDetail
-//     */
-//    public function getSubtotal(){
-//        return ProductDb::getById($this->productId)->getPrice() * $this->quantity;
-//    }
-
-
 }

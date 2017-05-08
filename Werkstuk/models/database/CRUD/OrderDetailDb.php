@@ -35,6 +35,20 @@ class OrderDetailDb
         return self::getOrderDetailArrayFromResult($result);
     }
 
+    public static function getProductIds(){
+        $query = 'SELECT DISTINCT productId from TINY_CLOUDS_ORDERDETAILS';
+
+        $result = self::getConnection()->executeSqlQuery($query);
+
+        $ids = array();
+
+        for($index = 0; $index < $result->num_rows;$index++){
+            $ids[$index] = $result->fetch_array()['productId'];
+        }
+
+        return $ids;
+    }
+
     /**
      * @param $orderDetail OrderDetail
      */

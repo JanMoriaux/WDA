@@ -14,6 +14,7 @@ if(isset($_SESSION['currentAction']) && !empty($_SESSION['currentAction'])){
 }
 
 global $adminfunctions;
+global $checkoutzone;
 
 ?>
 
