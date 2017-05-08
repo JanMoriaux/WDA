@@ -17,7 +17,6 @@ require_once ROOT . '/models/database/CRUD/OrderDetailDb.php';
 require_once ROOT . '/models/database/CRUD/OrderDb.php';
 
 
-
 class CartController extends Controller
 {
     protected $currentController = 'Cart';
@@ -145,7 +144,9 @@ class CartController extends Controller
 
         $this->setControllerAndActionSessionVariables('createOrder');
 
-        //todo title en sidebar
+        //title en sidebar
+        $title = 'Bestelling aanmaken';
+        $checkoutzone = true;
 
         $errorMessage = '';
 
@@ -155,7 +156,6 @@ class CartController extends Controller
             $errorMessage = 'U dient zich aan te melden om verder te gaan';
             $view = ROOT . '/views/User/login.php';
         } else {
-            //indien geen producten in winkelmandje gaan we naar home
             if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
 
                 $cart = $_SESSION['cart'];
@@ -178,44 +178,42 @@ class CartController extends Controller
 
                     call('Cart', 'addDeliveryAddress');
                 } else {
-                    call('Home', 'index');
+                    $errorMessage = 'Geen producten in het winkelmandje. Er kan geen bestelling aangemaakt worden.';
+                    call('Home', 'index');  //indien geen producten in winkelmandje gaan we naar home
                 }
             } else {
                 call('Home', 'index');
-
             }
         }
-
         require_once ROOT . '/views/layout.php';
 
-        //todo na druk op de bestellen knop in deze action
-        //cart wordt aan een nieuwe order session variabele toegevoegd
-        //indien leeg tonen we een boodschap 'geen items in shoping cart'
-        //ook sidebar met checkout workflow
-        //dan door naar action addDeliveryAddress
     }
 
     public function addDeliveryAddress()
     {
         $this->setControllerAndActionSessionVariables('addDeliveryAddress');
+        $this->checkUserAndOrderSessionVariables();
+
+        //title en sidebar
+        $title = 'Leveringsadres invoeren';
+        $checkoutzone = true;
 
         $errorMessage = '';
-
-        //nagaan of de Order session variable geset is, anders naar home
-        if (!isset($_SESSION['order']) || empty($_SESSION['order'])) {
-            call('Home', 'index');
-        }
-        //nagaan of User session variabele bestaat, anders naar login page
-        if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
-            $errorMessage = 'U dient zich aan te melden om verder te gaan';
-            call('User', 'login');
-        }
-
         $errors = $values = array();
 
-        //bij GET tonen we het formulier
+
+        //bij GET tonen we het formulier en eventueel reeds ingevoerde waarden van het adres
         //bij POST eerst valideren
-        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+
+            $order = $_SESSION['order'];
+
+            if ($order->getDeliveryAddress() !== null) {
+                $av = new AddressValidator($order->getDeliveryAddress());
+                $values = $av->getValues();
+            }
+
+        } else {
 
             $address = $this->getAddressFromPost();
             $av = new AddressValidator($address);
@@ -240,7 +238,7 @@ class CartController extends Controller
                     unset($_POST);
                     $_SERVER['REQUEST_METHOD'] = 'GET';
 
-                    call('Cart','chooseDeliveryPaymentAndAcceptTerms');
+                    call('Cart', 'chooseDeliveryPaymentAndAcceptTerms');
 
                 } else {
 
@@ -249,7 +247,7 @@ class CartController extends Controller
                     unset($_POST);
                     $_SERVER['REQUEST_METHOD'] = 'GET';
 
-                    call('Cart','addFacturationAddress');
+                    call('Cart', 'addFacturationAddress');
                 }
             }
         }
@@ -258,24 +256,16 @@ class CartController extends Controller
         $view = ROOT . '/views/Cart/addDeliveryAddress.php';
 
         require_once ROOT . '/views/layout.php';
-
-
     }
 
     public function addFacturationAddress()
     {
         $this->setControllerAndActionSessionVariables('addFacturationAddress');
+        $this->checkUserAndOrderSessionVariables();
 
-        //nagaan of de Order session variable geset is, anders naar home
-        if (!isset($_SESSION['order']) || empty($_SESSION['order'])) {
-            call('Home', 'index');
-        }
-        //nagaan of User session variabele bestaat, anders naar login page
-        if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
-            $errorMessage = 'U dient zich aan te melden om verder te gaan';
-            call('User', 'login');
-        }
-
+        //title en sidebar
+        $title = 'FacturatieAdres invoeren';
+        $checkoutzone = true;
 
         $errorMessage = '';
         $errors = $values = array();
@@ -283,7 +273,17 @@ class CartController extends Controller
 
         //bij GET tonen we het formulier
         //bij POST eerst valideren
-        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+
+            $order = $_SESSION['order'];
+
+            if ($order->getFacturationAddress() !== null) {
+                $av = new AddressValidator($order->getFacturationAddress());
+                $values = $av->getValues();
+            }
+
+
+        } else {
 
             $address = $this->getAddressFromPost();
             $av = new AddressValidator($address);
@@ -301,7 +301,7 @@ class CartController extends Controller
                 //om te voorkomen dat POTS validatie gebeurt
                 unset($_POST);
                 $_SERVER['REQUEST_METHOD'] = 'GET';
-                call('Cart','chooseDeliveryPaymentAndAcceptTerms');
+                call('Cart', 'chooseDeliveryPaymentAndAcceptTerms');
             }
         }
 
@@ -317,41 +317,38 @@ class CartController extends Controller
     public function chooseDeliveryPaymentAndAcceptTerms()
     {
         $this->setControllerAndActionSessionVariables('chooseDeliveryPaymentAndAcceptTerms');
+        $this->checkUserAndOrderSessionVariables();
 
-        //nagaan of de Order session variable geset is, anders naar home
-        if (!isset($_SESSION['order']) || empty($_SESSION['order'])) {
-            call('Home', 'index');
-        }
-        //nagaan of User session variabele bestaat, anders naar login page
-        if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
-            $errorMessage = 'U dient zich aan te melden om verder te gaan';
-            call('User', 'login');
-        }
+        //title en sidebar
+        $title = 'Verzend- en betaalopties kiezen';
+        $checkoutzone = true;
+
+        $errorMessage = '';
 
         //bij post nagaan of betalings-, verzendopties zijn aangevinkt
         //en algemene voorwaarden geaccepteerd werden
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
-            $errorMessage = '';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            if(!isset($_POST['deliveryMethod']) || empty($_POST['deliveryMethod'])){
+
+            if (!isset($_POST['deliveryMethod']) || empty($_POST['deliveryMethod'])) {
                 $errorMessage = $errorMessage . 'Gelieve een leveringsmethode aan te vinken<br />';
             }
-            if(!isset($_POST['paymentMethod']) || empty($_POST['paymentMethod'])){
-                $errorMessage = $errorMessage .  'Gelieve een betaalmethode aan te vinken<br />';
+            if (!isset($_POST['paymentMethod']) || empty($_POST['paymentMethod'])) {
+                $errorMessage = $errorMessage . 'Gelieve een betaalmethode aan te vinken<br />';
             }
-            if(!isset($_POST['acceptTerms']) || empty($_POST['acceptTerms'])){
+            if (!isset($_POST['acceptTerms']) || empty($_POST['acceptTerms'])) {
                 $errorMessage = $errorMessage . 'Gelieve de algemene voorwaarde te accepteren<br />';
             }
 
 
             //als alles aangevinkt is updaten we de Order sessionvariabele
             //en gaan we naar een laatste controlepagina voor bestelling
-            if(empty($errorMessage)){
+            if (empty($errorMessage)) {
                 $_SESSION['order']->setDeliveryMethodId($_POST['deliveryMethod']);
                 $_SESSION['order']->setPaymentMethodId($_POST['paymentMethod']);
                 $_SESSION['order']->setTermsAccepted($_POST['acceptTerms']);
 
-                call('Cart','reviewOrder');
+                call('Cart', 'reviewOrder');
             }
         }
 
@@ -364,43 +361,41 @@ class CartController extends Controller
 
     }
 
-    public function reviewOrder(){
+    public function reviewOrder()
+    {
         $this->setControllerAndActionSessionVariables('reviewOrder');
+        $this->checkUserAndOrderSessionVariables();
+
+        //title en sidebar
+        $title = 'Nazicht bestelling';
+        $checkoutzone = true;
 
         $errorMessage = '';
 
-        //indien order niet gezet is gaan we naar home page
-        if(!isset($_SESSION['order']) || empty($_SESSION['order'])){
-            call('Home','index');
-        }
-        //indien user niet ingelogd is tonen we login scherm
-        if(!isset($_SESSION['user']) || empty($_SESSION['user'])){
-            call('User','Login');
-        }
         //indien leveringsadres niet gezet is tonen we een waarschuwing
-        if($_SESSION['order']->getDeliveryAddress() === null){
+        if ($_SESSION['order']->getDeliveryAddress() === null) {
             $errorMessage = $errorMessage . 'Het leveringsadres is niet ingevoerd<br />';
         }
         //indien facturatieadres niet gezet is tonen we een waarschuwing
-        if($_SESSION['order']->getFacturationAddress() === null){
+        if ($_SESSION['order']->getFacturationAddress() === null) {
             $errorMessage = $errorMessage . 'Het facturatieadres is niet ingevoerd<br />';
         }
         //indien leveringsmethode niet gezet is tonen we een waarschuwing
-        if(empty($_SESSION['order']->getDeliveryMethodId())){
+        if (empty($_SESSION['order']->getDeliveryMethodId())) {
             $errorMessage = $errorMessage . 'Gelieve een leveringsmethode te kiezen<br />';
         }
         //indien betaalwijze niet gezet is tonen we een waarschuwing
-        if(empty($_SESSION['order']->getDeliveryMethodId())){
+        if (empty($_SESSION['order']->getPaymentMethodId())) {
             $errorMessage = $errorMessage . 'Gelieve een betaalwijze te kiezen<br />';
         }
         //indien de algemene voorwaarden niet aanvaard zijn tonen we een waarschuwing
-        if(empty($_SESSION['order']->isTermsAccepted())){
-            $errorMessage = $errorMessage . 'Gelieve een betaalwijze te kiezen<br />';
+        if (empty($_SESSION['order']->isTermsAccepted())) {
+            $errorMessage = $errorMessage . 'Gelieve de algemene voorwaarden te accepteren<br />';
         }
 
         //indien geen errors wordt het model de Order sessievariabele
         $order = null;
-        if(empty($errorMessage)){
+        if (empty($errorMessage)) {
             $order = $_SESSION['order'];
         }
 
@@ -408,48 +403,42 @@ class CartController extends Controller
         require_once ROOT . '/views/layout.php';
     }
 
-    public function placeOrder(){
-        //todo address client side validation
-
+    public function placeOrder()
+    {
         $this->setControllerAndActionSessionVariables('placeOrder');
+        $this->checkUserAndOrderSessionVariables();
 
-        //indien geen User sessievariabele gaan we naar login
-        if(!isset($_SESSION['user']) || empty($_SESSION['user'])){
-            call('User','login');
+        //title en sidebar
+        $title = 'Overzicht bestelling';
+        $categorySidebar = true;
+
+        $errorMessage = '';
+
+        $order = $_SESSION['order'];
+
+        //indien er niet bij levering wordt betaald zetten we de
+        //status van de bestelling op betaald
+        $order->getPaymentMethodId() != 3 ? $order->setPayed(true) : $order->setPayed(false);
+
+        //de userid aan de order toevoegen
+        $order->setUserId($_SESSION['user']->getId());
+
+
+        //order in database, we krijgen het id terug
+        //hiermee maken we een nieuwe sessievariabele aan voor het bestellingsoverzicht
+        $orderId = OrderDb::insert($order);
+
+        if ($orderId) {
+            $_SESSION['orderSummary'] = OrderDb::getById($orderId);
+            unset($_SESSION['order']);
+            unset($_SESSION['cart']);
+        } else {
+            $errorMessage =
+                'Er heeft zich een probleem voorgedaan bij het plaatsen van uw bestelling.<br />';
         }
-        //indien geen Order sessievariabele gaan we naar Home Page
-        if(!isset($_SESSION['order']) || empty($_SESSION['order'])){
-            call('Home','index');
-        } else{
-            $order = $_SESSION['order'];
 
-            //indien er niet bij levering wordt betaald zetten we de
-            //status van de bestelling op betaald
-            $order->getPaymentMethodId() != 3 ? $order->setPayed(true) : $order->setPayed(false);
-
-            //de userid aan de order toevoegen
-            $order->setUserId($_SESSION['user']->getId());
-
-
-
-            //order in database, we krijgen het id terug
-            //hiermee maken we een nieuwe sessievariabele aan voor het bestellingsoverzicht
-            $orderId = OrderDb::insert($order);
-
-            $errorMessage = '';
-            if($orderId){
-                $_SESSION['orderSummary'] = OrderDb::getById($orderId);
-                //todo unset
-                //unset($_SESSION['order']);
-                //unset($_SESSION['cart']);
-            } else{
-                $errorMessage =
-                    'Er heeft zich een probleem voorgedaan bij het plaatsen van uw bestelling.<br />';
-            }
-
-            $view = ROOT . '/views/Cart/placeOrder.php';
-            require_once ROOT . '/views/layout.php';
-        }
+        $view = ROOT . '/views/Cart/placeOrder.php';
+        require_once ROOT . '/views/layout.php';
     }
 
     protected function getAddressFromPost()
@@ -472,5 +461,18 @@ class CartController extends Controller
         return new Address(null, $street, $number, $bus, $postalCode, $city);
     }
 
+    protected function checkUserAndOrderSessionVariables()
+    {
+        $this->startSession();
 
+        //indien geen User sessievariabele gaan we naar login
+        if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
+            $errorMessage = 'U dient zich aan te melden om verder te gaan';
+            call('User', 'login');
+        }
+        //indien geen Order sessievariabele gaan we naar Home Page
+        if (!isset($_SESSION['order']) || empty($_SESSION['order'])) {
+            call('Home', 'index');
+        }
+    }
 }

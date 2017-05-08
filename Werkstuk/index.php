@@ -12,6 +12,7 @@ define('ROOT', __DIR__);
 require_once ROOT . '/models/entities/ShoppingCart.php';
 require_once ROOT . '/models/entities/Product.php';
 require_once ROOT . '/models/entities/User.php';
+require_once ROOT . '/models/entities/Order.php';
 require_once ROOT . '/models/database/CRUD/UserDb.php';
 
 //controleren op 'keeploggedin' cookie en eventueel verlengen

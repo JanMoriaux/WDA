@@ -8,6 +8,11 @@
  */
 require_once ROOT . '/models/database/CRUD/CategoryDb.php';
 
+$currentAction = '';
+if(isset($_SESSION['currentAction']) && !empty($_SESSION['currentAction'])){
+    $currentAction = $_SESSION['currentAction'];
+}
+
 ?>
 
 
@@ -50,9 +55,24 @@ require_once ROOT . '/models/database/CRUD/CategoryDb.php';
                href="#">Overzicht bestellingen TODO</a>
             <a class="list-group-item"
                href="#">Beheerder toevoegen TODO</a>
-        <?php } ?>
 
-        <!-- TODO andere sidebar functies -->
+        <?php } else if(isset($checkoutzone) && $checkoutzone){ ?>
+
+            <!--sidebar met verschillende stappen in checkout workflow -->
+            <a class="list-group-item <?php echo (isset($currentAction) && $currentAction === 'addDeliveryAddress') ? 'active' : ''; ?>"
+               href="index.php?controller=Cart&action=addDeliveryAddress"
+               title="Leveringsadres invoeren">Leveringsadres</a>
+            <a class="list-group-item <?php echo (isset($currentAction) && $currentAction === 'addFacturationAddress') ? 'active' : ''; ?>"
+               href="index.php?controller=Cart&action=addFacturationAddress"
+               title="Facturatieadres invoeren">Facturatieadres</a>
+            <a class="list-group-item <?php echo (isset($currentAction) && $currentAction == 'chooseDeliveryPaymentAndAcceptTerms') ? 'active' : ''; ?>"
+               href="index.php?controller=Cart&action=chooseDeliveryPaymentAndAcceptTerms"
+               title="Kies verzend- en betaalopties">Opties</a>
+            <a class="list-group-item <?php echo (isset($currentAction) && $currentAction == 'reviewOrder') ? 'active' : ''; ?>"
+               href="index.php?controller=Cart&action=reviewOrder"
+               title="Kies verzend- en betaalopties">Overzicht</a>
+
+        <?php } ?>
 
     </div><!-- div.listgroup -->
 </div><!-- div.col md 3 -->

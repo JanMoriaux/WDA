@@ -11,7 +11,7 @@
     <?php
     if (isset($errorMessage) && !empty($errorMessage)) { ?>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <p class="text-danger"><?php echo $errorMessage; ?></p>
+            <p class="alert alert-danger"><?php echo $errorMessage; ?></p>
         </div>
     <?php } else if (isset($order)) { ?>
 

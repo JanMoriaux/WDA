@@ -1,9 +1,6 @@
 /**
  * Created by janmo on 6/05/2017.
  */
-/**
- * Created by janmo on 5/05/2017.
- */
 
 //TODO reference Frauke Vanderzijpe
 
@@ -80,8 +77,6 @@ function validateNameField(el) {
     }
 }
 
-
-//todo unique?
 function validateUserNameField(el) {
 
     var errorLabelId = getErrorFieldId(el);
@@ -99,6 +94,7 @@ function validateUserNameField(el) {
 }
 
 function validatePasswordField(el) {
+
     var errorLabelId = getErrorFieldId(el);
 
     if (!valueProvided(el)) {

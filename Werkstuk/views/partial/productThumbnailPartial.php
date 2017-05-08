@@ -43,9 +43,6 @@
 
             $inCart = false;
 
-            if (session_status() === PHP_SESSION_NONE) {
-                session_start();
-            }
             if (isset($_SESSION['cart'])) {
                 $cart = $_SESSION['cart'];
                 foreach ($cart->getOrderDetails() as $orderDetail) {

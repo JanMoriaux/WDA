@@ -122,4 +122,11 @@
         </div>
     </div>
     <!-- /submit -->
+
+    <!-- script -->
+    <script src="./views/js/validationRules.js"></script>
+    <script src="./views/js/addressFormValidation.js"></script>
+
+    <!-- /script -->
+
 </form>
