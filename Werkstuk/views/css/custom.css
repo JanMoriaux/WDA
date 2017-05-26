@@ -47,8 +47,7 @@ body {
     padding-top: 140px; /* padding voor .navbar-fixed-top.*/
     background-color: #FEFDFF;
     /* font-family: 'Annie Use Your Telescope'; */
-    font-family: 'Architects Daughter';font-size: 22px;
-
+    font-family: 'Architects Daughter';
     font-size: 22px;
     font-weight: 400;
     /* Margin bottom by footer height */
@@ -154,7 +153,6 @@ td img{
     position: relative;
 }
 
-
 #productImage img{
     width:100%;
 }
@@ -162,8 +160,6 @@ td img{
 #productImage .panel-default{
     height:50%;
 }
-
-
 
 #productImage .glyphicon-shopping-cart{
     font-size: 40px;
@@ -177,4 +173,9 @@ td img{
 
 .paymentMethodLabel{
     margin-bottom: 10px;
+}
+
+
+td img{
+    min-width: 50px;
 }
