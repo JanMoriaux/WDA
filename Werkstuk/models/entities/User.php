@@ -49,8 +49,8 @@ class User
         $this->userName = $userName;
         $this->password = $password;
         $this->email = $email;
-        $this->facturationAddress = $facturationAddressId;
-        $this->deliveryAddress = $deliveryAddressId;
+        $this->facturationAddressId = $facturationAddressId;
+        $this->deliveryAddressId = $deliveryAddressId;
         $this->admin = $admin;
     }
 

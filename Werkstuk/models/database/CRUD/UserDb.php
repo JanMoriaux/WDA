@@ -109,67 +109,13 @@ class UserDb
 
         return self::getConnection()->executeSqlQuery($query, $parameters);
     }
-//
-//    /**
-//     * @param $user User object dat wordt aangepast in db
-//     * @return bool|mysqli_result true indien aangepast, false indien userName niet uniek is of niet wordt voldaan aan
-//     * FK constraints voor address id's
-//     */
-//    public static function update($user)
-//    {
-//        if (in_array($user->getUserName(), self::getUserNames())) {
-//            return false;
-//        }
-//        //TODO foreign key constraints op address id's
-//
-//        $query = "UPDATE TINY_CLOUDS_USERS SET firstName='?',lastName='?',userName='?',password='?',email='?'," .
-//            "facturationAdressId=?,deliveryAddressId=?,isAdmin= ? WHERE id=?";
-//
-//        $parameters = array(
-//            $user->getFirstName(), $user->getLastName(), $user->getUserName(), $user->getPassword(), $user->getEmail(), $user->getFacturationAddressId(),
-//            $user->getDeliveryAddressId(), (int)$user->isAdmin());
-//
-//        return self::getConnection()->executeSqlQuery($query, $parameters);
-//    }
 
-//    /**
-//     * @param $id int het id-nummer van de te verwijderen user
-//     * @return mysqli_result true indien verwijderd, false indien niet verwijderd (door bv. FK constraints
-//     * vanuit de orders tabel)
-//     */
-//    public static function deleteById($id)
-//    {
-//
-//        $query = "DELETE FROM TINY_CLOUDS_USERS WHERE id = ?";
-//        $parameters = array($id);
-//        return self::getConnection()->executeSqlQuery($query, $parameters);
-//    }
+    public static function updateAddressIds($deliveryAddressId, $facturationAddressId, $userid){
 
-//    /**
-//     * @param $user User de te verwijderen user
-//     * @return mysqli_result true indien verwijderd, false indien niet verwijderd (door bv. FK constraints
-//     * vanuit de orders tabel)
-//     */
-//    public static function delete($user)
-//    {
-//        return self::deleteById($user->getId());
-//
-//    }
+        $parameters = array($deliveryAddressId,$facturationAddressId,$userid);
+        $query = "UPDATE TINY_CLOUDS_USERS SET deliveryAddressId = ?,facturationAdressId = ? WHERE id= ?";
 
-    /**
-     * @return array van alle address ids die gekoppeld zijn aan een user in de database
-     * nodig voor FK constraints
-     */
-    public static function getAddressIds()
-    {
-        $result =
-            self::getConnection()->executeSqlQuery("SELECT addressId FROM (SELECT facturationAdressId FROM TINY_CLOUDS_USERS" .
-                " UNION SELECT deliveryAddressId FROM TINY_CLOUDS_USERS) AS addressIds(addressId)");
-        $addressIds = array();
-        FOR ($index = 0; $index < $result->num_rows; $index++) {
-            $addressIds[$index] = $result->fetch_array()['addressId'];
-        }
-        return $addressIds;
+        return self::getConnection()->executeSqlQuery($query,$parameters);
     }
 
     /**

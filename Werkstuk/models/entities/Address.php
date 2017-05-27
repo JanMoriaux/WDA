@@ -127,4 +127,28 @@ class Address
     {
         $this->city = $city;
     }
+
+    /**
+     * @param $other Address
+     * @return boolean
+     */
+    public function compareTo($other){
+
+        $same = true;
+
+        if($this->getId() !== $other->getId())
+            $same = false;
+        if($this->getStreet() !== $other->getStreet())
+            $same = false;
+        if($this->getNumber() !== $other->getNumber())
+            $same = false;
+        if($this->getBus() !== $other->getBus())
+            $same = false;
+        if($this->getPostalCode() !== $other->getPostalCode())
+            $same = false;
+        if($this->getCity() !== $other->getCity())
+            $same = false;
+
+        return $same;
+    }
 }

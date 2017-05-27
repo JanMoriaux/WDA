@@ -10,6 +10,7 @@
 require_once ROOT . '/models/database/CRUD/AddressDb.php';
 require_once ROOT . '/models/database/CRUD/OrderDetailDb.php';
 require_once ROOT . '/models/database/CRUD/ProductDb.php';
+require_once ROOT . '/models/database/CRUD/UserDb.php';
 require_once ROOT . '/models/entities/Order.php';
 
 class OrderDb
@@ -48,10 +49,48 @@ class OrderDb
 
         if(isset($order) && $order !== null){
 
-            //eerst de adressen toevoegen om te voldoen aan de foreign key constraints
-            $deliveryAddressId = AddressDb::insert($order->getDeliveryAddress());
-            $facturationAddressId = AddressDb::insert($order->getFacturationAddress());
+            $deliveryAddressId = $facturationAddressId =  null;
+            $updateUserDeliveryAddressId = $updateUserFacturationAddressId = true;
 
+            // nagaan of de address id aanwezig zijn
+            //leveringsadres
+            if(!empty($order->getDeliveryAddress()->getId())){ //er is een id aanwezig -> address al in db
+
+                $storedAddress = AddressDb::getById($order->getDeliveryAddress()->getId());
+                if(!$storedAddress->compareTo($order->getDeliveryAddress())){ //wijzigingen aangebracht => nieuw address in db
+
+                    $deliveryAddressId = AddressDb::insert($order->getDeliveryAddress());
+
+                } else{ //waarden die al in db zitten komen overeen met waarden in bestelling
+                    $updateUserDeliveryAddressId = false;
+                    $deliveryAddressId = $order->getDeliveryAddress()->getId();
+                }
+            } else{ //geen id aanwezig => nieuw address in db
+
+                $deliveryAddressId = AddressDb::insert($order->getDeliveryAddress());
+            }
+
+            //facturatieadres
+            if(!empty($order->getFacturationAddress()->getId())){ //er is een id aanwezig -> address al in db
+
+                $storedAddress = AddressDb::getById($order->getFacturationAddress()->getId());
+
+                if(!$storedAddress->compareTo($order->getFacturationAddress())){ //wijzigingen aangebracht => nieuw address in db
+
+                    $facturationAddressId = AddressDb::insert($order->getFacturationAddress());
+
+                } else{ //waarden die al in db zitten komen overeen met waarden in bestelling
+                    $updateUserFacturationAddressId = false;
+                    $facturationAddressId = $order->getFacturationAddress()->getId();
+                }
+            } else{ //geen id aanwezig => nieuw address in db
+
+                $facturationAddressId = AddressDb::insert($order->getFacturationAddress());
+            }
+
+            //id  van de addressen in user table
+            if($updateUserDeliveryAddressId || $updateUserDeliveryAddressId)
+                UserDB::updateAddressIds($deliveryAddressId,$facturationAddressId,$order->getUserId());
 
             //dan het order zelf toevoegen
             $query = 'INSERT INTO TINY_CLOUDS_ORDERS(userId, facturationAddressId, deliveryAddressId, deliveryMethodId, paymentMethodId, isPayed) ' .

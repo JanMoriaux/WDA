@@ -60,6 +60,7 @@ class AddressValidator extends ObjectValidator
     protected function setErrors()
     {
         $this->errors = [
+            'id' => '',
             'street' => '',
             'number' => '',
             'bus' => '',
@@ -72,6 +73,7 @@ class AddressValidator extends ObjectValidator
     protected function setValues()
     {
         $this->values = [
+            'id' => $this->address->getId(),
             'street' => $this->address->getStreet(),
             'number' => $this->address->getNumber(),
             'bus' => $this->address->getBus(),

@@ -11,6 +11,11 @@
 (isset($_SESSION['currentAction']) && !empty($_SESSION['currentAction'])) ?
     $_SESSION['currentAction'] : ''; ?>" method="post">
 
+
+    <!-- id -->
+    <input type="hidden" value="<?php echo(isset($values['id']) ? $values['id'] : '' ) ?>" name="id" />
+    <!-- /id -->
+
     <!--street -->
     <div class="form-group">
         <label class="control-label col-lg-6 col-md-6 col-sm-12 col-xs-12" for="street"> Straat:</label>

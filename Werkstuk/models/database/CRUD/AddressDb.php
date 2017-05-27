@@ -24,11 +24,16 @@ class AddressDb
         return self::getAddressArrayFromResult($result);
     }
 
-    public static function getById($id){
+    /**
+     * @param $id
+     * @return Address|bool
+     */
+    public static function getById($id)
+    {
         $query = 'SELECT * FROM TINY_CLOUDS_ADDRESSES WHERE id = ?';
         $parameters = array($id);
 
-        $result = self::getConnection()->executeSqlQuery($query,$parameters);
+        $result = self::getConnection()->executeSqlQuery($query, $parameters);
 
         if ($result->num_rows == 1) {
             $product = self::convertRowToAddress($result->fetch_array());
@@ -41,7 +46,8 @@ class AddressDb
     /**
      * @param $address Address
      */
-    public static function insert($address){
+    public static function insert($address)
+    {
         $query = 'INSERT INTO TINY_CLOUDS_ADDRESSES(street, number, bus, postalCode, city) VALUES ' .
             '("?",?,"?",?,"?")';
         $parameters = array(
@@ -52,19 +58,39 @@ class AddressDb
             $address->getCity()
         );
 
-        self::getConnection()->executeSqlQueryWithoutClosing($query,$parameters);
+        self::getConnection()->executeSqlQueryWithoutClosing($query, $parameters);
         $addressId = self::getConnection()->getInsertId();
         self::getConnection()->closeDatabaseConnection();
         return $addressId;
     }
 
-    protected static function convertRowToAddress($dbRow)
+    /**
+     * @param $address Address
+     */
+    public static function update($address)
     {
-        return new Address($dbRow['id'],$dbRow['street'],$dbRow['number'],$dbRow['bus'],
-            $dbRow['postalCode'],$dbRow['city']);
+
+        $query = 'UPDATE TINY_CLOUDS_ADDRESSES SET street="?", number=?,bus="?",postalCode=?,city="?" WHERE id=?';
+        $parameters = array(
+            $address->getStreet(),
+            $address->getNumber(),
+            $address->getBus(),
+            $address->getPostalCode(),
+            $address->getCity(),
+            $address->getId()
+        );
+
+        return self::getConnection()->executeSqlQuery($query,$parameters);
     }
 
-    protected static function getAddressArrayFromResult($result){
+    protected static function convertRowToAddress($dbRow)
+    {
+        return new Address($dbRow['id'], $dbRow['street'], $dbRow['number'], $dbRow['bus'],
+            $dbRow['postalCode'], $dbRow['city']);
+    }
+
+    protected static function getAddressArrayFromResult($result)
+    {
         $resultArray = array();
 
         for ($index = 0; $index < $result->num_rows; $index++) {
@@ -75,8 +101,6 @@ class AddressDb
 
         return $resultArray;
     }
-
-
 
 
 }

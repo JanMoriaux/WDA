@@ -97,9 +97,6 @@ function validateBusField(el){
     if (!isValidBusNumber(el)) {
         el.addClass('error');
         $(errorLabelId).html('Bestaat uit maximaal drie letters');
-    } else if (!isStrictPosInt(el)) {
-        el.addClass('error');
-        $(errorLabelId).html('Gelieve een positief geheel getal in te voeren');
     }
 }
 

@@ -161,8 +161,9 @@ class CartController extends Controller
                 // Order sessionvariabele toe en gaan we door naar invoer van het besteladres
                 if ($cart->getOrderDetails() !== null && count($cart->getOrderDetails()) > 0) {
 
-                    $_SESSION['order'] = new Order(null,
+                    $_SESSION['order'] = new Order(
                         null,
+                        $_SESSION['user']->getId(),
                         $cart,
                         null,
                         null,
@@ -205,6 +206,11 @@ class CartController extends Controller
 
             $order = $_SESSION['order'];
 
+            //nagaan of er al een leveringsadres werd geregistreerd voor de gebruiker
+            $user = $_SESSION['user'];
+            if (!empty($user->getDeliveryAddressId()))
+                $order->setDeliveryAddress(AddressDb::getById($user->getDeliveryAddressId()));
+
             if ($order->getDeliveryAddress() !== null) {
                 $av = new AddressValidator($order->getDeliveryAddress());
                 $values = $av->getValues();
@@ -223,7 +229,6 @@ class CartController extends Controller
             //indien niet gaan we over tot invullen van facturatieadres
             if ($this->isValidPost($errors)) {
 
-
                 $_SESSION['order']->setDeliveryAddress($address);
 
                 if (isset($_POST['addressesaresame']) && $_POST['addressesaresame']) {
@@ -231,7 +236,7 @@ class CartController extends Controller
                     $_SESSION['order']->setFacturationAddress($address);
 
                     //simuleren van een GET request naar de volgende action
-                    //om te voorkomen dat POTS validatie gebeurt
+                    //om te voorkomen dat POST validatie gebeurt
                     unset($_POST);
                     $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -240,7 +245,7 @@ class CartController extends Controller
                 } else {
 
                     //simuleren van een GET request naar de volgende action
-                    //om te voorkomen dat POTS validatie gebeurt
+                    //om te voorkomen dat POST validatie gebeurt
                     unset($_POST);
                     $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -270,6 +275,11 @@ class CartController extends Controller
 
             $order = $_SESSION['order'];
 
+            //nagaan of er al een facturatieadres werd geregistreerd voor de gebruiker
+            $user = $_SESSION['user'];
+            if (!empty($user->getFacturationAddressId()))
+                $order->setFacturationAddress(AddressDb::getById($user->getFacturationAddressId()));
+
             if ($order->getFacturationAddress() !== null) {
                 $av = new AddressValidator($order->getFacturationAddress());
                 $values = $av->getValues();
@@ -290,7 +300,7 @@ class CartController extends Controller
                 $_SESSION['order']->setFacturationAddress($address);
 
                 //simuleren van een GET request naar de volgende action
-                //om te voorkomen dat POTS validatie gebeurt
+                //om te voorkomen dat POST validatie gebeurt
                 unset($_POST);
                 $_SERVER['REQUEST_METHOD'] = 'GET';
                 call('Cart', 'chooseDeliveryPaymentAndAcceptTerms');
@@ -392,20 +402,20 @@ class CartController extends Controller
 
         $errorMessage = '';
 
-        if(isset($_SESSION['order']) && !empty($_SESSION['order'])){
+        if (isset($_SESSION['order']) && !empty($_SESSION['order'])) {
             $order = $_SESSION['order'];
 
             //indien er niet bij levering wordt betaald zetten we de
             //status van de bestelling op betaald
             $order->getPaymentMethodId() != 3 ? $order->setPayed(true) : $order->setPayed(false);
 
-            //de userid aan de order toevoegen
-            $order->setUserId($_SESSION['user']->getId());
-
-
             //order in database, we krijgen het id terug
             //hiermee maken we een nieuwe sessievariabele aan voor het bestellingsoverzicht
             $orderId = OrderDb::insert($order);
+
+            //session user opnieuw zetten in het geval addressen werden toegevoegd aan de Users table
+            //bij de order insert
+            $_SESSION['user'] = UserDb::getById($_SESSION['user']->getId());
 
             if ($orderId) {
                 $_SESSION['orderSummary'] = OrderDb::getById($orderId);
@@ -415,7 +425,7 @@ class CartController extends Controller
                 $errorMessage =
                     'Er heeft zich een probleem voorgedaan bij het plaatsen van uw bestelling.<br />';
             }
-        } else{
+        } else {
             $errorMessage = 'Bestelling niet teruggevonden';
         }
 
@@ -440,7 +450,7 @@ class CartController extends Controller
         if (isset($_POST['city']))
             $city = trim($_POST['city']);
 
-        return new Address(null, $street, $number, $bus, $postalCode, $city);
+        return new Address($id, $street, $number, $bus, $postalCode, $city);
     }
 
     protected function checkUserAndOrderSessionVariables()

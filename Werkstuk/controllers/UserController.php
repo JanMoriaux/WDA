@@ -49,7 +49,7 @@ class UserController extends Controller
             $errors = $loginViewModelValidator->getErrors();
             $values = $loginViewModelValidator->getValues();
 
-            //indien valid gaan we terug naar Home page
+            //indien valid gaan we terug naar vorige pagina
             //anders wordt formulier opnieuw getoond
             if ($this->isValidPost($errors)) {
                 $userLoggedIn = false;
