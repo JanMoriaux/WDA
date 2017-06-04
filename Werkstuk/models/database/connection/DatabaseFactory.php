@@ -1,4 +1,4 @@
-<?php
+71263548<?php
 
 /**
  * Created by PhpStorm.
@@ -23,7 +23,7 @@ class DatabaseFactory
         if(self::$connection == null){
             $servername = '';
             $username = '';
-            $password = '';
+            $password = '71263548';
             $databasename = '';
 
             self::$connection = new Database($servername,$username,$password,$databasename);
