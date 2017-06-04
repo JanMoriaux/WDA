@@ -21,10 +21,10 @@ class DatabaseFactory
     public static function getDatabase(){
 
         if(self::$connection == null){
-            $servername = 'dtsl.ehb.be';
-            $username = 'WDA098';
-            $password = '71263548';
-            $databasename = 'WDA098';
+            $servername = '';
+            $username = '';
+            $password = '';
+            $databasename = '';
 
             self::$connection = new Database($servername,$username,$password,$databasename);
         }
